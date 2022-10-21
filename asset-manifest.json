@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/genetic-pathfinding/static/css/main.073c9b0a.css",
-    "main.js": "/genetic-pathfinding/static/js/main.80e1e708.js",
-    "static/js/787.6934e392.chunk.js": "/genetic-pathfinding/static/js/787.6934e392.chunk.js",
-    "index.html": "/genetic-pathfinding/index.html",
-    "main.073c9b0a.css.map": "/genetic-pathfinding/static/css/main.073c9b0a.css.map",
-    "main.80e1e708.js.map": "/genetic-pathfinding/static/js/main.80e1e708.js.map",
-    "787.6934e392.chunk.js.map": "/genetic-pathfinding/static/js/787.6934e392.chunk.js.map"
+    "main.css": "/Pathogen/static/css/main.073c9b0a.css",
+    "main.js": "/Pathogen/static/js/main.c5cedb53.js",
+    "static/js/787.73389e07.chunk.js": "/Pathogen/static/js/787.73389e07.chunk.js",
+    "index.html": "/Pathogen/index.html",
+    "main.073c9b0a.css.map": "/Pathogen/static/css/main.073c9b0a.css.map",
+    "main.c5cedb53.js.map": "/Pathogen/static/js/main.c5cedb53.js.map",
+    "787.73389e07.chunk.js.map": "/Pathogen/static/js/787.73389e07.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.80e1e708.js"
+    "static/js/main.c5cedb53.js"
   ]
 }
