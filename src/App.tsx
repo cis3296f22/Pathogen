@@ -5,7 +5,7 @@ import Visual from './components/Visual';
 function App() {
 	return (
 		<div className="App">
-			<Visual></Visual>
+			<Visual/>
 		</div>
 	);
 }

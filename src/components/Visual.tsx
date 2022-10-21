@@ -28,10 +28,7 @@ class Visual extends React.Component {
 
 	render() {
 		return (
-			<div className="App">
-				<h1>react-p5</h1>
-				<Sketch setup={ this.setup } draw={ this.draw } />
-			</div>
+			<Sketch setup={ this.setup } draw={ this.draw } />
 		);
 	}
 }
