@@ -1,11 +1,14 @@
 import React from 'react';
-import './App.css';
-import Visual from './components/Visual';
+
+import Canvas from './components/Canvas';
+import Styles, { GlobalStyles } from './AppStyles';
 
 function App() {
 	return (
-		<div className="App">
-			<Visual/>
+		<div className='App'>
+			<GlobalStyles/>
+			<Styles.Banner/>
+			<Canvas/>
 		</div>
 	);
 }

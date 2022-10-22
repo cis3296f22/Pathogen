@@ -6,7 +6,7 @@ import React from 'react';
 import Sketch from 'react-p5';
 import p5Types from "p5";
 
-class Visual extends React.Component {
+class Canvas extends React.Component {
 	y = 0;
 	direction = '^';
 
@@ -33,4 +33,4 @@ class Visual extends React.Component {
 	}
 }
 
-export default Visual;
+export default Canvas;
