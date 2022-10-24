@@ -1,28 +1,25 @@
-# Project Name
-Put here a short paragraph describing your project. 
-Adding an screenshot or a mockup of your application in action would be nice.  
+# Pathogen
+Pathogen is a browser-based application that simulates a genetic algorithm finding an optimal path through a maze.
+The user starts by generating a maze via various options: random, preset, or user-drawn. 
+A population of agents is spawned into the mazed and tasked with finding the optimal path out. They acomplish this by moving through the maze based on a fitnes function that gets refined over time. This refinement process is an evolutionary phase–consisting of selection, mating, crossover, and mutation–that encourages those agnets with better fitness to produce the majority of the next generation. Over time, a subsequent population will converge to the optimal path.
 
 ![This is a screenshot.](images.png)
 # How to run
-Provide here instructions on how to use your application.   
-- Download the latest binary from the Release section on the right on GitHub.  
-- On the command line uncompress using
+### Installation
+- Download the latest binary from the Release section on the right on GitHub.
+- Download the latest version of npm onto your machine (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 ```
-tar -xzf  
+npm install -g npm
 ```
-- On the command line run with
+### Run Project
+- Open the command line, navigate to the root of your project, and run 
 ```
-./hello
+npm install
 ```
-- You will see Hello World! on your terminal. 
+- Run the project in your browser with
+```
+npm run start
+```
 
 # How to contribute
 Follow this project board to know the latest status of the project: [http://...]([http://...])  
-
-### How to build
-- Use this github repository: ... 
-- Specify what branch to use for a more stable release or for cutting edge development.  
-- Use InteliJ 11
-- Specify additional library to download if needed 
-- What file and target to compile and run. 
-- What is expected to happen when the app start. 
