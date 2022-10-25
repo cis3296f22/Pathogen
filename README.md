@@ -35,3 +35,5 @@ npm run start
 ```sh
 npm run deploy
 ```
+
+Link to [project board](https://github.com/orgs/cis3296f22/projects/112)
