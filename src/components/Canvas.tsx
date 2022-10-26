@@ -5,36 +5,21 @@
 import React from 'react';
 import Sketch from 'react-p5';
 import p5Types from "p5";
+import Grid from "./classes/Grid";
 
 class Canvas extends React.Component {
-	y = 0;
-    dir = 1;
-    cx = 0;
-    cy = 0;
-    dx = 1;
-    dy = 1;
+
+    rows = 20;
+    cols = 20;
+    grid = new Grid(this.rows, this.cols);
 
 	setup = (p5: p5Types, parentRef: Element) => {
-		p5.createCanvas(200, 200).parent(parentRef);
-        this.cx = p5.width / 2;
-        this.cy = p5.height / 2;
+		p5.createCanvas(p5.windowWidth, p5.windowHeight).parent(parentRef);
 	};
 
 	draw = (p5: p5Types) => {
-		p5.background(0); // fill the canvas background
-
-        
-        p5.push();                        // new drawing state
-        p5.fill(255, this.y * 1.3, 0);    // fill next shape with (r, g, b)
-        p5.noStroke();                    // no outline
-		p5.ellipse(this.cx, this.cy, 50); // draw an ellipse on the canvas
-        p5.pop();                         // restore original drawing state
-
-        this.cx += 2 * this.dx; // increment x value of circle
-        this.cy += 1 * this.dy; // increment y value of circle
-
-        if(this.cx > p5.width - 25 || this.cx < 25) this.dx *= -1;  // bouncing effect
-        if(this.cy > p5.height - 25 || this.cy < 25) this.dy *= -1; // bouncing effect
+		p5.background(0);
+        this.grid.show(p5);
 	};
 
 	render() {
