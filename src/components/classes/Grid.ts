@@ -12,15 +12,14 @@ export default class Grid {
         this.cols = cols;
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
-        console.log(this.grid);
     }
 
     // Creates a new, empty grid (2d array of `Cells`) and returns it
     createGrid(rows: number, cols: number) {
         let grid: Cell[][] = [];
-        for(let y = 0; y < rows; y++) {
+        for(let y = 0; y < this.rows; y++) {
             grid.push([]);
-            for(let x = 0; x < cols; x++) {
+            for(let x = 0; x < this.cols; x++) {
                 grid[y].push(new Cell(x, y, CELL_TYPE.wall));
             }
         }
@@ -37,7 +36,7 @@ export default class Grid {
             for(let x = 0; x < this.grid[y].length; x++) {
                 switch(this.grid[y][x].type) {
                     case CELL_TYPE.empty: {
-                        p5.fill(255, 255, 255);
+                        continue; // empty cells do not need to be rendered
                         break;
                     }
                     case CELL_TYPE.wall: {
@@ -66,6 +65,9 @@ export default class Grid {
         current.visited = true;
         let stack: Cell[] = [current];
 
+        // Mark the current cell as the start node
+        current.type = CELL_TYPE.start_node;
+
         // While the stack is not empty
         while(stack.length > 0) {
             // Pop a cell from the stack and make it a current cell
@@ -83,10 +85,10 @@ export default class Grid {
 
             // If the current cell has any neighbours which have not been visited
             if(neighbors.length > 0) {
-                
+
                 // Push the current cell to the stack
                 stack.push(current);
-                
+
                 // Choose one of the unvisited neighbours
                 let chosen = neighbors[Math.floor(Math.random() * neighbors.length)];
 

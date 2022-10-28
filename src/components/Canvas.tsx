@@ -18,7 +18,7 @@ class Canvas extends React.Component {
 	};
 
 	draw = (p5: p5Types) => {
-		p5.background(0);
+		p5.background(255);
         this.grid.show(p5);
 	};
 
