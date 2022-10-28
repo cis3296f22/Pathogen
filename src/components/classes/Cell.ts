@@ -10,6 +10,7 @@ export class Cell {
     x: number = 0;
     y: number = 0;
     type: CELL_TYPE = CELL_TYPE.empty;
+    visited: boolean = false;
 
     constructor(x: number, y: number, type: CELL_TYPE) {
         this.x = x;
