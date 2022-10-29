@@ -11,7 +11,7 @@ export default class Grid {
         this.rows = rows;
         this.cols = cols;
         this.grid = this.createGrid(this.rows, this.cols);
-        this.generateMaze();
+        this.generateMaze(); // TODO: remove, only generate maze when the user clicks the 'generate maze' button that is not yet implemented
     }
 
     // Creates a new, empty grid (2d array of `Cells`) and returns it
