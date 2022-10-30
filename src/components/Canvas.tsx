@@ -9,8 +9,8 @@ import Grid from "./classes/Grid";
 
 class Canvas extends React.Component {
 
-    rows = 20;
-    cols = 20;
+    rows = 21;
+    cols = 21;
     grid = new Grid(this.rows, this.cols);
 
 	setup = (p5: p5Types, parentRef: Element) => {
@@ -18,7 +18,7 @@ class Canvas extends React.Component {
 	};
 
 	draw = (p5: p5Types) => {
-		p5.background(0);
+		p5.background(255);
         this.grid.show(p5);
 	};
 
