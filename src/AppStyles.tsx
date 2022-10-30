@@ -1,7 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
-
-import Banner from './components/Banner'
-
+import { createGlobalStyle } from 'styled-components'
 
 import webFont1 from './assets/fonts/futura-medium-webfont.woff'
 import webFont2 from './assets/fonts/futura-medium-webfont.woff2'
@@ -33,13 +30,11 @@ export const GlobalStyles = createGlobalStyle`
 		text-align: center;
 		display: grid;
 
-		grid-template-rows: 100% 100%;
+		grid-template-rows: calc(var(--vh) * .3);
 		align-items: center;
 	}
-`
 
-export default class AppStyles {
-	static readonly Banner = styled(Banner)`
-		height: 400px;
-	`
-}
+	.react-p5 {
+		display: flex;
+	}
+`

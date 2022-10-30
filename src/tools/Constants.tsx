@@ -7,3 +7,12 @@ export class FONT_FAMILY {
 		line-height: 1.1;
 	`
 }
+
+export default class Constants {
+	static readonly ROW_MAX = 51
+	static readonly ROW_MIN = 21
+	static readonly DEFAULT_ROWS = 21
+	static readonly COL_MAX = 51
+	static readonly COL_MIN = 21
+	static readonly DEFAULT_COLS = 41
+}

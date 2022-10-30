@@ -6,12 +6,15 @@ import React from 'react';
 import Sketch from 'react-p5';
 import p5Types from "p5";
 import Grid from "./classes/Grid";
+import CanvasStyles, { Parameters } from './CanvasStyles';
 
-class Canvas extends React.Component {
+class Canvas extends React.Component <{params: Parameters}, {}>{
+    grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
 
-    rows = 21;
-    cols = 21;
-    grid = new Grid(this.rows, this.cols);
+	constructor(props: {params: Parameters}) {
+		super(props)
+		this.state = {}
+	}
 
 	setup = (p5: p5Types, parentRef: Element) => {
 		p5.createCanvas(p5.windowWidth, p5.windowHeight).parent(parentRef);
@@ -22,9 +25,23 @@ class Canvas extends React.Component {
         this.grid.show(p5);
 	};
 
+	windowResized = (p5: p5Types) => {
+		p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+	}
+
+	/**
+	 * Called when the component updates due to its props changing
+	 */
+	componentDidUpdate() {
+		// TODO: If there are changes to the settings, then restart simulation.
+		this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
+	}
+
 	render() {
 		return (
-			<Sketch setup={ this.setup } draw={ this.draw } />
+			<CanvasStyles.Canvas>
+				<Sketch setup={ this.setup } draw={ this.draw } windowResized={ this.windowResized }/>
+			</CanvasStyles.Canvas>
 		);
 	}
 }
