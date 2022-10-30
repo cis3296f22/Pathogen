@@ -37,7 +37,6 @@ export default class Grid {
                 switch(this.grid[y][x].type) {
                     case CELL_TYPE.empty: {
                         continue; // empty cells do not need to be rendered
-                        break;
                     }
                     case CELL_TYPE.wall: {
                         p5.fill(0, 0, 0);
