@@ -12,6 +12,7 @@ import { isMobile } from 'react-device-detect'
 import Grid from "./classes/Grid";
 import CanvasStyles, { Parameters } from './CanvasStyles';
 import Constants from '../tools/Constants';
+import {Colors} from '../tools/Constants';
 
 class Canvas extends React.Component <{params: Parameters, windowWidth: number}, {}>{
     grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
@@ -26,7 +27,7 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 	};
 
 	draw = (p5: p5Types) => {
-		p5.background(255);
+		p5.background(Colors.SECONDARY);
         this.grid.show(p5);
 	};
 
