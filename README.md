@@ -6,7 +6,9 @@ Pathogen is a pathfinding genetic algorithm visualization. A population of agent
 
 Click [here](https://cis3296f22.github.io/Pathogen/) to try out the visualization.
 
-## Install
+## Web Application
+
+### Install
 
 1. Download the latest release from the [releases](https://github.com/cis3296f22/Pathogen/releases) section.
 
@@ -22,13 +24,13 @@ npm install -g npm
 npm install
 ```
 
-## Run
+### Run
 
 ```sh
 npm run start
 ```
 
-## Deploy
+### Deploy
 
 1. Deploy to GitHub Pages:
 
@@ -36,10 +38,36 @@ npm run start
 npm run deploy
 ```
 
-## Packaging the web application
+## Executable
+
+### Install
+
+1. Download the latest release from the [releases](https://github.com/cis3296f22/Pathogen/releases) section.
+
+2. Download the latest version of [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm):
+
+```sh
+npm install -g npm
+```
+
+3. Install dependencies listed in `package.json` (must be in root of project):
+
+```sh
+npm install
+```
+
+4. Download the latest version of [yarn](https://yarnpkg.com/getting-started/install)
+
+### Package
+
+1. Package the application into an executable file:
+
 ```sh
 yarn electron:package:<mac|windows|linux>
 ```
-This will create an executable file for the web applications in the `dist/` folder.
+
+The executable that is created is located in the `dist/` directory.
+
+## Project Board
 
 Link to [project board](https://github.com/orgs/cis3296f22/projects/112)
