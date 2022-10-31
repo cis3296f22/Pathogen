@@ -1,5 +1,6 @@
 import p5Types from "p5";
 import {CELL_TYPE, Cell} from './Cell';
+import {Colors} from '../../tools/Constants';
 
 export default class Grid {
 
@@ -39,7 +40,8 @@ export default class Grid {
                         continue; // empty cells do not need to be rendered
                     }
                     case CELL_TYPE.wall: {
-                        p5.fill(0, 0, 0);
+                        p5.stroke(Colors.PRIMARY);
+                        p5.fill(Colors.PRIMARY);
                         break;
                     }
                     case CELL_TYPE.start_node: {
