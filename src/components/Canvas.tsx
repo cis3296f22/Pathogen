@@ -2,22 +2,27 @@
  * For Tips and Advanced Usage read this Blog Post
  * https://levelup.gitconnected.com/integrating-p5-sketches-into-your-react-app-de44a8c74e91
  */
+// Third party imports
 import React from 'react';
 import Sketch from 'react-p5';
 import p5Types from "p5";
+import { isMobile } from 'react-device-detect'
+
+// Custom imports
 import Grid from "./classes/Grid";
 import CanvasStyles, { Parameters } from './CanvasStyles';
+import Constants from '../tools/Constants';
 
-class Canvas extends React.Component <{params: Parameters}, {}>{
+class Canvas extends React.Component <{params: Parameters, windowWidth: number}, {}>{
     grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
 
-	constructor(props: {params: Parameters}) {
+	constructor(props: {params: Parameters, windowWidth: number}) {
 		super(props)
 		this.state = {}
 	}
 
 	setup = (p5: p5Types, parentRef: Element) => {
-		p5.createCanvas(p5.windowWidth, p5.windowHeight).parent(parentRef);
+		p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO).parent(parentRef);
 	};
 
 	draw = (p5: p5Types) => {
@@ -26,15 +31,15 @@ class Canvas extends React.Component <{params: Parameters}, {}>{
 	};
 
 	windowResized = (p5: p5Types) => {
-		p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+		if (!isMobile) p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO);
 	}
 
 	/**
 	 * Called when the component updates due to its props changing
 	 */
-	componentDidUpdate() {
-		// TODO: If there are changes to the settings, then restart simulation.
-		this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
+	componentDidUpdate(prevProps: {params: Parameters, windowWidth: number}) {
+		if (prevProps.params !== this.props.params)
+			this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
 	}
 
 	render() {

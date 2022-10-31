@@ -6,6 +6,7 @@ import arcaFont1 from './assets/fonts/arcamajora3-heavy-webfont.otf'
 import arcaFont2 from './assets/fonts/arcamajora3-heavy-webfont.eot'
 import arcaFont3 from './assets/fonts/arcamajora3-heavy-webfont.woff2'
 import arcaFont4 from './assets/fonts/arcamajora3-heavy-webfont.woff'
+import Constants from './tools/Constants'
 
 export const GlobalStyles = createGlobalStyle`
 	@font-face {
@@ -30,7 +31,7 @@ export const GlobalStyles = createGlobalStyle`
 		text-align: center;
 		display: grid;
 
-		grid-template-rows: calc(var(--vh) * .3);
+		grid-template-rows: calc(var(--vh) * ${Constants.BANNER_HEIGHT_RATIO});
 		align-items: center;
 	}
 

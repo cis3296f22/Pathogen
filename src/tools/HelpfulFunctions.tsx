@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react'
-
+import { isMobile } from 'react-device-detect'
 import debounce from 'lodash.debounce'
 
-export const scrollToTop = (): void =>{
-	window.scrollTo({
-		top: 0,
-		behavior: 'smooth'
+export const useWindowWidth = (): {width: number} => {
+	const [dimensions, setWidth] = useState({ width: window.innerWidth })
+
+	useEffect(() => {
+		const handler = debounce(() => {
+			setWidth({ width: window.innerWidth })
+		}, 10)
+
+		window.addEventListener('resize', handler)
+
+		return () => {
+			window.removeEventListener('resize', handler)
+		}
 	})
+
+	return dimensions
 }
 
 export const useSetVariableCssVars = (): void => {
@@ -15,10 +26,10 @@ export const useSetVariableCssVars = (): void => {
 			document.documentElement.style.setProperty('--vh', `${window.innerWidth}px`)
 		}, 10)
 
-		window.addEventListener('resize', setVh)
+		if(!isMobile) window.addEventListener('resize', setVh)
 
 		return () => {
-			window.removeEventListener('resize', setVh)
+			if(!isMobile) window.removeEventListener('resize', setVh)
 		}
 	})
 }
