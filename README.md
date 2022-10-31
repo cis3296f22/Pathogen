@@ -36,4 +36,10 @@ npm run start
 npm run deploy
 ```
 
+## Packaging the web application
+```sh
+yarn electron:package:<mac|windows|linux>
+```
+This will create an executable file for the web applications in the `dist/` folder.
+
 Link to [project board](https://github.com/orgs/cis3296f22/projects/112)
