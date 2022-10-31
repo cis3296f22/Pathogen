@@ -41,7 +41,7 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 					<Styles.Hamburger as={GiHamburgerMenu} onClick={this.handleShow}/>
 				</Styles.Banner>
 
-				<Offcanvas show={this.state.show} onHide={this.handleClose}>
+				<Styles.OffcanvasStyle show={this.state.show} onHide={this.handleClose}>
 					<Offcanvas.Header closeButton>
 						<Offcanvas.Title>Parameters</Offcanvas.Title>
 					</Offcanvas.Header>
@@ -55,7 +55,7 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 						axis='x' x={this.state.param.gridColumns} 
 						xmax={Constants.ROW_MAX} xmin={Constants.ROW_MIN}
 						onChange={({x}) => this.setCols(x)}/>
-				</Offcanvas>
+				</Styles.OffcanvasStyle>
 			</>
 		);
 	}
