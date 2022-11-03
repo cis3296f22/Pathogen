@@ -15,11 +15,12 @@ import Constants from '../tools/Constants';
 import {Colors} from '../tools/Constants';
 
 class Canvas extends React.Component <{params: Parameters, windowWidth: number}, {}>{
-    grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
+    grid: Grid;
 
 	constructor(props: {params: Parameters, windowWidth: number}) {
-		super(props)
-		this.state = {}
+		super(props);
+		this.state = {};
+        this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
 	}
 
 	setup = (p5: p5Types, parentRef: Element) => {
@@ -29,6 +30,7 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 	draw = (p5: p5Types) => {
 		p5.background(Colors.SECONDARY);
         this.grid.show(p5);
+        this.grid.update(p5);
 	};
 
 	windowResized = (p5: p5Types) => {
