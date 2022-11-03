@@ -9,10 +9,14 @@ export default class Grid {
     cols: number;
     grid: Cell[][];
     population: Agent[];
+    width: number;
+    height: number;
 
-    constructor(rows: number, cols: number) {
+    constructor(rows: number, cols: number, width?: number, height?: number) {
         this.rows = rows;
         this.cols = cols;
+        this.width = width ?? -1;
+        this.height = height ?? -1;
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
         this.population = this.createPopulation(100); // TODO: make this population size a slider value
@@ -127,10 +131,12 @@ export default class Grid {
 
     // Creates and returns a new population of size `n`
     createPopulation(n: number) {
+        let cw = this.width / this.cols;
+        let ch = this.height / this.rows;
         let population: Agent[] = [];
         let start_node_pos = this.getStartNodePosition();
         for(let i = 0; i < n; i++)
-            population.push(new Agent(start_node_pos.x, start_node_pos.y)); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
+            population.push(new Agent(start_node_pos.x * cw + cw / 2, start_node_pos.y * ch + ch / 2)); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
         return population;
     }
 
