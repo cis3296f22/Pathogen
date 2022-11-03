@@ -31,11 +31,11 @@ export default class Grid {
         return grid;
     }
 
-    // Draw the grid of cells
     show(p5: p5Types) {
-        let cw: number = p5.width / this.cols;  // spacing between cells horizontally
-        let cy: number = p5.height / this.rows; // spacing between cells vertically
+        let cw: number = p5.width / this.cols;  // spacing between cells horizontally (cell width)
+        let ch: number = p5.height / this.rows; // spacing between cells vertically (cell height)
 
+        // Draw the grid of cells
         p5.push();
         for(let y = 0; y < this.grid.length; y++) {
             for(let x = 0; x < this.grid[y].length; x++) {
@@ -57,8 +57,15 @@ export default class Grid {
                         break;
                     }
                 }
-                p5.rect(x * cw, y * cy, cw, cy);
+                p5.rect(x * cw, y * ch, cw, ch);
             }
+        }
+        p5.pop();
+
+        // Draw the agents
+        p5.push();
+        for(let agent of this.population) {
+            p5.ellipse(agent.x * cw + cw / 2, agent.y * ch + ch / 2, 5);
         }
         p5.pop();
     }
