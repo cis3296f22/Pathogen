@@ -14,9 +14,9 @@ export default class Grid {
         this.rows = rows;
         this.cols = cols;
         this.grid = this.createGrid(this.rows, this.cols);
+        this.generateMaze();
         this.population = this.createPopulation(100); // TODO: make this population size a slider value
         console.log(this.population); // TODO: remove this
-        this.generateMaze();
     }
 
     // Creates a new, empty grid (2d array of `Cells`) and returns it
@@ -113,8 +113,21 @@ export default class Grid {
     // Creates and returns a new population of size `n`
     createPopulation(n: number) {
         let population: Agent[] = [];
+        let start_node_pos = this.getStartNodePosition();
         for(let i = 0; i < n; i++)
-            population.push(new Agent(-1, -1)); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
+            population.push(new Agent(start_node_pos.x, start_node_pos.y)); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
         return population;
+    }
+
+    // Returns a position object that represents the cell location of the start node in the grid {x: start node x position, y: start node y position}
+    getStartNodePosition() {
+        for(let y = 0; y < this.grid.length; y++) {
+            for(let x = 0; x < this.grid[y].length; x++) {
+                if(this.grid[y][x].type == CELL_TYPE.start_node) {
+                    return {x: x, y: y};
+                }
+            }
+        }
+        return {x: -1, y: -1};
     }
 }
