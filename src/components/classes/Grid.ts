@@ -1,18 +1,22 @@
 import p5Types from "p5";
 import {CELL_TYPE, Cell} from './Cell';
 import {Colors} from '../../tools/Constants';
+import Agent from './Agent';
 
 export default class Grid {
 
     rows = 0;
     cols = 0;
     grid: Cell[][] = [];
+    population: Agent[] = [];
 
     constructor(rows: number, cols: number) {
         this.rows = rows;
         this.cols = cols;
         this.grid = this.createGrid(this.rows, this.cols);
-        this.generateMaze(); // TODO: remove, only generate maze when the user clicks the 'generate maze' button that is not yet implemented
+        this.population = this.createPopulation(100); // TODO: make this population size a slider value
+        console.log(this.population); // TODO: remove this
+        this.generateMaze();
     }
 
     // Creates a new, empty grid (2d array of `Cells`) and returns it
@@ -104,5 +108,13 @@ export default class Grid {
                 stack.push(chosen);
             }
         }
+    }
+
+    // Creates and returns a new population of size `n`
+    createPopulation(n: number) {
+        let population: Agent[] = [];
+        for(let i = 0; i < n; i++)
+            population.push(new Agent());
+        return population;
     }
 }
