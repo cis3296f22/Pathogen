@@ -22,3 +22,10 @@ export class Colors {
 	static readonly PRIMARY   = '#222529';
 	static readonly SECONDARY = '#808080';
 }
+
+export enum Direction {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+}

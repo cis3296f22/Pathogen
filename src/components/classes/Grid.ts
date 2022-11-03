@@ -5,10 +5,10 @@ import Agent from './Agent';
 
 export default class Grid {
 
-    rows = 0;
-    cols = 0;
-    grid: Cell[][] = [];
-    population: Agent[] = [];
+    rows: number;
+    cols: number;
+    grid: Cell[][];
+    population: Agent[];
 
     constructor(rows: number, cols: number) {
         this.rows = rows;
@@ -114,7 +114,7 @@ export default class Grid {
     createPopulation(n: number) {
         let population: Agent[] = [];
         for(let i = 0; i < n; i++)
-            population.push(new Agent());
+            population.push(new Agent(-1, -1)); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
         return population;
     }
 }
