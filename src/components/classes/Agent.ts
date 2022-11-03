@@ -1,4 +1,4 @@
-import {Direction} from '../../tools/Constants';
+import { Direction } from '../../tools/Constants';
 
 export default class Agent {
 
