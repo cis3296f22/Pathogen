@@ -15,16 +15,16 @@ import Constants from '../tools/Constants';
 import {Colors} from '../tools/Constants';
 
 class Canvas extends React.Component <{params: Parameters, windowWidth: number}, {}>{
-    grid: Grid;
+    grid!: Grid;
 
 	constructor(props: {params: Parameters, windowWidth: number}) {
 		super(props);
 		this.state = {};
-        this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
 	}
 
 	setup = (p5: p5Types, parentRef: Element) => {
 		p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO).parent(parentRef);
+        this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns, p5.width, p5.height);
 	};
 
 	draw = (p5: p5Types) => {
