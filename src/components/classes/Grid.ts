@@ -65,9 +65,17 @@ export default class Grid {
         // Draw the agents
         p5.push();
         for(let agent of this.population) {
-            p5.ellipse(agent.x * cw + cw / 2, agent.y * ch + ch / 2, 5);
+            p5.ellipse(agent.x, agent.y, 5);
         }
         p5.pop();
+    }
+
+    update(p5: p5Types) {
+
+        // Update each of the agents
+        for(let agent of this.population) {
+            agent.update();
+        }
     }
 
     // Automatically generates a maze using randomized depth-first search iterative algorithm (https://en.wikipedia.org/wiki/Maze_generation_algorithm#Iterative_implementation)
