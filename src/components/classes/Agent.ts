@@ -1,4 +1,5 @@
 import { Direction } from '../../tools/Constants';
+import p5Types from 'p5';
 
 export default class Agent {
 
@@ -46,5 +47,10 @@ export default class Agent {
 
         // Increment the age of the agent
         this.age++;
+    }
+
+    // Returns a boolean whether or not the agent is in the bounds of the canvas
+    inBounds(p5: p5Types) {
+        return this.x >= 0 && this.x <= p5.width && this.y >= 0 && this.y <= p5.height;
     }
 }

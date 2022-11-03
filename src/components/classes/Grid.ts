@@ -82,7 +82,7 @@ export default class Grid {
 
         // Update each of the agents
         for(let agent of this.population) {
-            if (this.getCell(agent.x, agent.y).type !== CELL_TYPE.wall) {
+            if (agent.inBounds(p5) && this.getCell(agent.x, agent.y).type !== CELL_TYPE.wall) {
                 agent.update();
             }
         }
