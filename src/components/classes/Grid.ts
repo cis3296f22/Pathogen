@@ -11,13 +11,18 @@ export default class Grid {
     population: Agent[];
     width: number;
     height: number;
+    cell_height: number;
+    cell_width: number;
 
-    constructor(rows: number, cols: number, width?: number, height?: number) {
+    constructor(rows: number, cols: number, width: number, height: number) {
         this.rows = rows;
         this.cols = cols;
-        this.width = width ?? -1;
-        this.height = height ?? -1;
+        this.width = width;
+        this.height = height;
         this.grid = this.createGrid(this.rows, this.cols);
+        this.cell_width = this.width / this.cols;
+        this.cell_height = this.height / this.rows;
+        
         this.generateMaze();
         this.population = this.createPopulation(100); // TODO: make this population size a slider value
         console.log(this.population); // TODO: remove this
@@ -36,8 +41,6 @@ export default class Grid {
     }
 
     show(p5: p5Types) {
-        let cw: number = p5.width / this.cols;  // spacing between cells horizontally (cell width)
-        let ch: number = p5.height / this.rows; // spacing between cells vertically (cell height)
 
         // Draw the grid of cells
         p5.push();
@@ -61,7 +64,8 @@ export default class Grid {
                         break;
                     }
                 }
-                p5.rect(x * cw, y * ch, cw, ch);
+                p5.rect(x * this.cell_width, y * this.cell_height,
+                    this.cell_width, this.cell_height);
             }
         }
         p5.pop();
@@ -78,8 +82,18 @@ export default class Grid {
 
         // Update each of the agents
         for(let agent of this.population) {
-            agent.update();
+            if (this.getCell(agent.x, agent.y).type !== CELL_TYPE.wall) {
+                agent.update();
+            }
         }
+    }
+
+    /**
+     * Make a new class to regenerate the grid and population
+     */
+    generateNewMaze(rows: number, cols: number) {
+        let newGrid = new Grid(rows, cols, this.width, this.height);
+        return newGrid;
     }
 
     // Automatically generates a maze using randomized depth-first search iterative algorithm (https://en.wikipedia.org/wiki/Maze_generation_algorithm#Iterative_implementation)
@@ -131,12 +145,14 @@ export default class Grid {
 
     // Creates and returns a new population of size `n`
     createPopulation(n: number) {
-        let cw = this.width / this.cols;
-        let ch = this.height / this.rows;
         let population: Agent[] = [];
         let start_node_pos = this.getStartNodePosition();
-        for(let i = 0; i < n; i++)
-            population.push(new Agent(start_node_pos.x * cw + cw / 2, start_node_pos.y * ch + ch / 2)); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
+        for(let i = 0; i < n; i++) {
+            population.push(
+                new Agent(start_node_pos.x * this.cell_width + this.cell_width / 2,
+                    start_node_pos.y * this.cell_height + this.cell_height / 2)
+            ); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
+        }
         return population;
     }
 
@@ -144,11 +160,17 @@ export default class Grid {
     getStartNodePosition() {
         for(let y = 0; y < this.grid.length; y++) {
             for(let x = 0; x < this.grid[y].length; x++) {
-                if(this.grid[y][x].type == CELL_TYPE.start_node) {
+                if(this.grid[y][x].type === CELL_TYPE.start_node) {
                     return {x: x, y: y};
                 }
             }
         }
         return {x: -1, y: -1};
+    }
+
+    getCell(x: number, y: number) {
+        let cell_y = Math.floor(y/this.cell_height);
+        let cell_x = Math.floor(x/this.cell_width);
+        return this.grid[cell_y][cell_x];
     }
 }

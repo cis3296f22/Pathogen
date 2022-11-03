@@ -42,7 +42,7 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 	 */
 	componentDidUpdate(prevProps: {params: Parameters, windowWidth: number}) {
 		if (prevProps.params !== this.props.params)
-			this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns);
+			this.grid = this.grid.generateNewMaze(this.props.params.gridRows, this.props.params.gridColumns);
 	}
 
 	render() {
