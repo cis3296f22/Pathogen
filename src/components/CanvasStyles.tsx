@@ -2,7 +2,11 @@ import styled from 'styled-components'
 
 export type Parameters = {
 	gridRows: number,
-	gridColumns: number
+	gridColumns: number,
+	pause: boolean,
+	apply: boolean,
+	speed: number,
+	generationSkip: number
 }
 
 export default class CanvasStyles {

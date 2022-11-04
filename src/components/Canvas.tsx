@@ -34,14 +34,17 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 	};
 
 	windowResized = (p5: p5Types) => {
-		if (!isMobile) p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO);
+		if (!isMobile) {
+			p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO);
+			this.grid.updateCells(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO);
+		}
 	}
 
 	/**
 	 * Called when the component updates due to its props changing
 	 */
 	componentDidUpdate(prevProps: {params: Parameters, windowWidth: number}) {
-		if (prevProps.params !== this.props.params)
+		if (prevProps.params.apply !== this.props.params.apply)
 			this.grid = this.grid.generateNewMaze(this.props.params.gridRows, this.props.params.gridColumns);
 	}
 
