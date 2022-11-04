@@ -9,6 +9,7 @@ export default class Grid {
     cols: number;
     grid: Cell[][];
     population: Agent[];
+    populationDeathToll: number;
     width: number;
     height: number;
     cell_height: number;
@@ -22,9 +23,9 @@ export default class Grid {
         this.grid = this.createGrid(this.rows, this.cols);
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
-        
         this.generateMaze();
         this.population = this.createPopulation(100); // TODO: make this population size a slider value
+        this.populationDeathToll = 0;
         console.log(this.population); // TODO: remove this
     }
 
@@ -82,9 +83,19 @@ export default class Grid {
 
         // Update each of the agents
         for(let agent of this.population) {
-            if (agent.inBounds(p5) && this.getCell(agent.x, agent.y).type !== CELL_TYPE.wall) {
-                agent.update();
+
+            // If the agent is already dead, skip it
+            if(agent.isDead()) continue;
+
+            // Agent either hit a wall or is outside the bounds of the canvas
+            if (!agent.inBounds(p5) || this.getCell(agent.x, agent.y).type === CELL_TYPE.wall) {
+                agent.kill(); // set the agent's 'dead' value to true
+                this.populationDeathToll++;
+                continue;
             }
+
+            // If the agent is not dead , update it
+            agent.update();
         }
     }
 
