@@ -81,11 +81,24 @@ export default class Grid {
     update(p5: p5Types) {
 
         // All agents in the current population have died
-        if(this.populationDeathToll == 100) { // TODO: use variable for population size
+        if(this.populationDeathToll >= 100) { // TODO: use variable for population size
+
+            // get the end node position
+            let epos = this.getEndNodePosition();
+            let ex = epos.x * this.cell_width + this.cell_width / 2;
+            let ey = epos.y * this.cell_height + this.cell_height / 2;
+
             // calculate fitness for each agent
             for(let agent of this.population) {
+
+                // calculate and set the distance each agent is to the end node
+                agent.setDistance(p5.dist(agent.x, agent.y, ex, ey));
+
+                // calculate fitness of current agent
                 agent.calculateFitness();
             }
+
+            this.population = this.createPopulation(100); // TODO: implement selection, mating, crossover, mutation
         }
 
         // Update each of the agents
@@ -178,6 +191,7 @@ export default class Grid {
                     start_node_pos.y * this.cell_height + this.cell_height / 2)
             ); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
         }
+        this.populationDeathToll = 0; // reset the death toll of the current population
         return population;
     }
 
@@ -186,6 +200,18 @@ export default class Grid {
         for(let y = 0; y < this.grid.length; y++) {
             for(let x = 0; x < this.grid[y].length; x++) {
                 if(this.grid[y][x].type === CELL_TYPE.start_node) {
+                    return {x: x, y: y};
+                }
+            }
+        }
+        return {x: -1, y: -1};
+    }
+
+    // Returns a position object that represents the cell location of the end node in the grid {x: end node x position, y: end node y position}
+    getEndNodePosition() {
+        for(let y = 0; y < this.grid.length; y++) {
+            for(let x = 0; x < this.grid[y].length; x++) {
+                if(this.grid[y][x].type === CELL_TYPE.end_node) {
                     return {x: x, y: y};
                 }
             }
