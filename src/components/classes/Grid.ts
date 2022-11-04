@@ -42,7 +42,6 @@ export default class Grid {
     }
 
     show(p5: p5Types) {
-
         // Draw the grid of cells
         p5.push();
         for(let y = 0; y < this.grid.length; y++) {
@@ -105,6 +104,13 @@ export default class Grid {
             // If the agent is not dead , update it
             agent.update();
         }
+    }
+
+    updateCells(height: number, width: number) {
+        this.width = height;
+        this.height = width;
+        this.cell_width = this.width / this.cols;
+        this.cell_height = this.height / this.rows;
     }
 
     /**

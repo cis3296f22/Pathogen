@@ -3,7 +3,7 @@ import ReactSlider, {InputSliderProps} from 'react-input-slider';
 import Styles from './SliderStyles';
 
 export interface SliderProps extends InputSliderProps {
-    title: string;
+    title?: string;
 }
 
 class Slider extends React.Component <SliderProps, {}> {
@@ -16,7 +16,7 @@ class Slider extends React.Component <SliderProps, {}> {
 	render() {
 		return (
 			<Styles.SliderContainer>
-				<p>{this.props.title}: {this.props.x}</p>
+				{this.props.title ? <p>{this.props.title}: {this.props.x}</p> : <></>}
 				<ReactSlider xstep={2} {...this.props}/>
 			</Styles.SliderContainer>
 		);

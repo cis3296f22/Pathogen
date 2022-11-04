@@ -10,7 +10,7 @@ import Constants from './tools/Constants';
 import { useWindowWidth } from './tools/HelpfulFunctions';
 
 function App() {
-	const [params, setParameters] = useState<Parameters>({gridColumns: Constants.DEFAULT_COLS, gridRows: Constants.DEFAULT_ROWS});
+	const [params, setParameters] = useState<Parameters>(Constants.PARAMS);
 	return (
 		<div className='App'>
 			<GlobalStyles/>

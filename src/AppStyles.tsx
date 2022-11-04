@@ -38,4 +38,14 @@ export const GlobalStyles = createGlobalStyle`
 	.react-p5 {
 		display: flex;
 	}
+
+	body {
+		margin:0;
+		padding:0;
+		overflow: hidden;
+	}
+
+	canvas {
+		margin:auto;
+	}
 `
