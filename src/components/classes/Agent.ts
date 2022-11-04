@@ -8,6 +8,7 @@ export default class Agent {
     y: number;
     age: number;
     dead: boolean;
+    dist: number;
     
     constructor(x: number, y:number, dna?: Direction[]) {
         this.x = x;
@@ -15,6 +16,7 @@ export default class Agent {
         this.dna = dna ?? [];
         this.age = 0;
         this.dead = false;
+        this.dist = Number.MAX_SAFE_INTEGER;
     }
 
     update() {
@@ -68,7 +70,12 @@ export default class Agent {
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
     calculateFitness() {
-        // TODO: implement fitness function
-        return;
+        let fitness = 1 / this.dist; // TODO: implement less naive fitness function
+        this.fitness = fitness;
+    }
+
+    // Sets the distance of the current agent to `n`
+    setDistance(n: number) {
+        this.dist = n;
     }
 }
