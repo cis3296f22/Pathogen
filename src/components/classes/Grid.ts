@@ -81,6 +81,14 @@ export default class Grid {
 
     update(p5: p5Types) {
 
+        // All agents in the current population have died
+        if(this.populationDeathToll == 100) { // TODO: use variable for population size
+            // calculate fitness for each agent
+            for(let agent of this.population) {
+                agent.calculateFitness();
+            }
+        }
+
         // Update each of the agents
         for(let agent of this.population) {
 

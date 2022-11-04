@@ -65,4 +65,10 @@ export default class Agent {
     isDead() {
         return this.dead;
     }
+
+    // Calculates the fitness of the agent and sets the 'fitness' class variable
+    calculateFitness() {
+        // TODO: implement fitness function
+        return;
+    }
 }
