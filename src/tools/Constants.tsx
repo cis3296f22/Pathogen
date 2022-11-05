@@ -11,20 +11,20 @@ export class FONT_FAMILY {
 }
 
 export default class Constants {
-	static readonly ROW_MIN             = 21;
+	static readonly ROW_MIN             = 7;
 	static readonly ROW_MAX             = 51;
-	static readonly COL_MIN             = 21;
+	static readonly COL_MIN             = 7;
 	static readonly COL_MAX             = 101;
 	static readonly POPULATION_MIN    	= 40;
 	static readonly POPULATION_MAX     	= 400;
 	static readonly SPEED_MIN        	= 1;
-	static readonly SPEED_MAX         	= 100;
+	static readonly SPEED_MAX         	= 10000;
 	static readonly GENERATION_MIN   	= 0;
 	static readonly GENERATION_MAX  	= 100;
 	static readonly BANNER_HEIGHT_RATIO = 0.15;
 
-	static readonly DEFAULT_ROWS        = 21;
-	static readonly DEFAULT_COLS        = 61;
+	static readonly DEFAULT_ROWS        = 7;
+	static readonly DEFAULT_COLS        = 7;
 	static readonly DEFAULT_POPULATION	= 100;
 	static readonly DEFAULT_PAUSE		= false;
 	static readonly DEFAULT_SPEED		= 1;

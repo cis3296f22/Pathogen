@@ -10,7 +10,7 @@ export default class Agent {
     dead: boolean;
     dist: number;
     fitness: number;
-    
+
     constructor(x: number, y:number, dna?: Direction[]) {
         this.x = x;
         this.y = y;
@@ -21,7 +21,7 @@ export default class Agent {
         this.fitness = 0;
     }
 
-    update() {
+    update(cell_width: number, cell_height: number) {
 
         // Ran out of DNA from parents, generate new random DNA
         while(this.age > this.dna.length - 1) {
@@ -34,19 +34,19 @@ export default class Agent {
 
         switch(dir) {
             case Direction.NORTH: {
-                this.y++;
+                this.y += 1;
                 break;
             }
             case Direction.SOUTH: {
-                this.y--;
+                this.y -= 1;
                 break;
             }
             case Direction.EAST: {
-                this.x++;
+                this.x += 1;
                 break;
             }
             case Direction.WEST: {
-                this.x--;
+                this.x -= 1;
                 break;
             }
         }
@@ -72,7 +72,7 @@ export default class Agent {
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
     calculateFitness() {
-        let fitness = 1 / this.dist; // TODO: implement less naive fitness function
+        let fitness = 1 / Math.pow(2, this.dist); // TODO: implement less naive fitness function
         this.fitness = fitness;
     }
 
