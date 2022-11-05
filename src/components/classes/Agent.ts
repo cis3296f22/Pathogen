@@ -10,7 +10,6 @@ export default class Agent {
     dead: boolean;
     dist: number;
     fitness: number;
-    visited_cells: any;
 
     constructor(x: number, y:number, dna?: Direction[]) {
         this.x = x;
@@ -20,7 +19,6 @@ export default class Agent {
         this.dead = false;
         this.dist = Number.MAX_SAFE_INTEGER;
         this.fitness = 0;
-        this.visited_cells = [];
     }
 
     update(cell_width: number, cell_height: number) {
@@ -53,18 +51,6 @@ export default class Agent {
             }
         }
 
-        // Add the current cell to list of visited cells (if not already present in the array)
-        let cx = Math.floor(this.x / cell_width);
-        let cy = Math.floor(this.y / cell_height);
-        let visited = false;
-        for(let cell of this.visited_cells) {
-            if(cell.x == cx && cell.y == cy) {
-                visited = true;
-                break;
-            }
-        }
-        if(!visited) this.visited_cells.push({x: cx, y: cy});
-
         // Increment the age of the agent
         this.age++;
     }
@@ -86,7 +72,7 @@ export default class Agent {
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
     calculateFitness() {
-        let fitness = 1 / this.dist * Math.pow(3, this.visited_cells.length); // TODO: implement less naive fitness function
+        let fitness = 1 / this.dist; // TODO: implement less naive fitness function
         this.fitness = fitness;
     }
 
