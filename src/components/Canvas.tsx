@@ -51,8 +51,13 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 	 * Called when the component updates due to its props changing
 	 */
 	componentDidUpdate(prevProps: {params: Parameters, windowWidth: number}) {
-		if (prevProps.params.apply !== this.props.params.apply)
-			this.grid = this.grid.generateNewMaze(this.props.params.gridRows, this.props.params.gridColumns);
+		if (prevProps.params.apply !== this.props.params.apply) {
+			this.grid = this.grid.generateNewMaze(
+				this.props.params.gridRows,
+				this.props.params.gridColumns,
+				this.props.params.population
+			);
+		}
 	}
 
 	render() {

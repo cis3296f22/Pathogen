@@ -1,6 +1,6 @@
 import p5Types from "p5";
 import {CELL_TYPE, Cell} from './Cell';
-import {Colors} from '../../tools/Constants';
+import Constants, {Colors} from '../../tools/Constants';
 import Agent from './Agent';
 
 export default class Grid {
@@ -15,7 +15,7 @@ export default class Grid {
     cell_height: number;
     cell_width: number;
 
-    constructor(rows: number, cols: number, width: number, height: number) {
+    constructor(rows: number, cols: number, width: number, height: number, population?: number) {
         this.rows = rows;
         this.cols = cols;
         this.width = width;
@@ -24,7 +24,7 @@ export default class Grid {
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
         this.generateMaze();
-        this.population = this.createPopulation(100); // TODO: make this population size a slider value
+        this.population = this.createPopulation(population ?? Constants.DEFAULT_POPULATION); // TODO: make this population size a slider value
         this.populationDeathToll = 0;
         console.log(this.population); // TODO: remove this
     }
@@ -81,7 +81,7 @@ export default class Grid {
     update(p5: p5Types) {
 
         // All agents in the current population have died
-        if(this.populationDeathToll >= 100) { // TODO: use variable for population size
+        if(this.populationDeathToll >= this.population.length) { // TODO: use variable for population size
 
             // get the end node position
             let epos = this.getEndNodePosition();
@@ -130,8 +130,8 @@ export default class Grid {
     /**
      * Make a new class to regenerate the grid and population
      */
-    generateNewMaze(rows: number, cols: number) {
-        let newGrid = new Grid(rows, cols, this.width, this.height);
+    generateNewMaze(rows: number, cols: number, population?: number) {
+        let newGrid = new Grid(rows, cols, this.width, this.height, population);
         return newGrid;
     }
 

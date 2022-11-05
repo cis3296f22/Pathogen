@@ -6,7 +6,8 @@ export type Parameters = {
 	pause: boolean,
 	apply: boolean,
 	speed: number,
-	generationSkip: number
+	generationSkip: number,
+	population: number
 }
 
 export default class CanvasStyles {
