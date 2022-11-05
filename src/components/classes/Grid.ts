@@ -96,6 +96,7 @@ export default class Grid {
 
                 // calculate fitness of current agent
                 agent.calculateFitness();
+                console.log(agent.fitness);
             }
 
             this.population = this.createPopulation(100); // TODO: implement selection, mating, crossover, mutation
