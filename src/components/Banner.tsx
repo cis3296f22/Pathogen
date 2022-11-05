@@ -34,8 +34,9 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 	}
 
 	pausePlay = (): void => {
-		this.setState({param: {...this.state.param, pause: !this.state.param.pause}})
-		this.props.setParameters({...this.state.param, pause: this.state.param.pause})
+		let inv_pause = !this.state.param.pause;
+		this.setState({param: {...this.state.param, pause: inv_pause}})
+		this.props.setParameters({...this.state.param, pause: inv_pause})
 	}
 
 	apply = (): void => {
