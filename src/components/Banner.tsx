@@ -33,6 +33,11 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 		this.props.setParameters({...this.state.param, gridColumns: cols})
 	}
 
+	setPopulation = (population: number): void => {
+		this.setState({param: {...this.state.param, population: population}})
+		this.props.setParameters({...this.state.param, population: population})
+	}
+
 	pausePlay = (): void => {
 		let inv_pause = !this.state.param.pause;
 		this.setState({param: {...this.state.param, pause: inv_pause}})
@@ -95,6 +100,11 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 						axis='x' x={this.state.param.gridColumns} 
 						xmax={Constants.ROW_MAX} xmin={Constants.ROW_MIN}
 						onChange={({x}) => this.setCols(x)}/>
+
+					<Slider title='Population'
+						axis='x' x={this.state.param.population} 
+						xmax={Constants.POPULATION_MAX} xmin={Constants.POPULATION_MIN}
+						onChange={({x}) => this.setPopulation(x)}/>
 					<button type="button" className="btn btn-primary" onClick={this.apply}>Apply</button>
 				</Styles.OffcanvasStyle>
 			</>
