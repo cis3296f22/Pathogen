@@ -9,6 +9,7 @@ export default class Agent {
     age: number;
     dead: boolean;
     dist: number;
+    fitness: number;
     
     constructor(x: number, y:number, dna?: Direction[]) {
         this.x = x;
@@ -17,6 +18,7 @@ export default class Agent {
         this.age = 0;
         this.dead = false;
         this.dist = Number.MAX_SAFE_INTEGER;
+        this.fitness = 0;
     }
 
     update() {

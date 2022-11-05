@@ -30,7 +30,14 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 	draw = (p5: p5Types) => {
 		p5.background(Colors.SECONDARY);
         this.grid.show(p5);
-        this.grid.update(p5);
+
+        // User paused
+        if(this.props.params.pause) return;
+
+        // User is fast-forwarding
+        for(let i = 0; i < this.props.params.speed; i++) {
+            this.grid.update(p5);
+        }
 	};
 
 	windowResized = (p5: p5Types) => {
