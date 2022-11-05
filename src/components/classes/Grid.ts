@@ -24,6 +24,7 @@ export default class Grid {
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
         this.generateMaze();
+        this.generateEndNode();
         this.population = this.createPopulation(population ?? Constants.DEFAULT_POPULATION); // TODO: make this population size a slider value
         this.populationDeathToll = 0;
         console.log(this.population); // TODO: remove this
@@ -195,6 +196,14 @@ export default class Grid {
         this.populationDeathToll = 0; // reset the death toll of the current population
         return population;
     }
+
+
+    // generates end node in bottom right corner based off row and col size
+    // TODO: use algo to find furthest cell from start node and set that to end node
+    generateEndNode(){
+        this.grid[this.rows-2][this.cols-2].type = CELL_TYPE.end_node
+    }
+    
 
     // Returns a position object that represents the cell location of the start node in the grid {x: start node x position, y: start node y position}
     getStartNodePosition() {
