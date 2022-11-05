@@ -72,7 +72,7 @@ export default class Agent {
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
     calculateFitness() {
-        let fitness = 1 / this.dist; // TODO: implement less naive fitness function
+        let fitness = 1 / Math.pow(2, this.dist); // TODO: implement less naive fitness function
         this.fitness = fitness;
     }
 

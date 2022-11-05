@@ -140,6 +140,12 @@ export default class Grid {
             // If the agent is already dead, skip it
             if(agent.isDead()) continue;
 
+            // Agent is too old
+            if(agent.age > 5000) {
+                agent.kill();
+                this.populationDeathToll++;
+            }
+
             // Agent either hit a wall or is outside the bounds of the canvas
             if (!agent.inBounds(p5) || this.getCell(agent.x, agent.y).type === CELL_TYPE.wall) {
                 agent.kill(); // set the agent's 'dead' value to true
