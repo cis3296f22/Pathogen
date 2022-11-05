@@ -88,18 +88,50 @@ export default class Grid {
             let ex = epos.x * this.cell_width + this.cell_width / 2;
             let ey = epos.y * this.cell_height + this.cell_height / 2;
 
+            // TODO: remove this at some point
+            p5.push();
+            p5.fill('blue');
+            p5.ellipse(ex, ey, 15);
+            p5.pop();
+
             // calculate fitness for each agent
+            let max_fitness = -1;
+            let mx = -1;
+            let my = -1;
             for(let agent of this.population) {
 
                 // calculate and set the distance each agent is to the end node
-                agent.setDistance(p5.dist(agent.x, agent.y, ex, ey));
+                agent.setDistance(Math.abs(agent.x - ex) + Math.abs(agent.y - ey));
 
                 // calculate fitness of current agent
                 agent.calculateFitness();
-                console.log(agent.fitness);
+
+                // keep track of the max fitness (used for normalization)
+                if(agent.fitness > max_fitness) {
+                    max_fitness = agent.fitness;
+                    mx = agent.x;
+                    my = agent.y;
+                }
             }
 
-            this.population = this.createPopulation(100); // TODO: implement selection, mating, crossover, mutation
+            // TODO: remove this at some point
+            p5.push();
+            p5.fill('red');
+            p5.ellipse(mx, my, 15);
+            p5.pop();
+
+            // Create the mating pool
+            let pool: Agent[] = [];
+
+            // Add higher fitness agents to the mating pool more often than lower fitness agents
+            for(let agent of this.population) {
+                //normalize fitness value between 0-1
+                agent.fitness /= max_fitness;
+                let n = agent.fitness * 100;
+                for(let i = 0; i < n; i++) pool.push(agent);
+            }
+
+            this.population = this.createPopulationFromPool(100, pool);
         }
 
         // Update each of the agents
@@ -180,6 +212,9 @@ export default class Grid {
                 stack.push(chosen);
             }
         }
+
+        // Set the end node position
+        this.grid[this.rows - 2][this.cols - 2].type = CELL_TYPE.end_node;
     }
 
     // Creates and returns a new population of size `n`
@@ -193,6 +228,32 @@ export default class Grid {
             ); // TODO: agents should start at the start node (new Agent(start_node.x, start_node.y))
         }
         this.populationDeathToll = 0; // reset the death toll of the current population
+        return population;
+    }
+
+    // Create a population using the parents from the selection pool
+    createPopulationFromPool(n: number, pool: Agent[]) {
+        let population: Agent[] = [];
+        let start_node_pos = this.getStartNodePosition();
+
+        while(population.length < n) {
+            let parent_a_dna = pool[Math.floor(Math.random() * pool.length)].dna;
+            let parent_b_dna = pool[Math.floor(Math.random() * pool.length)].dna;
+            let min_dna_length = Math.min(parent_a_dna.length, parent_b_dna.length);
+            let mid = min_dna_length / 2;
+            let child_dna = [];
+
+            for(let i = 0; i < min_dna_length; i++) {
+                if(Math.random() < 0.01) child_dna.push(Math.floor(Math.random() * 4)); // TODO: implement mutation rate slider
+                else if(i < mid) child_dna.push(parent_a_dna[i]);
+                else child_dna.push(parent_b_dna[i]);
+            }
+
+            population.push(new Agent(start_node_pos.x * this.cell_width + this.cell_width / 2,
+                                      start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna));
+        }
+
+        this.populationDeathToll = 0;
         return population;
     }
 
