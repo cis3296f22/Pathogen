@@ -1,6 +1,7 @@
 import p5Types from "p5";
 import {CELL_TYPE, Cell} from './Cell';
 import Constants, {Colors} from '../../tools/Constants';
+import type { Vector } from '../../tools/Constants';
 import Agent from './Agent';
 
 export default class Grid {
@@ -73,7 +74,7 @@ export default class Grid {
         // Draw the agents
         p5.push();
         for(let agent of this.population) {
-            p5.ellipse(agent.x, agent.y, 5);
+            p5.ellipse(agent.pos.x, agent.pos.y, 5);
         }
         p5.pop();
     }
@@ -101,7 +102,7 @@ export default class Grid {
             for(let agent of this.population) {
 
                 // calculate and set the distance each agent is to the end node
-                agent.setDistance(Math.abs(agent.x - ex) + Math.abs(agent.y - ey));
+                agent.setDistance(Math.abs(agent.pos.x - ex) + Math.abs(agent.pos.y - ey));
 
                 // calculate fitness of current agent
                 agent.calculateFitness();
@@ -109,8 +110,8 @@ export default class Grid {
                 // keep track of the max fitness (used for normalization)
                 if(agent.fitness > max_fitness) {
                     max_fitness = agent.fitness;
-                    mx = agent.x;
-                    my = agent.y;
+                    mx = agent.pos.x;
+                    my = agent.pos.y;
                 }
             }
 
@@ -147,7 +148,7 @@ export default class Grid {
             }
 
             // Agent either hit a wall or is outside the bounds of the canvas
-            if (!agent.inBounds(p5) || this.getCell(agent.x, agent.y).type === CELL_TYPE.wall) {
+            if (!agent.inBounds(p5) || this.getCell(agent.pos.x, agent.pos.y).type === CELL_TYPE.wall) {
                 agent.kill(); // set the agent's 'dead' value to true
                 this.populationDeathToll++;
                 continue;
@@ -247,10 +248,10 @@ export default class Grid {
             let parent_b_dna = pool[Math.floor(Math.random() * pool.length)].dna;
             let min_dna_length = Math.min(parent_a_dna.length, parent_b_dna.length);
             let mid = min_dna_length / 2;
-            let child_dna = [];
+            let child_dna: Vector[] = [];
 
             for(let i = 0; i < min_dna_length; i++) {
-                if(Math.random() < 0.01) child_dna.push(Math.floor(Math.random() * 4)); // TODO: implement mutation rate slider
+                if(Math.random() < 0.01) child_dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN}); // TODO: implement mutation rate slider AND create a vector library
                 else if(i < mid) child_dna.push(parent_a_dna[i]);
                 else child_dna.push(parent_b_dna[i]);
             }

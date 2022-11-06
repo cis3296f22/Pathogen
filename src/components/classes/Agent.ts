@@ -1,19 +1,22 @@
-import { Direction } from '../../tools/Constants';
+import Constants from  '../../tools/Constants';
+import type { Vector } from '../../tools/Constants';
 import p5Types from 'p5';
 
 export default class Agent {
 
-    dna: Direction[];
-    x: number;
-    y: number;
+    dna: Vector[];
+    pos: Vector;
+    vel: Vector;
+    acc: Vector;
     age: number;
     dead: boolean;
     dist: number;
     fitness: number;
 
-    constructor(x: number, y:number, dna?: Direction[]) {
-        this.x = x;
-        this.y = y;
+    constructor(x: number, y:number, dna?: Vector[]) {
+        this.pos = {x: x, y: y};
+        this.vel = {x: 0, y: 0};
+        this.acc = {x: 0, y: 0};
         this.dna = dna ?? [];
         this.age = 0;
         this.dead = false;
@@ -25,31 +28,15 @@ export default class Agent {
 
         // Ran out of DNA from parents, generate new random DNA
         while(this.age > this.dna.length - 1) {
-            let dirs = [Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST];
-            this.dna.push(dirs[Math.floor(Math.random() * dirs.length)]);
+            this.dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN});
         }
 
         // Direction is determined by dna (value) and age (index)
-        let dir: Direction = this.dna[this.age];
-
-        switch(dir) {
-            case Direction.NORTH: {
-                this.y += 1;
-                break;
-            }
-            case Direction.SOUTH: {
-                this.y -= 1;
-                break;
-            }
-            case Direction.EAST: {
-                this.x += 1;
-                break;
-            }
-            case Direction.WEST: {
-                this.x -= 1;
-                break;
-            }
-        }
+        this.acc = this.dna[this.age];
+        this.vel.x += this.acc.x
+        this.vel.y += this.acc.y;
+        this.pos.x += this.vel.x;
+        this.pos.y += this.vel.y;
 
         // Increment the age of the agent
         this.age++;
@@ -57,7 +44,7 @@ export default class Agent {
 
     // Returns a boolean whether or not the agent is in the bounds of the canvas
     inBounds(p5: p5Types) {
-        return this.x >= 0 && this.x <= p5.width && this.y >= 0 && this.y <= p5.height;
+        return this.pos.x >= 0 && this.pos.x <= p5.width && this.pos.y >= 0 && this.pos.y <= p5.height;
     }
 
     // Sets the 'dead' class variable of the `Agent` (this) class to true
