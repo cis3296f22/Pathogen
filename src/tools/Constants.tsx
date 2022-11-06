@@ -22,8 +22,9 @@ export default class Constants {
 	static readonly GENERATION_MIN   	= 0;
 	static readonly GENERATION_MAX  	= 100;
 	static readonly BANNER_HEIGHT_RATIO = 0.15;
-
-	static readonly DEFAULT_ROWS        = 7;
+    static readonly ACC_MIN = -1;
+    static readonly ACC_MAX = 1;
+    static readonly DEFAULT_ROWS        = 7;
 	static readonly DEFAULT_COLS        = 7;
 	static readonly DEFAULT_POPULATION	= 100;
 	static readonly DEFAULT_PAUSE		= false;
@@ -45,9 +46,7 @@ export class Colors {
 	static readonly HOVER = '#6c6b6b';
 }
 
-export enum Direction {
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST,
+export type Vector = {
+    x: number;
+    y: number;
 }
