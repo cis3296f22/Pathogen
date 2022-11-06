@@ -72,7 +72,7 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 					<Styles.BannerSettings>
 						<input type="number" min={Constants.GENERATION_MIN} max={Constants.GENERATION_MAX} onKeyDown={this.sendGeneration} value={this.state.param.generationSkip} size={4} onInput={this.setGeneration} />
 						<IconButton icon={this.state.param.pause ? <FaPlay/> : <FaPause/>} onClick={this.pausePlay} />
-						<input type="number" min={Constants.GENERATION_MIN} max={Constants.GENERATION_MAX} value={this.state.param.generationSkip} size={4} />
+						<input type="number" min={Constants.GENERATION_MIN} max={Constants.GENERATION_MAX} value={this.state.param.generationSkip} size={4} onInput={this.setGeneration} />
 
 						{/* Fast forward slider */}
 						<Styles.FastForward>
