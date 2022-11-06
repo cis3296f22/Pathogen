@@ -61,7 +61,6 @@ export default class Agent {
     calculateFitness() {
         let fitness = 1 / Math.pow(2, this.dist); // TODO: implement less naive fitness function
         this.fitness = fitness;
-        console.log(fitness);
     }
 
     // Sets the distance of the current agent to `n`
