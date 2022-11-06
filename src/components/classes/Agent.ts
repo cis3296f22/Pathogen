@@ -62,9 +62,8 @@ export default class Agent {
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
     calculateFitness() {
-        let fitness = 1 / Math.pow(2, this.dist) * Math.pow(3, this.visited_cells.length); // TODO: implement less naive fitness function
+        let fitness = 1 / Math.pow(2, this.dist) * Math.pow(4, this.visited_cells.length); // TODO: implement less naive fitness function
         this.fitness = fitness;
-        console.log(fitness);
     }
 
     // Sets the distance of the current agent to `n`
@@ -73,7 +72,7 @@ export default class Agent {
     }
 
     setVisitedCells(cell: Cell) {
-        if (this.visited_cells.filter(c => c.x === cell.x && c.y === cell.y).length) {
+        if (!this.visited_cells.filter(c => c.x === cell.x && c.y === cell.y).length) {
             this.visited_cells.push(cell);
         }
     }
