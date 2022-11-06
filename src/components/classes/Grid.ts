@@ -10,7 +10,6 @@ export default class Grid {
     cols: number;
     grid: Cell[][];
     population: Agent[];
-    populationSize: number;
     populationDeathToll: number;
     width: number;
     height: number;
@@ -25,10 +24,9 @@ export default class Grid {
         this.height = height;
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
-        this.populationSize = population ?? Constants.DEFAULT_POPULATION
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
-        this.population = this.createPopulation(this.populationSize); // TODO: make this population size a slider value
+        this.population = this.createPopulation(Constants.DEFAULT_POPULATION); // TODO: make this population size a slider value
     }
 
     // Creates a new, empty grid (2d array of `Cells`) and returns it
@@ -83,7 +81,7 @@ export default class Grid {
     update(p5: p5Types) {
 
         // All agents in the current population have died
-        if(this.populationDeathToll >= this.populationSize) { // TODO: use variable for population size
+        if(this.populationDeathToll >= this.population.length) { // TODO: use variable for population size
 
             // get the end node position
             let epos = this.getEndNodePosition();
