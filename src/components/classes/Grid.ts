@@ -10,6 +10,7 @@ export default class Grid {
     cols: number;
     grid: Cell[][];
     population: Agent[];
+    populationSize: number;
     populationDeathToll: number;
     width: number;
     height: number;
@@ -17,17 +18,17 @@ export default class Grid {
     cell_width: number;
 
     constructor(rows: number, cols: number, width: number, height: number, population?: number) {
+        this.populationDeathToll = 0;
         this.rows = rows;
         this.cols = cols;
         this.width = width;
         this.height = height;
-        this.grid = this.createGrid(this.rows, this.cols);
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
+        this.populationSize = population ?? Constants.DEFAULT_POPULATION
+        this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
-        this.population = this.createPopulation(population ?? Constants.DEFAULT_POPULATION); // TODO: make this population size a slider value
-        this.populationDeathToll = 0;
-        console.log(this.population); // TODO: remove this
+        this.population = this.createPopulation(this.populationSize); // TODO: make this population size a slider value
     }
 
     // Creates a new, empty grid (2d array of `Cells`) and returns it
@@ -82,7 +83,7 @@ export default class Grid {
     update(p5: p5Types) {
 
         // All agents in the current population have died
-        if(this.populationDeathToll >= this.population.length) { // TODO: use variable for population size
+        if(this.populationDeathToll >= this.populationSize) { // TODO: use variable for population size
 
             // get the end node position
             let epos = this.getEndNodePosition();
@@ -102,7 +103,7 @@ export default class Grid {
             for(let agent of this.population) {
 
                 // calculate and set the distance each agent is to the end node
-                agent.setDistance(Math.abs(agent.pos.x - ex) + Math.abs(agent.pos.y - ey));
+                agent.setDistance(Math.sqrt(Math.abs(agent.pos.x - ex) + Math.abs(agent.pos.y - ey)));
 
                 // calculate fitness of current agent
                 agent.calculateFitness();
