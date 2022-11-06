@@ -1,6 +1,7 @@
 import Constants from  '../../tools/Constants';
 import type { Vector } from '../../tools/Constants';
 import p5Types from 'p5';
+import { Cell } from './Cell';
 
 export default class Agent {
 
@@ -12,6 +13,7 @@ export default class Agent {
     dead: boolean;
     dist: number;
     fitness: number;
+    visited_cells: Cell[];
 
     constructor(x: number, y:number, dna?: Vector[]) {
         this.pos = {x: x, y: y};
@@ -22,6 +24,7 @@ export default class Agent {
         this.dead = false;
         this.dist = Number.MAX_SAFE_INTEGER;
         this.fitness = 0;
+        this.visited_cells = [];
     }
 
     update(cell_width: number, cell_height: number) {
@@ -59,7 +62,7 @@ export default class Agent {
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
     calculateFitness() {
-        let fitness = 1 / Math.pow(2, this.dist); // TODO: implement less naive fitness function
+        let fitness = 1 / Math.pow(2, this.dist) * Math.pow(3, this.visited_cells.length); // TODO: implement less naive fitness function
         this.fitness = fitness;
         console.log(fitness);
     }
@@ -67,5 +70,11 @@ export default class Agent {
     // Sets the distance of the current agent to `n`
     setDistance(n: number) {
         this.dist = n;
+    }
+
+    setVisitedCells(cell: Cell) {
+        if (this.visited_cells.filter(c => c.x === cell.x && c.y === cell.y).length) {
+            this.visited_cells.push(cell);
+        }
     }
 }
