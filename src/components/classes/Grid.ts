@@ -16,7 +16,7 @@ export default class Grid {
     cell_height: number;
     cell_width: number;
 
-    constructor(rows: number, cols: number, width: number, height: number, population?: number) {
+    constructor(rows: number, cols: number, width: number, height: number, population: number) {
         this.populationDeathToll = 0;
         this.rows = rows;
         this.cols = cols;
@@ -26,7 +26,7 @@ export default class Grid {
         this.cell_height = this.height / this.rows;
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
-        this.population = this.createPopulation(Constants.DEFAULT_POPULATION); // TODO: make this population size a slider value
+        this.population = this.createPopulation(population); // TODO: make this population size a slider value
     }
 
     // Creates a new, empty grid (2d array of `Cells`) and returns it
@@ -131,7 +131,7 @@ export default class Grid {
                 for(let i = 0; i < n; i++) pool.push(agent);
             }
 
-            this.population = this.createPopulationFromPool(100, pool);
+            this.population = this.createPopulationFromPool(this.population.length, pool);
         }
 
         // Update each of the agents
@@ -153,7 +153,7 @@ export default class Grid {
                 continue;
             }
 
-            // If the agent is not dead , update it
+            // If the agent is not dead, update it
             agent.update(this.cell_width, this.cell_height);
         }
     }
@@ -168,7 +168,7 @@ export default class Grid {
     /**
      * Make a new class to regenerate the grid and population
      */
-    generateNewMaze(rows: number, cols: number, population?: number) {
+    generateNewMaze(rows: number, cols: number, population: number) {
         let newGrid = new Grid(rows, cols, this.width, this.height, population);
         return newGrid;
     }
