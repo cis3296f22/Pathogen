@@ -24,7 +24,7 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 
 	setup = (p5: p5Types, parentRef: Element) => {
 		p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO).parent(parentRef);
-        this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns, p5.width, p5.height);
+        this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns, p5.width, p5.height, this.props.params.population);
 	};
 
 	draw = (p5: p5Types) => {
