@@ -24,7 +24,7 @@ export default class Agent {
         this.fitness = 0;
     }
 
-    update(cell_width: number, cell_height: number) {
+    update() {
 
         // Ran out of DNA from parents, generate new random DNA
         while(this.age > this.dna.length - 1) {
