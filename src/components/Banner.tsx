@@ -7,8 +7,7 @@ import { Parameters } from './CanvasStyles';
 import Constants from '../tools/Constants';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa';
-import IconButton from './elements/IconButton';
+import DropDown from './elements/Dropdown';
 
 class Banner extends React.Component <{setParameters: Function}, { show: boolean, param: Parameters }> {
 
@@ -69,20 +68,10 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 			<>
 				<Styles.Banner>
 					<Styles.Hamburger as={GiHamburgerMenu} onClick={this.handleShow}/>
-					<Styles.BannerSettings>
+					{/* <Styles.BannerSettings>
 						<input type="number" min={Constants.GENERATION_MIN} max={Constants.GENERATION_MAX} onKeyDown={this.sendGeneration} value={this.state.param.generationSkip} size={4} onInput={this.setGeneration} />
-						<IconButton icon={this.state.param.pause ? <FaPlay/> : <FaPause/>} onClick={this.pausePlay} />
-						<input type="number" min={Constants.GENERATION_MIN} max={Constants.GENERATION_MAX} value={this.state.param.generationSkip} size={4} onInput={this.setGeneration} />
-
-						{/* Fast forward slider */}
-						<Styles.FastForward>
-							<FaFastForward/>
-							<Slider
-								axis='x' x={this.state.param.speed} 
-								xmax={Constants.SPEED_MAX} xmin={Constants.SPEED_MIN}
-								onChange={({x}) => this.setSpeed(x)} xstep={1}/>
-						</Styles.FastForward>
-					</Styles.BannerSettings>
+					</Styles.BannerSettings> */}
+					<DropDown pausePlay={this.pausePlay} isPaused={this.state.param.pause} speed={this.state.param.speed} setSpeed={this.setSpeed} />
 				</Styles.Banner>
 
 				{/* Start offcanvas stuff with menu */}

@@ -4,7 +4,12 @@
   "private": true,
   "homepage": "https://cis3296f22.github.io/Pathogen",
   "author": "Ryan Hodge, Ben Scuron, Nick Coffin, Kai Iwugo",
-  "contributors": ["Ryan Hodge", "Ben Scuron", "Nick Coffin", "Kai Iwugo"],
+  "contributors": [
+    "Ryan Hodge",
+    "Ben Scuron",
+    "Nick Coffin",
+    "Kai Iwugo"
+  ],
   "description": "A genetic path-finding algorithm visualization",
   "main": "./public/electron.js",
   "build": {
@@ -14,10 +19,18 @@
       "build/**/*",
       "node_modules/**/*"
     ],
-    "directories": { "buildResources": "public" },
-    "mac": { "target": "dmg" },
-    "win": { "target": "nsis" },
-    "linux": { "target": "deb" }
+    "directories": {
+      "buildResources": "public"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "deb"
+    }
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -61,6 +74,7 @@
     ]
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.14",
     "@types/lodash": "^4.14.186",
     "@types/lodash.debounce": "^4.0.7",
     "@types/styled-components": "^5.1.26",
@@ -71,6 +85,7 @@
     "electron-builder": "^23.6.0",
     "electronmon": "^2.0.2",
     "gh-pages": "^4.0.0",
+    "jquery": "^3.6.1",
     "lodash": "^4.17.21",
     "react-bootstrap": "^2.5.0",
     "react-device-detect": "^2.2.2",

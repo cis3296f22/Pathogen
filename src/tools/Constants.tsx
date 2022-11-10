@@ -18,7 +18,7 @@ export default class Constants {
 	static readonly POPULATION_MIN    	= 40;
 	static readonly POPULATION_MAX     	= 400;
 	static readonly SPEED_MIN        	= 1;
-	static readonly SPEED_MAX         	= 10000;
+	static readonly SPEED_MAX         	= 100;
 	static readonly GENERATION_MIN   	= 0;
 	static readonly GENERATION_MAX  	= 100;
 	static readonly BANNER_HEIGHT_RATIO = 0.15;
