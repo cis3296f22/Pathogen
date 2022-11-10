@@ -64,6 +64,7 @@ export default class Agent {
     calculateFitness(dampening: number) {
         dampening /= this.visited_cells.length;
         let fitness = 1 / this.dist / dampening;
+        fitness = Math.min(fitness, Number.MAX_SAFE_INTEGER);
         this.fitness = fitness;
     }
 
