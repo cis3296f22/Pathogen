@@ -153,6 +153,9 @@ export default class Grid {
                 continue;
             }
 
+            // update the visited cells of the agent
+            agent.updateVisitedCells(this.getCell(agent.pos.x, agent.pos.y));
+
             // If the agent is not dead, update it
             agent.update(this.cell_width, this.cell_height);
         }
@@ -250,7 +253,7 @@ export default class Grid {
             let child_dna: Vector[] = [];
 
             for(let i = 0; i < min_dna_length; i++) {
-                if(Math.random() < 0.01) child_dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN}); // TODO: implement mutation rate slider AND create a vector library
+                if(Math.random() < 0.001) child_dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN}); // TODO: implement mutation rate slider AND create a vector library
                 else if(i < mid) child_dna.push(parent_a_dna[i]);
                 else child_dna.push(parent_b_dna[i]);
             }
