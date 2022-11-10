@@ -165,7 +165,7 @@ export default class Grid {
             agent.updateVisitedCells(this.getCell(agent.pos.x, agent.pos.y));
 
             // If the agent is not dead, update it
-            agent.update(this.cell_width, this.cell_height);
+            agent.update();
         }
     }
 
