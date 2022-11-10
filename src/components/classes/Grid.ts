@@ -147,7 +147,7 @@ export default class Grid {
             let cell = this.getCell(agent.pos.x, agent.pos.y);
 
             // Agent found the target
-            if(cell.x == epos.x && cell.y == epos.y) {
+            if(cell.type === CELL_TYPE.end_node) {
                 agent.kill(); // set the agent's 'dead' value to true
                 this.populationDeathToll++;
                 continue;
