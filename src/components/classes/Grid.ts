@@ -169,6 +169,27 @@ export default class Grid {
         }
     }
 
+    handleMouse(p5: p5Types) {
+
+        // Check if mouse is pressed
+        if(!p5.mouseIsPressed) return;
+
+        // Get mouse location in the grid
+        let cx = Math.floor(p5.mouseX / this.cell_width);
+        let cy = Math.floor(p5.mouseY / this.cell_height);
+
+        // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
+        if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
+
+        // Check that only the empty or wall nodes are being redrawn
+        if(this.grid[cy][cx].type != CELL_TYPE.empty && this.grid[cy][cx].type != CELL_TYPE.wall) return;
+
+        if(p5.keyIsPressed)
+            this.grid[cy][cx].type = CELL_TYPE.empty;
+        else
+            this.grid[cy][cx].type = CELL_TYPE.wall;
+    }
+
     updateCells(height: number, width: number) {
         this.width = height;
         this.height = width;

@@ -29,6 +29,8 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 
 	draw = (p5: p5Types) => {
 		p5.background(Colors.SECONDARY);
+
+        this.grid.handleMouse(p5);
         this.grid.show(p5);
 
         // User paused
