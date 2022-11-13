@@ -76,7 +76,7 @@ export default class Agent {
     // Updates this agent's visited cells array if the cell provided is not yet in the array
     updateVisitedCells(cell: Cell) {
         for(let visited_cell of this.visited_cells) {
-            if(cell.x == visited_cell.x && cell.y == visited_cell.y) return;
+            if(cell.x === visited_cell.x && cell.y === visited_cell.y) return;
         }
         this.visited_cells.push(cell);
     }

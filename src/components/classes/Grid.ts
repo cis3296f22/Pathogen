@@ -16,8 +16,10 @@ export default class Grid {
     cell_height: number;
     cell_width: number;
     mutationRate: number;
+    solved: boolean;
 
     constructor(rows: number, cols: number, width: number, height: number, population: number) {
+        this.solved = false;
         this.populationDeathToll = 0;
         this.rows = rows;
         this.cols = cols;
@@ -105,9 +107,6 @@ export default class Grid {
                 // calculate and set the distance each agent is to the end node
                 agent.setDistance(Math.sqrt(Math.abs(agent.pos.x - ex) + Math.abs(agent.pos.y - ey)));
 
-                // get the agent's current cell in the grid
-                let cell = this.getCell(agent.pos);
-
                 // calculate fitness of current agent
                 let last_pos = agent.getLastPosition();
                 let last_cell = this.getCell(last_pos);
@@ -143,6 +142,8 @@ export default class Grid {
 
         // Update each of the agents
         for(let agent of this.population) {
+
+            if (this.getCell(agent.pos).type === CELL_TYPE.end_node) { this.solved = true; }
 
             // If the agent is already dead, skip it
             if(agent.isDead()) continue;
@@ -192,7 +193,7 @@ export default class Grid {
         if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
 
         // Check that only the empty or wall nodes are being redrawn
-        if(this.grid[cy][cx].type != CELL_TYPE.empty && this.grid[cy][cx].type != CELL_TYPE.wall) return;
+        if(this.grid[cy][cx].type !== CELL_TYPE.empty && this.grid[cy][cx].type !== CELL_TYPE.wall) return;
 
         if(p5.keyIsPressed)
             this.grid[cy][cx].type = CELL_TYPE.empty;
@@ -205,6 +206,7 @@ export default class Grid {
         this.height = width;
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
+        this.solved = false;
     }
 
     /**
@@ -337,5 +339,9 @@ export default class Grid {
 
     setMutationRate(mutation: number) {
         this.mutationRate = mutation;
+    }
+
+    isSolved() {
+        return this.solved;
     }
 }

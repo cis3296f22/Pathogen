@@ -1,5 +1,6 @@
 // Third party
 import React from 'react';
+import { BsFillLightningChargeFill } from 'react-icons/bs';
 import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa';
 import Constants from '../../tools/Constants';
 
@@ -26,8 +27,10 @@ export default class DropDown extends React.Component<DropdownProps, { open: boo
                         onChange={(e) => this.props.setMutation(e.target.value)} step={0.001}/>
                 </Styles.HiddenSettings>
                 
-                <Styles.Skip/>
-                <Styles.PlayPause icon={this.props.isPaused ? <FaPlay/> : <FaPause/>} onClick={() => this.props.pausePlay()} />
+                <Styles.Skip icon={<BsFillLightningChargeFill/>}
+                    onClick={() => this.props.skipVisual()} tooltip={'Skip Visualization'} />
+                <Styles.PlayPause icon={this.props.isPaused ? <FaPlay/> : <FaPause/>}
+                    onClick={() => this.props.pausePlay()} tooltip={this.props.isPaused ? 'play' : 'pause'} />
                 <Styles.FastForward>
                     <FaFastForward/>
                     <Slider value={this.props.speed} 

@@ -8,7 +8,8 @@ export type Parameters = {
 	speed: number,
 	generationSkip: number,
 	population: number,
-	mutation: number
+	mutation: number,
+	skipVisual: boolean
 }
 
 export default class CanvasStyles {

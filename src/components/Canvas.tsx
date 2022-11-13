@@ -14,10 +14,16 @@ import CanvasStyles, { Parameters } from './CanvasStyles';
 import Constants from '../tools/Constants';
 import {Colors} from '../tools/Constants';
 
-class Canvas extends React.Component <{params: Parameters, windowWidth: number}, {}>{
+export type CanvasProps = {
+	params: Parameters,
+	windowWidth: number,
+	setParameters: Function
+}
+
+class Canvas extends React.Component <CanvasProps, {}>{
     grid!: Grid;
 
-	constructor(props: {params: Parameters, windowWidth: number}) {
+	constructor(props: CanvasProps) {
 		super(props);
 		this.state = {};
 	}
@@ -34,10 +40,20 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
         this.grid.show(p5);
 
         // User paused
-        if(this.props.params.pause) return;
+        if (this.props.params.pause) return;
+
+		if (this.props.params.skipVisual) {
+			let count = 0;
+			while (!this.grid.isSolved() && count < 500000) {
+				this.grid.update(p5);
+				count++;
+			}
+
+			if (count > 0) this.props.setParameters({...this.props.params, pause: true, skipVisual: false})
+		}
 
         // User is fast-forwarding
-        for(let i = 0; i < this.props.params.speed; i++) {
+        for (let i = 0; i < this.props.params.speed; i++) {
             this.grid.update(p5);
         }
 	};
