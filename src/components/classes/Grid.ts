@@ -149,7 +149,7 @@ export default class Grid {
             }
 
             // Agent either hit a wall or is outside the bounds of the canvas
-            if (!agent.inBounds(p5) || this.getCell(agent.pos.x, agent.pos.y).type === CELL_TYPE.wall) {
+            if (!agent.inBounds(p5) || this.getCell(agent.pos).type === CELL_TYPE.wall) {
                 agent.kill(); // set the agent's 'dead' value to true
                 this.populationDeathToll++;
                 continue;
@@ -289,9 +289,9 @@ export default class Grid {
         return {x: -1, y: -1};
     }
 
-    getCell(x: number, y: number) {
-        let cell_y = Math.floor(y/this.cell_height);
-        let cell_x = Math.floor(x/this.cell_width);
+    getCell(pos: Vector) {
+        let cell_y = Math.floor(pos.y/this.cell_height);
+        let cell_x = Math.floor(pos.x/this.cell_width);
         return this.grid[cell_y][cell_x];
     }
 
