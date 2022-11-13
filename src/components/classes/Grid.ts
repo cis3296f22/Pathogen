@@ -10,7 +10,6 @@ export default class Grid {
     cols: number;
     grid: Cell[][];
     population: Agent[];
-    population_lifespan: number;
     populationDeathToll: number;
     width: number;
     height: number;
@@ -27,7 +26,6 @@ export default class Grid {
         this.cell_height = this.height / this.rows;
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
-        this.population_lifespan = 10;
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
     }
 
@@ -146,13 +144,6 @@ export default class Grid {
 
             // If the agent is already dead, skip it
             if(agent.isDead()) continue;
-
-            // Agent is too old
-            if(agent.age > this.population_lifespan) {
-                agent.kill();
-                this.populationDeathToll++;
-                continue;
-            }
 
             // get the agent's current cell in the grid
             let cell = this.getCell(agent.pos.x, agent.pos.y);
