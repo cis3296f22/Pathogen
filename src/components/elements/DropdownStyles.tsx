@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components'
 import { Colors } from '../../tools/Constants'
 import {AiFillCaretDown, AiFillCaretUp} from 'react-icons/ai'
 import IconButton from './IconButton'
-import { BsFillLightningChargeFill } from 'react-icons/bs'
 import Slider from './Slider'
 
 export type DropdownProps = {
@@ -11,7 +10,8 @@ export type DropdownProps = {
     setSpeed: Function,
     speed: number,
     mutation: number,
-    setMutation: Function
+    setMutation: Function,
+    skipVisual: Function
 }
 
 export default class DropdownStyles {
@@ -32,6 +32,7 @@ export default class DropdownStyles {
         position: fixed;
         right: 0;
         background-color: ${Colors.PRIMARY};
+        border-radius: 0 0 5% 5%;
         height: ${this.dropdownHeight};
         width: calc(var(--vh) * .25);
         display: grid;
@@ -44,6 +45,7 @@ export default class DropdownStyles {
 	`
 
     static readonly HiddenSettings = styled.div`
+        align-self: start;
         width: 100%;
         grid-row: 1;
         grid-column-start: 1;
@@ -57,10 +59,9 @@ export default class DropdownStyles {
 		justify-content: space-around;
     `
 
-    static readonly Skip = styled(BsFillLightningChargeFill)`
+    static readonly Skip = styled(IconButton)`
         grid-row: 2;
         grid-column: 1;
-        color: white;
     `
 
     static readonly DropdownIcon = css`

@@ -15,8 +15,8 @@ function App() {
 	return (
 		<div className='App'>
 			<GlobalStyles/>
-			<Banner setParameters={setParameters} />
-			<Canvas params={params} windowWidth={useWindowWidth().width}/>
+			<Banner setParameters={setParameters} params={params} />
+			<Canvas params={params} setParameters={setParameters} windowWidth={useWindowWidth().width}/>
 		</div>
 	);
 }

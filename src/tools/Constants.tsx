@@ -19,12 +19,12 @@ export default class Constants {
 	static readonly GENERATION_RANGE    = [0, 100];
     static readonly ACC_RANGE           = [-1, 1];
 	static readonly MUTATION_RANGE      = [0.001, 0.05];
-    static readonly DEFAULT_MUTATION    = 0.001;
     static readonly DEFAULT_ROWS        = 7;
 	static readonly DEFAULT_COLS        = 7;
-	static readonly DEFAULT_POPULATION  = 100;
-	static readonly DEFAULT_PAUSE       = false;
-	static readonly DEFAULT_SPEED       = 1;
+	static readonly DEFAULT_POPULATION	= 100;
+	static readonly DEFAULT_PAUSE		= false;
+	static readonly DEFAULT_SPEED		= 1;
+	static readonly DEFAULT_MUTATION	= 0.01;
 
 	static readonly PARAMS: Parameters  = {
 		gridRows: Constants.DEFAULT_ROWS,
@@ -34,7 +34,8 @@ export default class Constants {
 		speed: Constants.DEFAULT_SPEED,
 		generationSkip: 0,
 		population: Constants.DEFAULT_POPULATION,
-		mutation: Constants.DEFAULT_MUTATION
+		mutation: Constants.DEFAULT_MUTATION,
+		skipVisual: false
 	}
 }
 
