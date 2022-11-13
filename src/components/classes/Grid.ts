@@ -15,6 +15,7 @@ export default class Grid {
     height: number;
     cell_height: number;
     cell_width: number;
+    mutationRate: number;
 
     constructor(rows: number, cols: number, width: number, height: number, population: number) {
         this.populationDeathToll = 0;
@@ -24,6 +25,7 @@ export default class Grid {
         this.height = height;
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
+        this.mutationRate = Constants.DEFAULT_MUTATION;
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
@@ -250,7 +252,7 @@ export default class Grid {
             let child_dna: Vector[] = [];
 
             for(let i = 0; i < min_dna_length; i++) {
-                if(Math.random() < 0.01) child_dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN}); // TODO: implement mutation rate slider AND create a vector library
+                if(Math.random() < this.mutationRate) child_dna.push({x: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0], y: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0]}); // TODO: implement mutation rate slider AND create a vector library
                 else if(i < mid) child_dna.push(parent_a_dna[i]);
                 else child_dna.push(parent_b_dna[i]);
             }
@@ -291,5 +293,9 @@ export default class Grid {
         let cell_y = Math.floor(y/this.cell_height);
         let cell_x = Math.floor(x/this.cell_width);
         return this.grid[cell_y][cell_x];
+    }
+
+    setMutationRate(mutation: number) {
+        this.mutationRate = mutation;
     }
 }

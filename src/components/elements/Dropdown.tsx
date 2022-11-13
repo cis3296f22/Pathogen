@@ -19,13 +19,19 @@ export default class DropDown extends React.Component<DropdownProps, { open: boo
 	render (): React.ReactElement {
 		return (
 			<Styles.DropdownContainer open={this.state.open} className='dropdown-container'>
+
+                <Styles.HiddenSettings>
+                    <Styles.MutationRate title='Mutation Rate' value={this.props.mutation}
+                        max={Constants.MUTATION_RANGE[1]} min={Constants.MUTATION_RANGE[0]}
+                        onChange={(e) => this.props.setMutation(e.target.value)} step={0.001}/>
+                </Styles.HiddenSettings>
                 
                 <Styles.Skip/>
                 <Styles.PlayPause icon={this.props.isPaused ? <FaPlay/> : <FaPause/>} onClick={() => this.props.pausePlay()} />
                 <Styles.FastForward>
                     <FaFastForward/>
                     <Slider value={this.props.speed} 
-                        max={Constants.SPEED_MAX} min={Constants.SPEED_MIN}
+                        max={Constants.SPEED_RANGE[1]} min={Constants.SPEED_RANGE[0]}
                         onChange={(e) => this.props.setSpeed(e.target.value)} step={1}/>
                 </Styles.FastForward>
                 { this.state.open ?

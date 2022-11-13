@@ -28,7 +28,7 @@ export default class Agent {
 
         // Ran out of DNA from parents, generate new random DNA
         while(this.age > this.dna.length - 1) {
-            this.dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN});
+            this.dna.push({x: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0], y: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0]});
         }
 
         // Direction is determined by dna (value) and age (index)
