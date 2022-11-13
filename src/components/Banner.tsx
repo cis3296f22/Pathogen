@@ -1,5 +1,4 @@
 import React, { FormEvent, KeyboardEvent } from 'react';
-import Slider from './elements/Slider';
 
 import Styles from './BannerStyles';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -54,6 +53,11 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 		this.props.setParameters({...this.state.param, speed: speed})
 	}
 
+	setMutation = (mutation: number): void => {
+		this.setState({param: {...this.state.param, mutation: mutation}})
+		this.props.setParameters({...this.state.param, mutation: mutation})
+	}
+
 	setGeneration = (e: FormEvent<HTMLInputElement>): void => {
 		this.setState({param: {...this.state.param, generationSkip: parseInt(e.currentTarget.value)}})
 	}
@@ -69,9 +73,11 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 				<Styles.Banner>
 					<Styles.Hamburger as={GiHamburgerMenu} onClick={this.handleShow}/>
 					{/* <Styles.BannerSettings>
-						<input type="number" min={Constants.GENERATION_MIN} max={Constants.GENERATION_MAX} onKeyDown={this.sendGeneration} value={this.state.param.generationSkip} size={4} onInput={this.setGeneration} />
+						<input type="number" min={Constants.GENERATION_RANGE[0]} max={Constants.GENERATION_RANGE[1]} onKeyDown={this.sendGeneration} value={this.state.param.generationSkip} size={4} onInput={this.setGeneration} />
 					</Styles.BannerSettings> */}
-					<DropDown pausePlay={this.pausePlay} isPaused={this.state.param.pause} speed={this.state.param.speed} setSpeed={this.setSpeed} />
+					<DropDown pausePlay={this.pausePlay} isPaused={this.state.param.pause}
+						speed={this.state.param.speed} setSpeed={this.setSpeed}
+						mutation={this.state.param.mutation} setMutation={this.setMutation} />
 				</Styles.Banner>
 
 				{/* Start offcanvas stuff with menu */}
@@ -80,20 +86,20 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 						<Offcanvas.Title>Parameters</Offcanvas.Title>
 					</Offcanvas.Header>
 
-					<Slider title='# of Rows'
-						axis='x' x={this.state.param.gridRows} 
-						xmax={Constants.ROW_MAX} xmin={Constants.ROW_MIN}
-						onChange={({x}) => this.setRows(x)}/>
+					<Styles.SliderStyle title='# of Rows'
+						value={this.state.param.gridRows} 
+						max={Constants.ROW_RANGE[1]} min={Constants.ROW_RANGE[0]}
+						onChange={(e) => this.setRows(parseInt(e.target.value))}/>
 
-					<Slider title='# of Columns'
-						axis='x' x={this.state.param.gridColumns} 
-						xmax={Constants.ROW_MAX} xmin={Constants.ROW_MIN}
-						onChange={({x}) => this.setCols(x)}/>
+					<Styles.SliderStyle title='# of Columns'
+						value={this.state.param.gridColumns} 
+						max={Constants.COL_RANGE[1]} min={Constants.COL_RANGE[0]}
+						onChange={(e) => this.setCols(parseInt(e.target.value))}/>
 
-					<Slider title='Population'
-						axis='x' x={this.state.param.population} 
-						xmax={Constants.POPULATION_MAX} xmin={Constants.POPULATION_MIN}
-						onChange={({x}) => this.setPopulation(x)}/>
+					<Styles.SliderStyle title='Population'
+						value={this.state.param.population} 
+						max={Constants.POPULATION_RANGE[1]} min={Constants.POPULATION_RANGE[0]}
+						onChange={(e) => this.setPopulation(parseInt(e.target.value))}/>
 					<button type="button" className="btn btn-primary" onClick={this.apply}>Apply</button>
 				</Styles.OffcanvasStyle>
 			</>

@@ -1,5 +1,5 @@
 // Third party
-import React from 'react'
+import React from 'react';
 import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa';
 import Constants from '../../tools/Constants';
 
@@ -19,12 +19,20 @@ export default class DropDown extends React.Component<DropdownProps, { open: boo
 	render (): React.ReactElement {
 		return (
 			<Styles.DropdownContainer open={this.state.open} className='dropdown-container'>
+
+                <Styles.HiddenSettings>
+                    <Styles.MutationRate title='Mutation Rate' value={this.props.mutation}
+                        max={Constants.MUTATION_RANGE[1]} min={Constants.MUTATION_RANGE[0]}
+                        onChange={(e) => this.props.setMutation(e.target.value)} step={0.001}/>
+                </Styles.HiddenSettings>
+                
+                <Styles.Skip/>
                 <Styles.PlayPause icon={this.props.isPaused ? <FaPlay/> : <FaPause/>} onClick={() => this.props.pausePlay()} />
                 <Styles.FastForward>
                     <FaFastForward/>
-                    <Slider axis='x' x={this.props.speed} 
-                        xmax={Constants.SPEED_MAX} xmin={Constants.SPEED_MIN}
-                        onChange={({x}) => this.props.setSpeed(x)} xstep={1}/>
+                    <Slider value={this.props.speed} 
+                        max={Constants.SPEED_RANGE[1]} min={Constants.SPEED_RANGE[0]}
+                        onChange={(e) => this.props.setSpeed(e.target.value)} step={1}/>
                 </Styles.FastForward>
                 { this.state.open ?
                     <Styles.DropdownIconUp onClick={() => this.setState({open: !this.state.open})}/> :
