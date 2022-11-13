@@ -19,7 +19,7 @@ export default class IconButton extends React.Component<IconButtonProps, { hover
 			<>
 				<Styles.IconContainer className={this.props.className} href={this.props?.source}
 					onClick={this.props?.onClick} target='_blank' rel='noreferrer' onMouseOver={this.handleMouseIn.bind(this)}
-					onMouseOut={this.handleMouseOut.bind(this)}>
+					onMouseOut={this.handleMouseOut.bind(this)} onMouseDown={this.handleMouseOut.bind(this)}>
 					{this.props.icon}
 				</Styles.IconContainer>
 				{this.props.tooltip ? <Styles.Tooltip hover={this.state.hover}>{this.props.tooltip}</Styles.Tooltip> : <></>}
