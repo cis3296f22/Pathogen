@@ -33,7 +33,13 @@ export default class BannerStyles {
 	`
 
 	static readonly OffcanvasStyle = styled(Offcanvas)`
-		background-color: ${Colors.PRIMARY};
+		background-color: ${Colors.PRIMARY}AF;
 		color: white;
+
+		& > button {
+			margin: 4%;
+			width: 80%;
+			align-self: center;
+		}
 	`
 }

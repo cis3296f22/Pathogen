@@ -95,6 +95,7 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 						value={this.props.params.population} 
 						max={Constants.POPULATION_RANGE[1]} min={Constants.POPULATION_RANGE[0]}
 						onChange={(e) => this.setPopulation(parseInt(e.target.value))}/>
+
 					<button type="button" className="btn btn-primary" onClick={this.apply}>Apply</button>
 				</Styles.OffcanvasStyle>
 			</>
