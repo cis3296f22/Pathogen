@@ -82,13 +82,13 @@ export default class Grid {
 
     update(p5: p5Types) {
 
+        // get the end node position
+        let epos = this.getEndNodePosition();
+        let ex = epos.x * this.cell_width + this.cell_width / 2;
+        let ey = epos.y * this.cell_height + this.cell_height / 2;
+
         // All agents in the current population have died
         if(this.populationDeathToll >= this.population.length) { // TODO: use variable for population size
-
-            // get the end node position
-            let epos = this.getEndNodePosition();
-            let ex = epos.x * this.cell_width + this.cell_width / 2;
-            let ey = epos.y * this.cell_height + this.cell_height / 2;
 
             // TODO: remove this at some point
             p5.push();
@@ -105,8 +105,11 @@ export default class Grid {
                 // calculate and set the distance each agent is to the end node
                 agent.setDistance(Math.sqrt(Math.abs(agent.pos.x - ex) + Math.abs(agent.pos.y - ey)));
 
+                // get the agent's current cell in the grid
+                let cell = this.getCell(agent.pos.x, agent.pos.y);
+
                 // calculate fitness of current agent
-                agent.calculateFitness();
+                agent.calculateFitness(cell.getDampening());
 
                 // keep track of the max fitness (used for normalization)
                 if(agent.fitness > max_fitness) {
@@ -142,22 +145,51 @@ export default class Grid {
             // If the agent is already dead, skip it
             if(agent.isDead()) continue;
 
-            // Agent is too old
-            if(agent.age > 5000) {
-                agent.kill();
-                this.populationDeathToll++;
-            }
+            // get the agent's current cell in the grid
+            let cell = this.getCell(agent.pos.x, agent.pos.y);
 
-            // Agent either hit a wall or is outside the bounds of the canvas
-            if (!agent.inBounds(p5) || this.getCell(agent.pos).type === CELL_TYPE.wall) {
+            // Agent found the target
+            if(cell.type === CELL_TYPE.end_node) {
                 agent.kill(); // set the agent's 'dead' value to true
                 this.populationDeathToll++;
                 continue;
             }
 
+            // Agent either hit a wall or is outside the bounds of the canvas
+            if (!agent.inBounds(p5) || this.getCell(agent.pos).type === CELL_TYPE.wall) {
+                agent.kill(); // set the agent's 'dead' value to true
+                cell.dampen(); // increase dampening of cells that a lot of agents die at (dead end)
+                this.populationDeathToll++;
+                continue;
+            }
+
+            // update the visited cells of the agent
+            agent.updateVisitedCells(this.getCell(agent.pos.x, agent.pos.y));
+
             // If the agent is not dead, update it
             agent.update();
         }
+    }
+
+    handleMouse(p5: p5Types) {
+
+        // Check if mouse is pressed
+        if(!p5.mouseIsPressed) return;
+
+        // Get mouse location in the grid
+        let cx = Math.floor(p5.mouseX / this.cell_width);
+        let cy = Math.floor(p5.mouseY / this.cell_height);
+
+        // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
+        if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
+
+        // Check that only the empty or wall nodes are being redrawn
+        if(this.grid[cy][cx].type != CELL_TYPE.empty && this.grid[cy][cx].type != CELL_TYPE.wall) return;
+
+        if(p5.keyIsPressed)
+            this.grid[cy][cx].type = CELL_TYPE.empty;
+        else
+            this.grid[cy][cx].type = CELL_TYPE.wall;
     }
 
     updateCells(height: number, width: number) {
