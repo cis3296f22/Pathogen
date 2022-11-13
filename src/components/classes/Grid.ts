@@ -195,6 +195,9 @@ export default class Grid {
         // Check that only the empty or wall nodes are being redrawn
         if(this.grid[cy][cx].type !== CELL_TYPE.empty && this.grid[cy][cx].type !== CELL_TYPE.wall) return;
 
+        // The maze is no longer solved because it was updated
+        this.solved = false;
+
         if(p5.keyIsPressed)
             this.grid[cy][cx].type = CELL_TYPE.empty;
         else
