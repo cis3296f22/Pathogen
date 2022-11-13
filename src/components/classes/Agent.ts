@@ -11,9 +11,11 @@ export default class Agent {
     acc: Vector;
     age: number;
     dead: boolean;
+    found_target: boolean;
     dist: number;
     fitness: number;
     visited_cells: Cell[];
+    last_pos: Vector;
 
     constructor(x: number, y:number, dna?: Vector[]) {
         this.pos = {x: x, y: y};
@@ -22,9 +24,11 @@ export default class Agent {
         this.dna = dna ?? [];
         this.age = 0;
         this.dead = false;
+        this.found_target = false;
         this.dist = Number.MAX_SAFE_INTEGER;
         this.fitness = 0;
         this.visited_cells = [];
+        this.last_pos = {x: -1, y: -1};
     }
 
     update() {
@@ -65,6 +69,7 @@ export default class Agent {
         dampening /= this.visited_cells.length;
         let fitness = 1 / this.dist / dampening;
         fitness = Math.min(fitness, Number.MAX_SAFE_INTEGER);
+        if(this.found_target) fitness = Number.MAX_SAFE_INTEGER;
         this.fitness = fitness;
     }
 
@@ -79,5 +84,21 @@ export default class Agent {
     // Sets the distance of the current agent to `n`
     setDistance(n: number) {
         this.dist = n;
+    }
+
+    // Returns the last position of the agent
+    getLastPosition() {
+        return this.last_pos;
+    }
+
+    // Sets the last position of the agent
+    setLastPosition(x: number, y: number) {
+        this.last_pos.x = x;
+        this.last_pos.y = y;
+    }
+
+    // Sets the agents found target value to true
+    foundTarget() {
+        this.found_target = true;
     }
 }

@@ -109,7 +109,9 @@ export default class Grid {
                 let cell = this.getCell(agent.pos.x, agent.pos.y);
 
                 // calculate fitness of current agent
-                agent.calculateFitness(cell.getDampening());
+                let last_pos = agent.getLastPosition();
+                let last_cell = this.getCell(last_pos.x, last_pos.y);
+                agent.calculateFitness(last_cell.getDampening());
 
                 // keep track of the max fitness (used for normalization)
                 if(agent.fitness > max_fitness) {
@@ -150,6 +152,7 @@ export default class Grid {
 
             // Agent found the target
             if(cell.type === CELL_TYPE.end_node) {
+                agent.foundTarget();
                 agent.kill(); // set the agent's 'dead' value to true
                 this.populationDeathToll++;
                 continue;
@@ -158,13 +161,18 @@ export default class Grid {
             // Agent either hit a wall or is outside the bounds of the canvas
             if (!agent.inBounds(p5) || this.getCell(agent.pos).type === CELL_TYPE.wall) {
                 agent.kill(); // set the agent's 'dead' value to true
-                cell.dampen(); // increase dampening of cells that a lot of agents die at (dead end)
+                let last_pos = agent.getLastPosition();
+                let last_cell = this.getCell(last_pos.x, last_pos.y);
+                this.grid[last_cell.y][last_cell.x].dampen();
                 this.populationDeathToll++;
                 continue;
             }
 
             // update the visited cells of the agent
             agent.updateVisitedCells(this.getCell(agent.pos.x, agent.pos.y));
+
+            // Set the agents last position as the current position
+            agent.setLastPosition(agent.pos.x, agent.pos.y);
 
             // If the agent is not dead, update it
             agent.update();

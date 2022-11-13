@@ -12,21 +12,19 @@ export class FONT_FAMILY {
 
 export default class Constants {
 	static readonly BANNER_HEIGHT_RATIO = 0.15;
-
 	static readonly ROW_RANGE         	= [7, 51];
 	static readonly COL_RANGE         	= [7, 101];
 	static readonly POPULATION_RANGE   	= [40, 400];
 	static readonly SPEED_RANGE         = [1, 100];
 	static readonly GENERATION_RANGE  	= [0, 100];
-    static readonly ACC_RANGE 			= [-1, 1];
-	static readonly MUTATION_RANGE		= [0.005, 0.5];
-
-    static readonly DEFAULT_ROWS        = 7;
+  static readonly ACC_RANGE 			    = [-1, 1];
+	static readonly MUTATION_RANGE		  = [0.001, 1.0];
+  static readonly DEFAULT_ROWS        = 7;
 	static readonly DEFAULT_COLS        = 7;
 	static readonly DEFAULT_POPULATION	= 100;
-	static readonly DEFAULT_PAUSE		= false;
-	static readonly DEFAULT_SPEED		= 1;
-	static readonly DEFAULT_MUTATION	= 0.05;
+	static readonly DEFAULT_PAUSE		    = false;
+	static readonly DEFAULT_SPEED		    = 1;
+	static readonly DEFAULT_MUTATION	  = 0.05;
 
 	static readonly PARAMS: Parameters = {
 		gridRows: Constants.DEFAULT_ROWS,
@@ -43,7 +41,7 @@ export default class Constants {
 export class Colors {
 	static readonly PRIMARY   = '#222529';
 	static readonly SECONDARY = '#808080';
-	static readonly HOVER = '#6c6b6b';
+	static readonly HOVER     = '#6c6b6b';
 }
 
 export type Vector = {
