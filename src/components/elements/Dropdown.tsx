@@ -1,5 +1,6 @@
 // Third party
 import React from 'react';
+import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
 import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa';
 import Constants from '../../tools/Constants';
@@ -37,9 +38,8 @@ export default class DropDown extends React.Component<DropdownProps, { open: boo
                         max={Constants.SPEED_RANGE[1]} min={Constants.SPEED_RANGE[0]}
                         onChange={(e) => this.props.setSpeed(e.target.value)} step={1}/>
                 </Styles.FastForward>
-                { this.state.open ?
-                    <Styles.DropdownIconUp onClick={() => this.setState({open: !this.state.open})}/> :
-                    <Styles.DropdownIconDown onClick={() => this.setState({open: !this.state.open})}/> }
+                <Styles.DropdownIcon icon={this.state.open ? <AiFillCaretUp/> : <AiFillCaretDown/>}
+                    onClick={() => this.setState({open: !this.state.open})} tooltip={this.state.open ? 'close' : 'open'} />
             </Styles.DropdownContainer>
 		)
 	}

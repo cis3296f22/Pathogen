@@ -27,6 +27,7 @@ export default class IconButtonStyles {
 
     static readonly Tooltip = styled.div<{hover: boolean}>`
         position: relative;
+        top: -20%;
         left: 50%; // TODO: Figure out tooltip positioning
         margin: 10%;
         padding-left: 10%;

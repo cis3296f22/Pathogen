@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
 import { Colors } from '../../tools/Constants'
-import {AiFillCaretDown, AiFillCaretUp} from 'react-icons/ai'
 import IconButton from './IconButton'
 import Slider from './Slider'
 
@@ -64,22 +63,6 @@ export default class DropdownStyles {
         grid-column: 1;
     `
 
-    static readonly DropdownIcon = css`
-        & {
-            grid-row: 2;
-            grid-column: 4;
-            color: white;
-        }
-
-        :hover {
-            cursor: pointer;
-            color: ${Colors.SECONDARY};
-        }
-    `
-
-    static readonly DropdownIconUp = styled(AiFillCaretUp)`${this.DropdownIcon}`
-    static readonly DropdownIconDown = styled(AiFillCaretDown)`${this.DropdownIcon}`
-
     static readonly FastForward = styled.div`
         grid-column: 3;
         grid-row: 2;
@@ -94,5 +77,10 @@ export default class DropdownStyles {
     static readonly PlayPause = styled(IconButton)`
         grid-row: 2;
         grid-column: 2;
+    `
+
+    static readonly DropdownIcon = styled(IconButton)`
+        grid-row: 2;
+        grid-column: 4;
     `
 }
