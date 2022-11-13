@@ -11,7 +11,6 @@ export default class Agent {
     acc: Vector;
     age: number;
     dead: boolean;
-    hit_wall: boolean;
     found_target: boolean;
     dist: number;
     fitness: number;
@@ -25,7 +24,6 @@ export default class Agent {
         this.dna = dna ?? [];
         this.age = 0;
         this.dead = false;
-        this.hit_wall = false;
         this.found_target = false;
         this.dist = Number.MAX_SAFE_INTEGER;
         this.fitness = 0;
@@ -57,9 +55,8 @@ export default class Agent {
     }
 
     // Sets the 'dead' class variable of the `Agent` (this) class to true
-    kill(hit_wall?: boolean) {
+    kill() {
         this.dead = true;
-        this.hit_wall = hit_wall ?? false;
     }
 
     // Returns true if the agent is dead, false if the agent is not dead
@@ -73,7 +70,6 @@ export default class Agent {
         let fitness = 1 / this.dist / dampening;
         fitness = Math.min(fitness, Number.MAX_SAFE_INTEGER);
         if(this.found_target) fitness = Number.MAX_SAFE_INTEGER;
-        else if(this.hit_wall) fitness = 0;
         this.fitness = fitness;
     }
 

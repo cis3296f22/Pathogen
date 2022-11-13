@@ -158,7 +158,7 @@ export default class Grid {
 
             // Agent either hit a wall or is outside the bounds of the canvas
             if (!agent.inBounds(p5) || cell.type === CELL_TYPE.wall) {
-                agent.kill(true); // set the agent's 'dead' value to true
+                agent.kill(); // set the agent's 'dead' value to true
                 let last_pos = agent.getLastPosition();
                 let last_cell = this.getCell(last_pos.x, last_pos.y);
                 this.grid[last_cell.y][last_cell.x].dampen();
