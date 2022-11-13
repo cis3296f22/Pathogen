@@ -1,5 +1,4 @@
 import React, { FormEvent, KeyboardEvent } from 'react';
-import Slider from './elements/Slider';
 
 import Styles from './BannerStyles';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -80,20 +79,20 @@ class Banner extends React.Component <{setParameters: Function}, { show: boolean
 						<Offcanvas.Title>Parameters</Offcanvas.Title>
 					</Offcanvas.Header>
 
-					<Slider title='# of Rows'
-						axis='x' x={this.state.param.gridRows} 
-						xmax={Constants.ROW_MAX} xmin={Constants.ROW_MIN}
-						onChange={({x}) => this.setRows(x)}/>
+					<Styles.SliderStyle title='# of Rows'
+						value={this.state.param.gridRows} 
+						max={Constants.ROW_MAX} min={Constants.ROW_MIN}
+						onChange={(e) => this.setRows(parseInt(e.target.value))}/>
 
-					<Slider title='# of Columns'
-						axis='x' x={this.state.param.gridColumns} 
-						xmax={Constants.ROW_MAX} xmin={Constants.ROW_MIN}
-						onChange={({x}) => this.setCols(x)}/>
+					<Styles.SliderStyle title='# of Columns'
+						value={this.state.param.gridColumns} 
+						max={Constants.ROW_MAX} min={Constants.ROW_MIN}
+						onChange={(e) => this.setCols(parseInt(e.target.value))}/>
 
-					<Slider title='Population'
-						axis='x' x={this.state.param.population} 
-						xmax={Constants.POPULATION_MAX} xmin={Constants.POPULATION_MIN}
-						onChange={({x}) => this.setPopulation(x)}/>
+					<Styles.SliderStyle title='Population'
+						value={this.state.param.population} 
+						max={Constants.POPULATION_MAX} min={Constants.POPULATION_MIN}
+						onChange={(e) => this.setPopulation(parseInt(e.target.value))}/>
 					<button type="button" className="btn btn-primary" onClick={this.apply}>Apply</button>
 				</Styles.OffcanvasStyle>
 			</>
