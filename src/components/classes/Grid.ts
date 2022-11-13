@@ -106,11 +106,11 @@ export default class Grid {
                 agent.setDistance(Math.sqrt(Math.abs(agent.pos.x - ex) + Math.abs(agent.pos.y - ey)));
 
                 // get the agent's current cell in the grid
-                let cell = this.getCell(agent.pos.x, agent.pos.y);
+                let cell = this.getCell(agent.pos);
 
                 // calculate fitness of current agent
                 let last_pos = agent.getLastPosition();
-                let last_cell = this.getCell(last_pos.x, last_pos.y);
+                let last_cell = this.getCell(last_pos);
                 agent.calculateFitness(last_cell.getDampening());
 
                 // keep track of the max fitness (used for normalization)
@@ -148,7 +148,7 @@ export default class Grid {
             if(agent.isDead()) continue;
 
             // get the agent's current cell in the grid
-            let cell = this.getCell(agent.pos.x, agent.pos.y);
+            let cell = this.getCell(agent.pos);
 
             // Agent found the target
             if(cell.type === CELL_TYPE.end_node) {
@@ -162,14 +162,14 @@ export default class Grid {
             if (!agent.inBounds(p5) || this.getCell(agent.pos).type === CELL_TYPE.wall) {
                 agent.kill(); // set the agent's 'dead' value to true
                 let last_pos = agent.getLastPosition();
-                let last_cell = this.getCell(last_pos.x, last_pos.y);
+                let last_cell = this.getCell(last_pos);
                 this.grid[last_cell.y][last_cell.x].dampen();
                 this.populationDeathToll++;
                 continue;
             }
 
             // update the visited cells of the agent
-            agent.updateVisitedCells(this.getCell(agent.pos.x, agent.pos.y));
+            agent.updateVisitedCells(this.getCell(agent.pos));
 
             // Set the agents last position as the current position
             agent.setLastPosition(agent.pos.x, agent.pos.y);
