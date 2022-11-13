@@ -3,12 +3,15 @@ import { Colors } from '../../tools/Constants'
 import {AiFillCaretDown, AiFillCaretUp} from 'react-icons/ai'
 import IconButton from './IconButton'
 import { BsFillLightningChargeFill } from 'react-icons/bs'
+import Slider from './Slider'
 
 export type DropdownProps = {
 	isPaused: boolean,
     pausePlay: Function,
     setSpeed: Function,
-    speed: number
+    speed: number,
+    mutation: number,
+    setMutation: Function
 }
 
 export default class DropdownStyles {
@@ -39,6 +42,20 @@ export default class DropdownStyles {
 
         ${props => props.open ? this.OpenDropdown : this.ClosedDropdown}
 	`
+
+    static readonly HiddenSettings = styled.div`
+        width: 100%;
+        grid-row: 1;
+        grid-column-start: 1;
+        grid-column-end: 5;
+    `
+
+    static readonly MutationRate = styled(Slider)`
+        width: 100%;
+        color: white;
+        display: flex;
+		justify-content: space-around;
+    `
 
     static readonly Skip = styled(BsFillLightningChargeFill)`
         grid-row: 2;

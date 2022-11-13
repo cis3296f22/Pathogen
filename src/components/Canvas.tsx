@@ -60,6 +60,9 @@ class Canvas extends React.Component <{params: Parameters, windowWidth: number},
 				this.props.params.population
 			);
 		}
+
+		// If the mutation rate has changed, update it right away
+		if (prevProps.params.mutation !== this.props.params.mutation) this.grid.setMutationRate(this.props.params.mutation);
 	}
 
 	render() {
