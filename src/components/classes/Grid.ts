@@ -15,8 +15,11 @@ export default class Grid {
     height: number;
     cell_height: number;
     cell_width: number;
+    mutationRate: number;
+    solved: boolean;
 
     constructor(rows: number, cols: number, width: number, height: number, population: number) {
+        this.solved = false;
         this.populationDeathToll = 0;
         this.rows = rows;
         this.cols = cols;
@@ -24,6 +27,7 @@ export default class Grid {
         this.height = height;
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
+        this.mutationRate = Constants.DEFAULT_MUTATION;
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
@@ -85,13 +89,13 @@ export default class Grid {
 
     update(p5: p5Types) {
 
+        // get the end node position
+        let epos = this.getEndNodePosition();
+        let ex = epos.x * this.cell_width + this.cell_width / 2;
+        let ey = epos.y * this.cell_height + this.cell_height / 2;
+
         // All agents in the current population have died
         if(this.populationDeathToll >= this.population.length) { // TODO: use variable for population size
-
-            // get the end node position
-            let epos = this.getEndNodePosition();
-            let ex = epos.x * this.cell_width + this.cell_width / 2;
-            let ey = epos.y * this.cell_height + this.cell_height / 2;
 
             // TODO: remove this at some point
             p5.push();
@@ -109,7 +113,9 @@ export default class Grid {
                 agent.setDistance(Math.sqrt(Math.abs(agent.pos.x - ex) + Math.abs(agent.pos.y - ey)));
 
                 // calculate fitness of current agent
-                agent.calculateFitness();
+                let last_pos = agent.getLastPosition();
+                let last_cell = this.getCell(last_pos);
+                agent.calculateFitness(last_cell.getDampening());
 
                 // keep track of the max fitness (used for normalization)
                 if(agent.fitness > max_fitness) {
@@ -142,25 +148,65 @@ export default class Grid {
         // Update each of the agents
         for(let agent of this.population) {
 
+            if (this.getCell(agent.pos).type === CELL_TYPE.end_node) { this.solved = true; }
+
             // If the agent is already dead, skip it
             if(agent.isDead()) continue;
 
-            // Agent is too old
-            if(agent.age > 5000) {
-                agent.kill();
-                this.populationDeathToll++;
-            }
+            // get the agent's current cell in the grid
+            let cell = this.getCell(agent.pos);
 
-            // Agent either hit a wall or is outside the bounds of the canvas
-            if (!agent.inBounds(p5) || this.getCell(agent.pos.x, agent.pos.y).type === CELL_TYPE.wall) {
+            // Agent found the target
+            if(cell.type === CELL_TYPE.end_node) {
+                agent.foundTarget();
                 agent.kill(); // set the agent's 'dead' value to true
                 this.populationDeathToll++;
                 continue;
             }
 
+            // Agent either hit a wall or is outside the bounds of the canvas
+            if (!agent.inBounds(p5) || this.getCell(agent.pos).type === CELL_TYPE.wall) {
+                agent.kill(); // set the agent's 'dead' value to true
+                let last_pos = agent.getLastPosition();
+                let last_cell = this.getCell(last_pos);
+                this.grid[last_cell.y][last_cell.x].dampen();
+                this.populationDeathToll++;
+                continue;
+            }
+
+            // update the visited cells of the agent
+            agent.updateVisitedCells(this.getCell(agent.pos));
+
+            // Set the agents last position as the current position
+            agent.setLastPosition(agent.pos.x, agent.pos.y);
+
             // If the agent is not dead, update it
-            agent.update(this.cell_width, this.cell_height);
+            agent.update();
         }
+    }
+
+    handleMouse(p5: p5Types) {
+
+        // Check if mouse is pressed
+        if(!p5.mouseIsPressed) return;
+
+        // Get mouse location in the grid
+        let cx = Math.floor(p5.mouseX / this.cell_width);
+        let cy = Math.floor(p5.mouseY / this.cell_height);
+
+        // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
+        if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
+
+        // Check that only the empty or wall nodes are being redrawn
+        if(this.grid[cy][cx].type !== CELL_TYPE.empty && this.grid[cy][cx].type !== CELL_TYPE.wall) return;
+
+        // The maze is no longer solved because it was updated
+        this.solved = false;
+
+        if(p5.keyIsPressed)
+            this.grid[cy][cx].type = CELL_TYPE.empty;
+        else
+            this.grid[cy][cx].type = CELL_TYPE.wall;
     }
 
     updateCells(height: number, width: number) {
@@ -168,6 +214,7 @@ export default class Grid {
         this.height = width;
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
+        this.solved = false;
     }
 
     /**
@@ -255,7 +302,7 @@ export default class Grid {
             let child_dna: Vector[] = [];
 
             for(let i = 0; i < min_dna_length; i++) {
-                if(Math.random() < 0.01) child_dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN}); // TODO: implement mutation rate slider AND create a vector library
+                if(Math.random() < this.mutationRate) child_dna.push({x: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0], y: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0]}); // TODO: implement mutation rate slider AND create a vector library
                 else if(i < mid) child_dna.push(parent_a_dna[i]);
                 else child_dna.push(parent_b_dna[i]);
             }
@@ -292,9 +339,17 @@ export default class Grid {
         return {x: -1, y: -1};
     }
 
-    getCell(x: number, y: number) {
-        let cell_y = Math.floor(y/this.cell_height);
-        let cell_x = Math.floor(x/this.cell_width);
+    getCell(pos: Vector) {
+        let cell_y = Math.floor(pos.y/this.cell_height);
+        let cell_x = Math.floor(pos.x/this.cell_width);
         return this.grid[cell_y][cell_x];
+    }
+
+    setMutationRate(mutation: number) {
+        this.mutationRate = mutation;
+    }
+
+    isSolved() {
+        return this.solved;
     }
 }

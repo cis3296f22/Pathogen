@@ -1,6 +1,7 @@
 import Constants from  '../../tools/Constants';
 import type { Vector } from '../../tools/Constants';
 import p5Types from 'p5';
+import { Cell } from './Cell';
 
 export default class Agent {
 
@@ -10,8 +11,11 @@ export default class Agent {
     acc: Vector;
     age: number;
     dead: boolean;
+    found_target: boolean;
     dist: number;
     fitness: number;
+    visited_cells: Cell[];
+    last_pos: Vector;
 
     constructor(x: number, y:number, dna?: Vector[]) {
         this.pos = {x: x, y: y};
@@ -20,15 +24,18 @@ export default class Agent {
         this.dna = dna ?? [];
         this.age = 0;
         this.dead = false;
+        this.found_target = false;
         this.dist = Number.MAX_SAFE_INTEGER;
         this.fitness = 0;
+        this.visited_cells = [];
+        this.last_pos = {x: -1, y: -1};
     }
 
-    update(cell_width: number, cell_height: number) {
+    update() {
 
         // Ran out of DNA from parents, generate new random DNA
         while(this.age > this.dna.length - 1) {
-            this.dna.push({x: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN, y: Math.random() * (Constants.ACC_MAX - Constants.ACC_MIN) + Constants.ACC_MIN});
+            this.dna.push({x: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0], y: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0]});
         }
 
         // Direction is determined by dna (value) and age (index)
@@ -58,13 +65,39 @@ export default class Agent {
     }
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
-    calculateFitness() {
-        let fitness = 1 / Math.pow(2, this.dist); // TODO: implement less naive fitness function
+    calculateFitness(dampening: number) {
+        let fitness = this.visited_cells.length / (this.dist * dampening);
+        fitness = Math.min(fitness, Number.MAX_SAFE_INTEGER);
+        if(this.found_target) fitness = Number.MAX_SAFE_INTEGER;
         this.fitness = fitness;
+    }
+
+    // Updates this agent's visited cells array if the cell provided is not yet in the array
+    updateVisitedCells(cell: Cell) {
+        for(let visited_cell of this.visited_cells) {
+            if(cell.x === visited_cell.x && cell.y === visited_cell.y) return;
+        }
+        this.visited_cells.push(cell);
     }
 
     // Sets the distance of the current agent to `n`
     setDistance(n: number) {
         this.dist = n;
+    }
+
+    // Returns the last position of the agent
+    getLastPosition() {
+        return this.last_pos;
+    }
+
+    // Sets the last position of the agent
+    setLastPosition(x: number, y: number) {
+        this.last_pos.x = x;
+        this.last_pos.y = y;
+    }
+
+    // Sets the agents found target value to true
+    foundTarget() {
+        this.found_target = true;
     }
 }

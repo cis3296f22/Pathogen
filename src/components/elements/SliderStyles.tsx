@@ -5,14 +5,11 @@ export default class SliderStyles {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-left: 5%;
-        margin-right: 5%;
+        width: 100%;
 
         & > p {
             line-height: 100%;
             margin: 0;
         }
-
-
 	`
 }

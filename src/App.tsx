@@ -6,6 +6,7 @@ import Canvas from './components/Canvas';
 import { Parameters } from './components/CanvasStyles';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import Constants from './tools/Constants';
 import { useWindowWidth } from './tools/HelpfulFunctions';
 
@@ -14,8 +15,8 @@ function App() {
 	return (
 		<div className='App'>
 			<GlobalStyles/>
-			<Banner setParameters={setParameters} />
-			<Canvas params={params} windowWidth={useWindowWidth().width}/>
+			<Banner setParameters={setParameters} params={params} />
+			<Canvas params={params} setParameters={setParameters} windowWidth={useWindowWidth().width}/>
 		</div>
 	);
 }

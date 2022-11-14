@@ -11,39 +11,38 @@ export class FONT_FAMILY {
 }
 
 export default class Constants {
-	static readonly ROW_MIN             = 7;
-	static readonly ROW_MAX             = 51;
-	static readonly COL_MIN             = 7;
-	static readonly COL_MAX             = 101;
-	static readonly POPULATION_MIN    	= 40;
-	static readonly POPULATION_MAX     	= 400;
-	static readonly SPEED_MIN        	= 1;
-	static readonly SPEED_MAX         	= 10000;
-	static readonly GENERATION_MIN   	= 0;
-	static readonly GENERATION_MAX  	= 100;
 	static readonly BANNER_HEIGHT_RATIO = 0.15;
-    static readonly ACC_MIN = -1;
-    static readonly ACC_MAX = 1;
+	static readonly ROW_RANGE         	= [7, 51];
+	static readonly COL_RANGE         	= [7, 101];
+	static readonly POPULATION_RANGE   	= [40, 400];
+	static readonly SPEED_RANGE         = [1, 1000];
+	static readonly GENERATION_RANGE    = [0, 100];
+    static readonly ACC_RANGE           = [-1, 1];
+	static readonly MUTATION_RANGE      = [0.001, 0.05];
     static readonly DEFAULT_ROWS        = 7;
 	static readonly DEFAULT_COLS        = 7;
 	static readonly DEFAULT_POPULATION	= 100;
 	static readonly DEFAULT_PAUSE		= false;
 	static readonly DEFAULT_SPEED		= 1;
-	static readonly PARAMS: Parameters = {
+	static readonly DEFAULT_MUTATION	= 0.004;
+
+	static readonly PARAMS: Parameters  = {
 		gridRows: Constants.DEFAULT_ROWS,
 		gridColumns: Constants.DEFAULT_COLS,
 		pause: Constants.DEFAULT_PAUSE,
 		apply: true,
 		speed: Constants.DEFAULT_SPEED,
 		generationSkip: 0,
-		population: Constants.DEFAULT_POPULATION
+		population: Constants.DEFAULT_POPULATION,
+		mutation: Constants.DEFAULT_MUTATION,
+		skipVisual: false
 	}
 }
 
 export class Colors {
 	static readonly PRIMARY   = '#222529';
 	static readonly SECONDARY = '#808080';
-	static readonly HOVER = '#6c6b6b';
+	static readonly HOVER     = '#6c6b6b';
 }
 
 export type Vector = {

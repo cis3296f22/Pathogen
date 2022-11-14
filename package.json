@@ -4,12 +4,7 @@
   "private": true,
   "homepage": "https://cis3296f22.github.io/Pathogen",
   "author": "Ryan Hodge, Ben Scuron, Nick Coffin, Kai Iwugo",
-  "contributors": [
-    "Ryan Hodge",
-    "Ben Scuron",
-    "Nick Coffin",
-    "Kai Iwugo"
-  ],
+  "contributors": ["Ryan Hodge", "Ben Scuron", "Nick Coffin", "Kai Iwugo"],
   "description": "A genetic path-finding algorithm visualization",
   "main": "./public/electron.js",
   "build": {
@@ -19,18 +14,10 @@
       "build/**/*",
       "node_modules/**/*"
     ],
-    "directories": {
-      "buildResources": "public"
-    },
-    "mac": {
-      "target": "dmg"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "linux": {
-      "target": "deb"
-    }
+    "directories": { "buildResources": "public" },
+    "mac": { "target": "dmg" },
+    "win": { "target": "nsis" },
+    "linux": { "target": "deb" }
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -43,6 +30,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "react-slider": "^2.0.4",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
@@ -74,8 +62,10 @@
     ]
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.14",
     "@types/lodash": "^4.14.186",
     "@types/lodash.debounce": "^4.0.7",
+    "@types/react-slider": "^1.3.1",
     "@types/styled-components": "^5.1.26",
     "bootstrap": "^5.2.2",
     "concurrently": "^7.5.0",
@@ -84,13 +74,14 @@
     "electron-builder": "^23.6.0",
     "electronmon": "^2.0.2",
     "gh-pages": "^4.0.0",
-    "jest": "^27.5.1",
     "lodash": "^4.17.21",
     "react-bootstrap": "^2.5.0",
+    "react-bootstrap-range-slider": "^3.0.8",
     "react-device-detect": "^2.2.2",
     "react-icons": "^4.6.0",
     "react-input-slider": "^6.0.1",
     "react-p5": "^1.3.30",
+    "react-range-slider-input": "^3.0.3",
     "styled-components": "^5.3.6",
     "wait-on": "^6.0.1"
   },
