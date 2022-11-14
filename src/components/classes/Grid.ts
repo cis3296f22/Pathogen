@@ -76,8 +76,12 @@ export default class Grid {
 
         // Draw the agents
         p5.push();
+        p5.stroke(255, 255);
+        let radius = Math.min(this.cell_width / 8, this.cell_height / 8); // TODO: see if 8 is the best factor here
         for(let agent of this.population) {
-            p5.ellipse(agent.pos.x, agent.pos.y, 5);
+            let parent_fitness_avg = (agent.parent_a_fitness + agent.parent_b_fitness) / 2;
+            p5.fill(255 * (1 - parent_fitness_avg), 255 * parent_fitness_avg, 0);
+            p5.ellipse(agent.pos.x, agent.pos.y, radius);
         }
         p5.pop();
     }
@@ -297,20 +301,20 @@ export default class Grid {
         let start_node_pos = this.getStartNodePosition();
 
         while(population.length < n) {
-            let parent_a_dna = pool[Math.floor(Math.random() * pool.length)].dna;
-            let parent_b_dna = pool[Math.floor(Math.random() * pool.length)].dna;
-            let min_dna_length = Math.min(parent_a_dna.length, parent_b_dna.length);
+            let parent_a = pool[Math.floor(Math.random() * pool.length)];
+            let parent_b = pool[Math.floor(Math.random() * pool.length)];
+            let min_dna_length = Math.min(parent_a.dna.length, parent_b.dna.length);
             let mid = min_dna_length / 2;
             let child_dna: Vector[] = [];
 
             for(let i = 0; i < min_dna_length; i++) {
                 if(Math.random() < this.mutationRate) child_dna.push({x: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0], y: Math.random() * (Constants.ACC_RANGE[1] - Constants.ACC_RANGE[0]) + Constants.ACC_RANGE[0]}); // TODO: implement mutation rate slider AND create a vector library
-                else if(i < mid) child_dna.push(parent_a_dna[i]);
-                else child_dna.push(parent_b_dna[i]);
+                else if(i < mid) child_dna.push(parent_a.dna[i]);
+                else child_dna.push(parent_b.dna[i]);
             }
 
             population.push(new Agent(start_node_pos.x * this.cell_width + this.cell_width / 2,
-                                      start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna));
+                                      start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna, parent_a.fitness, parent_b.fitness));
         }
 
         this.populationDeathToll = 0;

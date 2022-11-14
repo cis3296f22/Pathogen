@@ -16,12 +16,16 @@ export default class Agent {
     fitness: number;
     visited_cells: Cell[];
     last_pos: Vector;
+    parent_a_fitness: number;
+    parent_b_fitness: number;
 
-    constructor(x: number, y:number, dna?: Vector[]) {
+    constructor(x: number, y:number, dna?: Vector[], parent_a_fitness?: number, parent_b_fitness?: number) {
         this.pos = {x: x, y: y};
         this.vel = {x: 0, y: 0};
         this.acc = {x: 0, y: 0};
         this.dna = dna ?? [];
+        this.parent_a_fitness = parent_a_fitness ?? 0;
+        this.parent_b_fitness = parent_b_fitness ?? 0;
         this.age = 0;
         this.dead = false;
         this.found_target = false;
