@@ -198,8 +198,15 @@ export default class Grid {
         // The maze is no longer solved because it was updated
         this.solved = false;
 
-        if(p5.keyIsPressed)
+        // Reset dampening of cells if the maze is altered
+        for(let row of this.grid)
+            for(let cell of row) cell.resetDampening();
+
+        // Shift-click draws empty cells
+        if(p5.keyIsPressed && p5.keyCode == p5.SHIFT)
             this.grid[cy][cx].type = CELL_TYPE.empty;
+
+        // Regular click draws walls
         else
             this.grid[cy][cx].type = CELL_TYPE.wall;
     }

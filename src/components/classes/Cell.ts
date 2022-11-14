@@ -17,7 +17,7 @@ export class Cell {
         this.x = x;
         this.y = y;
         this.type = type;
-        this.dampening = 0;
+        this.dampening = 1;
     }
 
     dampen() {
@@ -26,5 +26,9 @@ export class Cell {
 
     getDampening() {
         return this.dampening;
+    }
+
+    resetDampening() {
+        this.dampening = 1;
     }
 }
