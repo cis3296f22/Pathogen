@@ -66,8 +66,7 @@ export default class Agent {
 
     // Calculates the fitness of the agent and sets the 'fitness' class variable
     calculateFitness(dampening: number) {
-        dampening /= this.visited_cells.length;
-        let fitness = 1 / this.dist / dampening;
+        let fitness = this.visited_cells.length / (this.dist * dampening);
         fitness = Math.min(fitness, Number.MAX_SAFE_INTEGER);
         if(this.found_target) fitness = Number.MAX_SAFE_INTEGER;
         this.fitness = fitness;
