@@ -76,9 +76,9 @@ export default class Grid {
 
         // Draw the agents
         p5.push();
-        p5.noStroke();
         let radius = Math.min(this.cell_width / 8, this.cell_height / 8); // TODO: see if 8 is the best factor here
         for(let agent of this.population) {
+            p5.stroke(agent.color[0] * 0.5, agent.color[1] * 0.5, agent.color[2] * 0.5);
             p5.fill(agent.color);
             p5.ellipse(agent.pos.x, agent.pos.y, radius);
         }
