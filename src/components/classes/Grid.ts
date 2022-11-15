@@ -78,7 +78,7 @@ export default class Grid {
         p5.push();
         let radius = Math.min(this.cell_width / 8, this.cell_height / 8); // TODO: see if 8 is the best factor here
         for(let agent of this.population) {
-            p5.stroke(agent.color[0] * 0.5, agent.color[1] * 0.5, agent.color[2] * 0.5);
+            p5.stroke(agent.outline);
             p5.fill(agent.color);
             p5.ellipse(agent.pos.x, agent.pos.y, radius);
         }
@@ -94,12 +94,6 @@ export default class Grid {
 
         // All agents in the current population have died
         if(this.populationDeathToll >= this.population.length) { // TODO: use variable for population size
-
-            // TODO: remove this at some point
-            p5.push();
-            p5.fill('blue');
-            p5.ellipse(ex, ey, 15);
-            p5.pop();
 
             // calculate fitness for each agent
             let max_fitness = -1;
@@ -122,12 +116,6 @@ export default class Grid {
                     my = agent.pos.y;
                 }
             }
-
-            // TODO: remove this at some point
-            p5.push();
-            p5.fill('red');
-            p5.ellipse(mx, my, 15);
-            p5.pop();
 
             // Create the mating pool
             let pool: Agent[] = [];
