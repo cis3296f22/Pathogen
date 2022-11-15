@@ -76,7 +76,7 @@ export default class Grid {
 
         // Draw the agents
         p5.push();
-        p5.stroke(255, 255);
+        p5.noStroke();
         let radius = Math.min(this.cell_width / 8, this.cell_height / 8); // TODO: see if 8 is the best factor here
         for(let agent of this.population) {
             let parent_fitness_avg = (agent.parent_a_fitness + agent.parent_b_fitness) / 2;
