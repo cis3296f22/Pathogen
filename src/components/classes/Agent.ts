@@ -17,6 +17,7 @@ export default class Agent {
     visited_cells: Cell[];
     last_pos: Vector;
     color: number[];
+    outline: number[];
 
     constructor(x: number, y:number, dna?: Vector[], color?: number[]) {
         this.pos = {x: x, y: y};
@@ -25,7 +26,8 @@ export default class Agent {
         this.dna = dna ?? [];
         this.age = 0;
         this.dead = false;
-        this.color = color ?? [255, 255, 255];
+        this.color = color ?? [255, 0, 0];
+        this.outline = [this.color[0] * 0.5, this.color[1] * 0.5, this.color[2] * 0.5];
         this.found_target = false;
         this.dist = Number.MAX_SAFE_INTEGER;
         this.fitness = 0;
