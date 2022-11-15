@@ -32,6 +32,7 @@ export default class Grid {
         this.generateMaze();
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
     }
+    
     // Creates a new, empty grid (2d array of `Cells`) and returns it
     createGrid(rows: number, cols: number) {
         let grid: Cell[][] = [];
@@ -205,7 +206,7 @@ export default class Grid {
             for(let cell of row) cell.resetDampening();
 
         // Shift-click draws empty cells
-        if(p5.keyIsPressed && p5.keyCode == p5.SHIFT)
+        if(p5.keyIsPressed && p5.keyCode === p5.SHIFT)
             this.grid[cy][cx].type = CELL_TYPE.empty;
 
         // Regular click draws walls
