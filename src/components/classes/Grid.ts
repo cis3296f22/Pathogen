@@ -79,8 +79,7 @@ export default class Grid {
         p5.noStroke();
         let radius = Math.min(this.cell_width / 8, this.cell_height / 8); // TODO: see if 8 is the best factor here
         for(let agent of this.population) {
-            let parent_fitness_avg = (agent.parent_a_fitness + agent.parent_b_fitness) / 2;
-            p5.fill(255 * (1 - parent_fitness_avg), 255 * parent_fitness_avg, 0);
+            p5.fill(agent.color);
             p5.ellipse(agent.pos.x, agent.pos.y, radius);
         }
         p5.pop();
@@ -313,8 +312,10 @@ export default class Grid {
                 else child_dna.push(parent_b.dna[i]);
             }
 
+            let parent_avg_fitness = (parent_a.fitness + parent_b.fitness) / 2;
+            let child_color = [255 * (1 - parent_avg_fitness), 255 * parent_avg_fitness, 0];
             population.push(new Agent(start_node_pos.x * this.cell_width + this.cell_width / 2,
-                                      start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna, parent_a.fitness, parent_b.fitness));
+                                      start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna, child_color));
         }
 
         this.populationDeathToll = 0;
