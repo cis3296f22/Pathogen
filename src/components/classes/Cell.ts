@@ -10,7 +10,7 @@ export class Cell {
     x: number = 0;                     // column position in the grid
     y: number = 0;                     // row position in the grid
     type: CELL_TYPE = CELL_TYPE.empty; // specifies the type of the current cell
-    visited: boolean = false;          // used for maze generation
+    visited: boolean;          // used for maze generation
     dampening: number;
 
     constructor(x: number, y: number, type: CELL_TYPE) {
@@ -18,17 +18,12 @@ export class Cell {
         this.y = y;
         this.type = type;
         this.dampening = 1;
+        this.visited = false;
     }
 
-    dampen() {
-        this.dampening++;
-    }
+    dampen() { this.dampening++; }
 
-    getDampening() {
-        return this.dampening;
-    }
+    getDampening() { return this.dampening; }
 
-    resetDampening() {
-        this.dampening = 1;
-    }
+    resetDampening() { this.dampening = 1; }
 }
