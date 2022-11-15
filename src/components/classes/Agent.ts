@@ -16,14 +16,16 @@ export default class Agent {
     fitness: number;
     visited_cells: Cell[];
     last_pos: Vector;
+    color: number[];
 
-    constructor(x: number, y:number, dna?: Vector[]) {
+    constructor(x: number, y:number, dna?: Vector[], color?: number[]) {
         this.pos = {x: x, y: y};
         this.vel = {x: 0, y: 0};
         this.acc = {x: 0, y: 0};
         this.dna = dna ?? [];
         this.age = 0;
         this.dead = false;
+        this.color = color ?? [255, 255, 255];
         this.found_target = false;
         this.dist = Number.MAX_SAFE_INTEGER;
         this.fitness = 0;

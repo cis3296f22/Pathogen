@@ -40,9 +40,12 @@ export default class Constants {
 }
 
 export class Colors {
-	static readonly PRIMARY   = '#222529';
-	static readonly SECONDARY = '#808080';
-	static readonly HOVER     = '#6c6b6b';
+	static readonly PRIMARY       = '#222529';
+    static readonly PRIMARY_RGB   = [34, 37, 41];
+	static readonly SECONDARY     = '#808080';
+    static readonly SECONDARY_RGB = [128, 128, 128];
+	static readonly HOVER         = '#6c6b6b';
+    static readonly HOVER_RGB     = [108, 107, 107];
 }
 
 export type Vector = {
