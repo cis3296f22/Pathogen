@@ -3,7 +3,6 @@ import {CELL_TYPE, Cell} from './Cell';
 import Constants, {Colors} from '../../tools/Constants';
 import type { Vector } from '../../tools/Constants';
 import Agent from './Agent';
-import { getgid } from "process";
 
 export default class Grid {
 

@@ -10,7 +10,6 @@ export type Parameters = {
 	population: number,
 	mutation: number,
 	skipVisual: boolean
-
 }
 
 export default class CanvasStyles {

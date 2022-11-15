@@ -2,7 +2,7 @@
 import React from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
-import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa'
+import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa';
 import Constants from '../../tools/Constants';
 
 // Custom styles
