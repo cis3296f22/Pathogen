@@ -32,12 +32,6 @@ export default class Grid {
         this.generateMaze();
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
     }
-    //gets values for testing
-    getDeathToll(){return this.populationDeathToll;}
-    getRows(){return this.rows;}
-    getCols(){return this.cols;}
-    getWidth(){return this.width;}
-    getHeight(){return this.height;}
     // Creates a new, empty grid (2d array of `Cells`) and returns it
     createGrid(rows: number, cols: number) {
         let grid: Cell[][] = [];
