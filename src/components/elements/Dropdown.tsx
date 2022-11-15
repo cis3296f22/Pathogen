@@ -2,7 +2,7 @@
 import React from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
-import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa';
+import { FaFastForward, FaPause, FaPlay } from 'react-icons/fa'
 import Constants from '../../tools/Constants';
 
 // Custom styles
@@ -21,13 +21,11 @@ export default class DropDown extends React.Component<DropdownProps, { open: boo
 	render (): React.ReactElement {
 		return (
 			<Styles.DropdownContainer open={this.state.open} className='dropdown-container'>
-
                 <Styles.HiddenSettings>
                     <Styles.MutationRate title='Mutation Rate' value={this.props.mutation}
                         max={Constants.MUTATION_RANGE[1]} min={Constants.MUTATION_RANGE[0]}
                         onChange={(e) => this.props.setMutation(e.target.value)} step={0.001}/>
-                </Styles.HiddenSettings>
-                
+                </Styles.HiddenSettings>   
                 <Styles.Skip icon={<BsFillLightningChargeFill/>}
                     onClick={() => this.props.skipVisual()} tooltip={'Skip Visualization'} />
                 <Styles.PlayPause icon={this.props.isPaused ? <FaPlay/> : <FaPause/>}
