@@ -34,9 +34,9 @@ export default class DropDown extends React.Component<DropdownProps, { open: boo
                     onClick={() => this.props.pausePlay()} tooltip={this.props.isPaused ? 'play' : 'pause'} />
                 <Styles.FastForward>
                     <FaFastForward/>
-                    <Slider value={this.props.speed} 
+                    <Slider value={this.props.speed} title={'Fast Forward'} hideLabel={true}
                         max={Constants.SPEED_RANGE[1]} min={Constants.SPEED_RANGE[0]}
-                        onChange={(_, value) => this.props.setSpeed(value)} step={1}/>
+                        onChange={(_, value) => this.props.setSpeed(value)} step={1} exponential/>
                 </Styles.FastForward>
                 <Styles.DropdownIcon icon={this.state.open ? <AiFillCaretUp/> : <AiFillCaretDown/>}
                     onClick={() => this.setState({open: !this.state.open})} tooltip={this.state.open ? 'close' : 'open'} />
