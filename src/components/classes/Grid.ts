@@ -97,8 +97,8 @@ export default class Grid {
 
             // calculate fitness for each agent
             let max_fitness = -1;
-            let mx = -1;
-            let my = -1;
+            // let mx = -1;
+            // let my = -1;
             for(let agent of this.population) {
 
                 // calculate and set the distance each agent is to the end node
@@ -112,8 +112,8 @@ export default class Grid {
                 // keep track of the max fitness (used for normalization)
                 if(agent.fitness > max_fitness) {
                     max_fitness = agent.fitness;
-                    mx = agent.pos.x;
-                    my = agent.pos.y;
+                    // mx = agent.pos.x;
+                    // my = agent.pos.y;
                 }
             }
 
@@ -337,7 +337,7 @@ export default class Grid {
     getCell(pos: Vector) {
         let cell_y = Math.floor(pos.y/this.cell_height);
         let cell_x = Math.floor(pos.x/this.cell_width);
-        return this.grid[cell_y][cell_x];
+        return this.grid[cell_y][cell_x] ?? this.grid[0][0];
     }
 
     setMutationRate(mutation: number) {
