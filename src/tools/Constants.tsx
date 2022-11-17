@@ -46,6 +46,7 @@ export class Colors {
     static readonly SECONDARY_RGB = [128, 128, 128];
 	static readonly HOVER         = '#6c6b6b';
     static readonly HOVER_RGB     = [108, 107, 107];
+	static readonly PRIMARY_TRANSPARENT       = '#222529AF';
 }
 
 export type Vector = {

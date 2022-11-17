@@ -33,7 +33,7 @@ export default class BannerStyles {
 	`
 
 	static readonly OffcanvasStyle = styled(Offcanvas)`
-		background-color: ${Colors.PRIMARY}AF;
+		background-color: ${Colors.PRIMARY_TRANSPARENT};
 		color: white;
 
 		& > button {
