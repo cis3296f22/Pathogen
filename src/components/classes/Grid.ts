@@ -173,9 +173,6 @@ export default class Grid {
 
     handleMouse(p5: p5Types) {
 
-        // Check if mouse is pressed
-        if(!p5.mouseIsPressed) return;
-
         // Get mouse location in the grid
         let cx = Math.floor(p5.mouseX / this.cell_width);
         let cy = Math.floor(p5.mouseY / this.cell_height);
@@ -185,6 +182,25 @@ export default class Grid {
 
         // Check that only the empty or wall nodes are being redrawn
         if(this.grid[cy][cx].type !== CELL_TYPE.empty && this.grid[cy][cx].type !== CELL_TYPE.wall) return;
+
+        // Hover effect over cells
+        p5.push();
+        switch(this.grid[cy][cx].type) {
+            case CELL_TYPE.empty: {
+                p5.fill(Colors.SECONDARY_RGB[0] * 1.5, Colors.SECONDARY_RGB[1] * 1.5, Colors.SECONDARY_RGB[2] * 1.5, 100);
+                break;
+            }
+            case CELL_TYPE.wall: {
+                p5.fill(Colors.PRIMARY_RGB[0] * 1.5, Colors.PRIMARY_RGB[1] * 1.5, Colors.PRIMARY_RGB[2] * 1.5, 100);
+                break;
+            }
+        }
+        p5.noStroke();
+        p5.rect(cx * this.cell_width, cy * this.cell_height, this.cell_width, this.cell_height);
+        p5.pop();
+
+        // Check if mouse is pressed
+        if(!p5.mouseIsPressed) return;
 
         // The maze is no longer solved because it was updated
         this.solved = false;
