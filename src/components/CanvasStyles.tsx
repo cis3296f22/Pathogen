@@ -9,7 +9,8 @@ export type Parameters = {
 	generationSkip: number,
 	population: number,
 	mutation: number,
-	skipVisual: boolean
+	skipVisual: boolean,
+	windowSize: {height: number, width: number}
 }
 
 export default class CanvasStyles {
