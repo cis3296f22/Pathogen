@@ -4,9 +4,9 @@ import Styles from './BannerStyles';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Parameters } from './CanvasStyles';
 import Constants from '../tools/Constants';
+
 import { GiHamburgerMenu } from 'react-icons/gi';
 import DropDown from './elements/Dropdown';
-import SimContext from './elements/SimContext';
 
 class Banner extends React.Component <{setParameters: Function, params: Parameters}, { show: boolean }> {
 
@@ -17,6 +17,7 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 
 	handleClose = (): void => {this.setState({ show: false })}
 	handleShow = (): void => {this.setState({ show: true })}
+
 	setRows = (rows: number): void => {
 		this.props.setParameters({...this.props.params, gridRows: rows})
 	}
@@ -68,7 +69,6 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 					{/* <Styles.BannerSettings>
 						<input type="number" min={Constants.GENERATION_RANGE[0]} max={Constants.GENERATION_RANGE[1]} onKeyDown={this.sendGeneration} value={this.state.param.generationSkip} size={4} onInput={this.setGeneration} />
 					</Styles.BannerSettings> */}
-					<SimContext generation={0} mutationRate={this.props.params.mutation} progress={50} />
 					<DropDown pausePlay={this.pausePlay} isPaused={this.props.params.pause}
 						speed={this.props.params.speed} setSpeed={this.setSpeed}
 						mutation={this.props.params.mutation} setMutation={this.setMutation}

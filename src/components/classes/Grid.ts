@@ -17,12 +17,10 @@ export default class Grid {
     cell_width: number;
     mutationRate: number;
     solved: boolean;
-    generationCount: number;
 
     constructor(rows: number, cols: number, width: number, height: number, population: number) {
         this.solved = false;
         this.populationDeathToll = 0;
-        this.generationCount = 0;
         this.rows = rows;
         this.cols = cols;
         this.width = width;
@@ -171,7 +169,6 @@ export default class Grid {
             // If the agent is not dead, update it
             agent.update();
         }
-        this.generationCount += 1;
     }
 
     handleMouse(p5: p5Types) {
