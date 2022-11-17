@@ -7,6 +7,7 @@ import Constants from '../tools/Constants';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
 import DropDown from './elements/Dropdown';
+import InfoModal from './elements/InfoModal';
 
 class Banner extends React.Component <{setParameters: Function, params: Parameters}, { show: boolean }> {
 
@@ -73,6 +74,8 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 						speed={this.props.params.speed} setSpeed={this.setSpeed}
 						mutation={this.props.params.mutation} setMutation={this.setMutation}
 						skipVisual={this.skipVisual} />
+
+					<InfoModal/>
 				</Styles.Banner>
 
 				{/* Start offcanvas stuff with menu */}

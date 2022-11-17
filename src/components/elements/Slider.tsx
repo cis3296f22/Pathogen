@@ -39,10 +39,11 @@ class Slider extends React.Component <SliderProps, {value: number}> {
 	}
 
 	render() {
+		let {title, className, exponential, hideLabel, ...sliderProperties} = this.props;
 		return (
 			<Styles.SliderContainer className={this.props.className}>
 				{this.props.title && !this.props.hideLabel ? <p>{this.props.title}: {this.props.value}</p> : <></>}
-				<RangeSlider size='sm' tooltip={'off'} step={2} {...this.props} className=''
+				<RangeSlider size='sm' tooltip={'off'} step={2} {...sliderProperties} className=''
 					onChange={this.props.exponential ? this.exponential : this.props.onChange}/>
 			</Styles.SliderContainer>
 		);
