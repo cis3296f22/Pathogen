@@ -73,7 +73,7 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 					<DropDown pausePlay={this.pausePlay} isPaused={this.props.params.pause}
 						speed={this.props.params.speed} setSpeed={this.setSpeed}
 						mutation={this.props.params.mutation} setMutation={this.setMutation}
-						skipVisual={this.skipVisual} />
+						skipVisual={this.skipVisual} windowSize={this.props.params.windowSize}/>
 
 					<InfoModal/>
 				</Styles.Banner>

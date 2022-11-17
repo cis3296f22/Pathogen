@@ -10,7 +10,8 @@ export type DropdownProps = {
     speed: number,
     mutation: number,
     setMutation: Function,
-    skipVisual: Function
+    skipVisual: Function,
+    windowSize: {height: number, width: number}
 }
 
 export default class DropdownStyles {
@@ -26,21 +27,22 @@ export default class DropdownStyles {
         & { margin-top: ${this.minimizedDropdownOffset}; }
     `;
 
-	static readonly DropdownContainer = styled.div<{open: boolean}>`
+	static readonly DropdownContainer = styled.div<{open: boolean, location: number}>`
         z-index: 100;
+        overflow: hidden;
         position: fixed;
-        right: 0;
-        background-color: ${Colors.PRIMARY};
+        right: ${props => props.location}px;
+        background-color: ${Colors.PRIMARY_TRANSPARENT};
         border-radius: 0 0 5% 5%;
         height: ${this.dropdownHeight};
         width: calc(var(--vh) * .25);
         display: grid;
-        grid-template-columns: 10% 10% 70% 10%;
+        grid-template-columns: 10% 10% 60% 10% 10%;
         grid-template-rows: 80% 20%;
         justify-items: center;
         align-items: center;
 
-        ${props => props.open ? this.OpenDropdown : this.ClosedDropdown}
+        ${props => props.open ? 'margin-top: 0px;' : this.ClosedDropdown}
 	`
 
     static readonly HiddenSettings = styled.div`
@@ -82,5 +84,22 @@ export default class DropdownStyles {
     static readonly DropdownIcon = styled(IconButton)`
         grid-row: 2;
         grid-column: 4;
+    `
+
+    static readonly DragIconContainer = styled.div<{open: boolean}>`
+        width: 100%;
+        height: 100%;
+        display: flex;
+        color: white;
+        grid-row-start: ${props => props.open ? 1 : 2};
+        grid-row-end: 3;
+        grid-column: 5;
+        background-color: ${Colors.PRIMARY};
+        justify-content: center;
+        align-items: center;
+
+        :hover {
+            cursor: pointer;
+        }
     `
 }

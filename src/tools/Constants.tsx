@@ -35,7 +35,8 @@ export default class Constants {
 		generationSkip: 0,
 		population: Constants.DEFAULT_POPULATION,
 		mutation: Constants.DEFAULT_MUTATION,
-		skipVisual: false
+		skipVisual: false,
+		windowSize: {height: 0, width: 0}
 	}
 }
 
