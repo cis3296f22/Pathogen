@@ -178,6 +178,8 @@ export default class Grid {
     }
 
     handleMouse(p5: p5Types) {
+        // Reset cursor to default
+        p5.cursor('default');
 
         // Get mouse location in the grid
         let cx = Math.floor(p5.mouseX / this.cell_width);
@@ -197,16 +199,14 @@ export default class Grid {
         cy = p5.constrain(cy, 1, this.rows - 2)
 
         // Change cursor style
-        if(this.grid[cy][cx].type == CELL_TYPE.start_node || this.grid[cy][cx].type == CELL_TYPE.end_node) {
-            p5.cursor('grab');
-        } else if(this.start_node_moving || this.end_node_moving) {
+        if(this.start_node_moving || this.end_node_moving) {
             p5.cursor('grabbing');
-        } else {
-            p5.cursor('default');
+        } else if(this.grid[cy][cx].type == CELL_TYPE.start_node || this.grid[cy][cx].type == CELL_TYPE.end_node) {
+            p5.cursor('grab');
         }
 
         // Hover effect for moving start node
-        if(this.start_node_moving && this.grid[cy][cx].type != CELL_TYPE.start_node) {
+        if(this.start_node_moving && this.grid[cy][cx].type != CELL_TYPE.start_node && this.grid[cy][cx].type != CELL_TYPE.end_node) {
             p5.push();
             p5.noStroke();
             p5.fill(0, 255, 0, 64);
@@ -216,7 +216,7 @@ export default class Grid {
         }
 
         // Hover effect for moving end node
-        if(this.end_node_moving && this.grid[cy][cx].type != CELL_TYPE.end_node) {
+        if(this.end_node_moving && this.grid[cy][cx].type != CELL_TYPE.end_node && this.grid[cy][cx].type != CELL_TYPE.start_node) {
             p5.push();
             p5.fill(255, 0, 0, 64);
             p5.noStroke();
@@ -441,18 +441,34 @@ export default class Grid {
         cx = p5.constrain(cx, 1, this.cols - 2);
         cy = p5.constrain(cy, 1, this.rows - 2)
 
+        // Start node dropped on end node (not allowed)
+        if(this.start_node_moving && this.grid[cy][cx].type == CELL_TYPE.end_node) {
+            this.start_node_moving = false;
+            return;
+        }
+
+        // End node dropped on start node (not allowed)
+        if(this.end_node_moving && this.grid[cy][cx].type == CELL_TYPE.start_node) {
+            this.end_node_moving = false;
+            return;
+        }
+
+        // Drop the start node
         if(this.start_node_moving && !(this.grid[cy][cx].type == CELL_TYPE.end_node)) {
             let start_pos = this.getStartNodePosition();
             this.grid[start_pos.y][start_pos.x].type = CELL_TYPE.empty;
             this.grid[cy][cx].type = CELL_TYPE.start_node;
             this.start_node_moving = false;
+            return;
         }
 
-        else if(this.end_node_moving && !(this.grid[cy][cx].type == CELL_TYPE.end_node)) {
+        // Drop the end node
+        if(this.end_node_moving && !(this.grid[cy][cx].type == CELL_TYPE.start_node)) {
             let end_pos = this.getEndNodePosition();
             this.grid[end_pos.y][end_pos.x].type = CELL_TYPE.empty;
             this.grid[cy][cx].type = CELL_TYPE.end_node;
             this.end_node_moving = false;
+            return;
         }
     }
 }

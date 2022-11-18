@@ -41,7 +41,7 @@ class Canvas extends React.Component <CanvasProps, {}>{
 	};
 
 	draw = (p5: p5Types) => {
-		p5.background('rgba(' + Colors.SECONDARY_RGB[0] + ',' + Colors.SECONDARY_RGB[1] + ',' + Colors.SECONDARY_RGB[2] + ',' + 0.5 + ')');
+		p5.background(Colors.SECONDARY_RGB[0], Colors.SECONDARY_RGB[1], Colors.SECONDARY_RGB[2], 127.5);
 
         this.grid.show(p5);
         this.grid.handleMouse(p5);
