@@ -30,8 +30,14 @@ class Canvas extends React.Component <CanvasProps, {}>{
 
 	setup = (p5: p5Types, parentRef: Element) => {
 		this.props.setParameters({...this.props.params, windowSize: {height: p5.windowHeight, width: p5.windowWidth}});
-		p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO).parent(parentRef);
+		let canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO).parent(parentRef);
         this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns, p5.width, p5.height, this.props.params.population);
+        canvas.mousePressed(() => {
+            this.grid.handleMousePressed(p5);
+        });
+        canvas.mouseReleased(() => {
+            this.grid.handleMouseReleased(p5);
+        });
 	};
 
 	draw = (p5: p5Types) => {
