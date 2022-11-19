@@ -17,12 +17,16 @@ export default class Grid {
     cell_width: number;
     mutationRate: number;
     solved: boolean;
+    start_node_moving: boolean;
+    end_node_moving: boolean;
 
     constructor(rows: number, cols: number, width: number, height: number, population: number) {
         this.solved = false;
         this.populationDeathToll = 0;
         this.rows = rows;
         this.cols = cols;
+        this.start_node_moving = false;
+        this.end_node_moving = false;
         this.width = width;
         this.height = height;
         this.cell_width = this.width / this.cols;
@@ -32,7 +36,7 @@ export default class Grid {
         this.generateMaze();
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
     }
-    
+
     // Creates a new, empty grid (2d array of `Cells`) and returns it
     createGrid(rows: number, cols: number) {
         let grid: Cell[][] = [];
@@ -60,10 +64,12 @@ export default class Grid {
                         break;
                     }
                     case CELL_TYPE.start_node: {
+                        p5.noStroke();
                         p5.fill(0, 255, 0);
                         break;
                     }
                     case CELL_TYPE.end_node: {
+                        p5.noStroke();
                         p5.fill(255, 0, 0);
                         break;
                     }
@@ -172,13 +178,52 @@ export default class Grid {
     }
 
     handleMouse(p5: p5Types) {
+        // Reset cursor to default
+        p5.cursor('default');
 
         // Get mouse location in the grid
         let cx = Math.floor(p5.mouseX / this.cell_width);
         let cy = Math.floor(p5.mouseY / this.cell_height);
 
+        // If cursor is off canvas, reset moving status of start and end nodes
+        if(cx < 0 || cx > this.cols - 1 || cy < 0 || cy > this.rows - 1) {
+            this.start_node_moving = false;
+            this.end_node_moving = false;
+        }
+
         // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
-        if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
+        if(!this.start_node_moving && !this.end_node_moving && (cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2)) return;
+
+        // Contrain the position to the grid (not including border walls)
+        cx = p5.constrain(cx, 1, this.cols - 2);
+        cy = p5.constrain(cy, 1, this.rows - 2)
+
+        // Change cursor style
+        if(this.start_node_moving || this.end_node_moving) {
+            p5.cursor('grabbing');
+        } else if(this.grid[cy][cx].type == CELL_TYPE.start_node || this.grid[cy][cx].type == CELL_TYPE.end_node) {
+            p5.cursor('grab');
+        }
+
+        // Hover effect for moving start node
+        if(this.start_node_moving && this.grid[cy][cx].type != CELL_TYPE.start_node && this.grid[cy][cx].type != CELL_TYPE.end_node) {
+            p5.push();
+            p5.noStroke();
+            p5.fill(0, 255, 0, 64);
+            p5.rect(cx * this.cell_width, cy * this.cell_height, this.cell_width, this.cell_height);
+            p5.pop();
+            return;
+        }
+
+        // Hover effect for moving end node
+        if(this.end_node_moving && this.grid[cy][cx].type != CELL_TYPE.end_node && this.grid[cy][cx].type != CELL_TYPE.start_node) {
+            p5.push();
+            p5.fill(255, 0, 0, 64);
+            p5.noStroke();
+            p5.rect(cx * this.cell_width, cy * this.cell_height, this.cell_width, this.cell_height);
+            p5.pop();
+            return;
+        }
 
         // Check that only the empty or wall nodes are being redrawn
         if(this.grid[cy][cx].type !== CELL_TYPE.empty && this.grid[cy][cx].type !== CELL_TYPE.wall) return;
@@ -362,5 +407,68 @@ export default class Grid {
 
     isSolved() {
         return this.solved;
+    }
+
+    handleMousePressed(p5: p5Types) {
+
+        // Get mouse location in the grid
+        let cx = Math.floor(p5.mouseX / this.cell_width);
+        let cy = Math.floor(p5.mouseY / this.cell_height);
+
+        // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
+        if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
+
+        // Check if the mouse is clicked in the start node position
+        if(this.grid[cy][cx].type == CELL_TYPE.start_node) {
+            this.start_node_moving = true;
+            return;
+        }
+
+        // Check if the mouse is clicked in the end node position
+        if(this.grid[cy][cx].type == CELL_TYPE.end_node) {
+            this.end_node_moving = true;
+            return;
+        }
+    }
+
+    handleMouseReleased(p5: p5Types) {
+
+        // Get mouse location in the grid
+        let cx = Math.floor(p5.mouseX / this.cell_width);
+        let cy = Math.floor(p5.mouseY / this.cell_height);
+
+        // Contrain the position to the grid (not including border walls)
+        cx = p5.constrain(cx, 1, this.cols - 2);
+        cy = p5.constrain(cy, 1, this.rows - 2)
+
+        // Start node dropped on end node (not allowed)
+        if(this.start_node_moving && this.grid[cy][cx].type == CELL_TYPE.end_node) {
+            this.start_node_moving = false;
+            return;
+        }
+
+        // End node dropped on start node (not allowed)
+        if(this.end_node_moving && this.grid[cy][cx].type == CELL_TYPE.start_node) {
+            this.end_node_moving = false;
+            return;
+        }
+
+        // Drop the start node
+        if(this.start_node_moving && !(this.grid[cy][cx].type == CELL_TYPE.end_node)) {
+            let start_pos = this.getStartNodePosition();
+            this.grid[start_pos.y][start_pos.x].type = CELL_TYPE.empty;
+            this.grid[cy][cx].type = CELL_TYPE.start_node;
+            this.start_node_moving = false;
+            return;
+        }
+
+        // Drop the end node
+        if(this.end_node_moving && !(this.grid[cy][cx].type == CELL_TYPE.start_node)) {
+            let end_pos = this.getEndNodePosition();
+            this.grid[end_pos.y][end_pos.x].type = CELL_TYPE.empty;
+            this.grid[cy][cx].type = CELL_TYPE.end_node;
+            this.end_node_moving = false;
+            return;
+        }
     }
 }
