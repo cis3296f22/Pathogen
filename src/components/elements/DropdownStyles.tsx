@@ -3,17 +3,6 @@ import { Colors } from '../../tools/Constants'
 import IconButton from './IconButton'
 import Slider from './Slider'
 
-export type DropdownProps = {
-	isPaused: boolean,
-    pausePlay: Function,
-    setSpeed: Function,
-    speed: number,
-    mutation: number,
-    setMutation: Function,
-    skipVisual: Function,
-    windowSize: {height: number, width: number}
-}
-
 export default class DropdownStyles {
 
     static readonly dropdownHeight = `calc(var(--vh) * .125)`;
@@ -42,7 +31,7 @@ export default class DropdownStyles {
         justify-items: center;
         align-items: center;
 
-        ${props => props.open ? 'margin-top: 0px;' : this.ClosedDropdown}
+        ${props => props.open ? this.OpenDropdown : this.ClosedDropdown}
 	`
 
     static readonly HiddenSettings = styled.div`
@@ -54,10 +43,10 @@ export default class DropdownStyles {
     `
 
     static readonly MutationRate = styled(Slider)`
+        padding-left: 5%;
+        padding-right: 5%;
         width: 100%;
         color: white;
-        display: flex;
-		justify-content: space-around;
     `
 
     static readonly Skip = styled(IconButton)`

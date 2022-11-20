@@ -6,7 +6,6 @@ import Canvas from './components/Canvas';
 import { Parameters } from './components/CanvasStyles';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import Constants from './tools/Constants';
 import { useWindowWidth } from './tools/HelpfulFunctions';
 

@@ -201,12 +201,12 @@ export default class Grid {
         // Change cursor style
         if(this.start_node_moving || this.end_node_moving) {
             p5.cursor('grabbing');
-        } else if(this.grid[cy][cx].type == CELL_TYPE.start_node || this.grid[cy][cx].type == CELL_TYPE.end_node) {
+        } else if(this.grid[cy][cx].type === CELL_TYPE.start_node || this.grid[cy][cx].type === CELL_TYPE.end_node) {
             p5.cursor('grab');
         }
 
         // Hover effect for moving start node
-        if(this.start_node_moving && this.grid[cy][cx].type != CELL_TYPE.start_node && this.grid[cy][cx].type != CELL_TYPE.end_node) {
+        if(this.start_node_moving && this.grid[cy][cx].type !== CELL_TYPE.start_node && this.grid[cy][cx].type !== CELL_TYPE.end_node) {
             p5.push();
             p5.noStroke();
             p5.fill(0, 255, 0, 64);
@@ -216,7 +216,7 @@ export default class Grid {
         }
 
         // Hover effect for moving end node
-        if(this.end_node_moving && this.grid[cy][cx].type != CELL_TYPE.end_node && this.grid[cy][cx].type != CELL_TYPE.start_node) {
+        if(this.end_node_moving && this.grid[cy][cx].type !== CELL_TYPE.end_node && this.grid[cy][cx].type !== CELL_TYPE.start_node) {
             p5.push();
             p5.fill(255, 0, 0, 64);
             p5.noStroke();
@@ -274,8 +274,8 @@ export default class Grid {
     /**
      * Make a new class to regenerate the grid and population
      */
-    generateNewMaze(rows: number, cols: number, population: number) {
-        let newGrid = new Grid(rows, cols, this.width, this.height, population);
+    generateNewMaze(rows: number, cols: number, population?: number) {
+        let newGrid = new Grid(rows, cols, this.width, this.height, population ?? this.population.length);
         return newGrid;
     }
 
@@ -398,7 +398,7 @@ export default class Grid {
     getCell(pos: Vector) {
         let cell_y = Math.floor(pos.y/this.cell_height);
         let cell_x = Math.floor(pos.x/this.cell_width);
-        return this.grid[cell_y][cell_x] ?? this.grid[0][0];
+        return this.grid[cell_y] ? this.grid[cell_y][cell_x] : this.grid[0][0];
     }
 
     setMutationRate(mutation: number) {
@@ -419,13 +419,13 @@ export default class Grid {
         if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
 
         // Check if the mouse is clicked in the start node position
-        if(this.grid[cy][cx].type == CELL_TYPE.start_node) {
+        if(this.grid[cy][cx].type === CELL_TYPE.start_node) {
             this.start_node_moving = true;
             return;
         }
 
         // Check if the mouse is clicked in the end node position
-        if(this.grid[cy][cx].type == CELL_TYPE.end_node) {
+        if(this.grid[cy][cx].type === CELL_TYPE.end_node) {
             this.end_node_moving = true;
             return;
         }
@@ -442,19 +442,19 @@ export default class Grid {
         cy = p5.constrain(cy, 1, this.rows - 2)
 
         // Start node dropped on end node (not allowed)
-        if(this.start_node_moving && this.grid[cy][cx].type == CELL_TYPE.end_node) {
+        if(this.start_node_moving && this.grid[cy][cx].type === CELL_TYPE.end_node) {
             this.start_node_moving = false;
             return;
         }
 
         // End node dropped on start node (not allowed)
-        if(this.end_node_moving && this.grid[cy][cx].type == CELL_TYPE.start_node) {
+        if(this.end_node_moving && this.grid[cy][cx].type === CELL_TYPE.start_node) {
             this.end_node_moving = false;
             return;
         }
 
         // Drop the start node
-        if(this.start_node_moving && !(this.grid[cy][cx].type == CELL_TYPE.end_node)) {
+        if(this.start_node_moving && !(this.grid[cy][cx].type === CELL_TYPE.end_node)) {
             let start_pos = this.getStartNodePosition();
             this.grid[start_pos.y][start_pos.x].type = CELL_TYPE.empty;
             this.grid[cy][cx].type = CELL_TYPE.start_node;
@@ -463,7 +463,7 @@ export default class Grid {
         }
 
         // Drop the end node
-        if(this.end_node_moving && !(this.grid[cy][cx].type == CELL_TYPE.start_node)) {
+        if(this.end_node_moving && !(this.grid[cy][cx].type === CELL_TYPE.start_node)) {
             let end_pos = this.getEndNodePosition();
             this.grid[end_pos.y][end_pos.x].type = CELL_TYPE.empty;
             this.grid[cy][cx].type = CELL_TYPE.end_node;
@@ -471,4 +471,6 @@ export default class Grid {
             return;
         }
     }
+
+    setPopulation(pop: number) { this.population = this.createPopulation(pop); }
 }

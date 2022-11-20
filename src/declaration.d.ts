@@ -7,3 +7,4 @@ declare module '*.otf';
 declare module '*.eot';
 declare module '*.pdf';
 declare module '*.webm';
+declare module '*.scss';

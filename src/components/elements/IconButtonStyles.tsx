@@ -13,7 +13,7 @@ export type IconButtonProps = {
 export default class IconButtonStyles {
 	static readonly IconContainer = styled.a`
 		display: flex;
-        font-size: 100%;
+        font-size: calc(var(--vh) * .015);;
         border-radius: 100%;
         color: white;
         align-items: center;
@@ -25,10 +25,11 @@ export default class IconButtonStyles {
         }
 	`
 
+    // TODO: Figure out tooltip positioning
     static readonly Tooltip = styled.div<{hover: boolean}>`
         position: relative;
         top: -20%;
-        left: 50%; // TODO: Figure out tooltip positioning
+        left: 50%;
         margin: 10%;
         padding-left: 10%;
         padding-right: 10%;
