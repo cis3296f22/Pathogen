@@ -12,8 +12,8 @@ export class FONT_FAMILY {
 
 export default class Constants {
 	static readonly BANNER_HEIGHT_RATIO = 0.15;
-	static readonly ROW_RANGE         	= [7, 51];
-	static readonly COL_RANGE         	= [7, 101];
+	static readonly ROW_RANGE         	= [7, 21];
+	static readonly COL_RANGE         	= [7, 31];
 	static readonly POPULATION_RANGE   	= [40, 400];
 	static readonly SPEED_RANGE         = [1, 1000];
 	static readonly GENERATION_RANGE    = [0, 100];
@@ -38,6 +38,8 @@ export default class Constants {
 		skipVisual: false,
 		windowSize: {height: 0, width: 0}
 	}
+
+	static readonly PARAGRAPH_FONT_SIZE = 'font-size: calc(var(--vh) * .009);';
 }
 
 export class Colors {
@@ -47,6 +49,7 @@ export class Colors {
     static readonly SECONDARY_RGB = [128, 128, 128];
 	static readonly HOVER         = '#6c6b6b';
     static readonly HOVER_RGB     = [108, 107, 107];
+	static readonly BLUE = '#42abc2';
 	static readonly PRIMARY_TRANSPARENT       = '#222529AF';
 }
 

@@ -7,13 +7,26 @@ import { MdDragIndicator } from 'react-icons/md';
 import Constants from '../../tools/Constants';
 
 // Custom styles
-import Styles, { DropdownProps } from './DropdownStyles'
+import Styles from './DropdownStyles'
 import Slider from './Slider';
 
 type DropdownState = {
     open: boolean,
     location: number,
     dragging: boolean
+}
+
+type DropdownProps = {
+	isPaused: boolean,
+    pausePlay: Function,
+    setSpeed: Function,
+    speed: number,
+    mutation: number,
+    setMutation: Function,
+    skipVisual: Function,
+    population: number,
+    setPopulation: Function,
+    windowSize: {height: number, width: number}
 }
 
 export default class DropDown extends React.Component<DropdownProps, DropdownState> {
@@ -58,12 +71,15 @@ export default class DropDown extends React.Component<DropdownProps, DropdownSta
 
 	render (): React.ReactElement {
 		return (
-			<Styles.DropdownContainer open={this.state.open} location={this.state.location} className='dropdown-container'>
+			<Styles.DropdownContainer open={this.state.open} location={this.state.location > this.props.windowSize.width ? 0 : this.state.location} className='dropdown-container'>
 
                 <Styles.HiddenSettings>
                     <Styles.MutationRate title='Mutation Rate' value={this.props.mutation}
                         max={Constants.MUTATION_RANGE[1]} min={Constants.MUTATION_RANGE[0]}
                         onChange={(e) => this.props.setMutation(e.target.value)} step={0.001}/>
+                    <Styles.MutationRate title='Population' value={this.props.population} 
+						max={Constants.POPULATION_RANGE[1]} min={Constants.POPULATION_RANGE[0]}
+						onChange={(e) => this.props.setPopulation(parseInt(e.target.value))}/>
                 </Styles.HiddenSettings>
                 
                 <Styles.Skip icon={<BsFillLightningChargeFill/>}

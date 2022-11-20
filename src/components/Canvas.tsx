@@ -80,13 +80,13 @@ class Canvas extends React.Component <CanvasProps, {}>{
 		if (prevProps.params.apply !== this.props.params.apply) {
 			this.grid = this.grid.generateNewMaze(
 				this.props.params.gridRows,
-				this.props.params.gridColumns,
-				this.props.params.population
+				this.props.params.gridColumns
 			);
 		}
 
 		// If the mutation rate has changed, update it right away
 		if (prevProps.params.mutation !== this.props.params.mutation) this.grid.setMutationRate(this.props.params.mutation);
+		if (prevProps.params.population !== this.props.params.population) this.grid.setPopulation(this.props.params.population);
 	}
 
 	render() {
