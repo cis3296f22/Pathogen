@@ -173,7 +173,15 @@ export default class Grid {
             agent.setLastPosition(agent.pos.x, agent.pos.y);
 
             // If the agent is not dead, update it
+            let ppos = this.getCell(agent.pos);
             agent.update();
+
+            // Check if the agent went through a diagonal (not allowed)
+            let pos = this.getCell(agent.pos);
+            if(Math.abs(ppos.x - pos.x) + Math.abs(ppos.y - pos.y) > 1) {
+                agent.kill();
+                this.populationDeathToll++;
+            }
         }
     }
 
