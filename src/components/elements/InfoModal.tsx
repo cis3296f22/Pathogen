@@ -21,7 +21,7 @@ export default class InfoModal extends React.Component<{}, {open: boolean}> {
 	render (): React.ReactElement {
 		return (
             <>
-                <IconButton icon={<AiOutlineInfoCircle/>} onClick={this.open}/>
+                <IconButton icon={<AiOutlineInfoCircle/>} onClick={this.open} tooltip={'Info'}/>
                 <Styles.ModalContainer dialogClassName={'dialogueClass'} show={this.state.open} onHide={this.close}>
                     <Modal.Header>
                         <Modal.Title>Help</Modal.Title>

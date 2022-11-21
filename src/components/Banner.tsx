@@ -27,30 +27,9 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 		this.props.setParameters({...this.props.params, gridColumns: cols})
 	}
 
-	setPopulation = (population: number): void => {
-		this.props.setParameters({...this.props.params, population: population})
-	}
-
-	pausePlay = (): void => {
-		let inv_pause = !this.props.params.pause;
-		this.props.setParameters({...this.props.params, pause: inv_pause})
-	}
-
 	apply = (): void => {
 		let inv_apply = !this.props.params.apply;
 		this.props.setParameters({...this.props.params, apply: inv_apply})
-	}
-
-	setSpeed = (speed: number): void => {
-		this.props.setParameters({...this.props.params, speed: speed})
-	}
-
-	setMutation = (mutation: number): void => {
-		this.props.setParameters({...this.props.params, mutation: mutation})
-	}
-
-	skipVisual = (): void => {
-		this.props.setParameters({...this.props.params, skipVisual: true})
 	}
 
 	render() {
@@ -58,12 +37,7 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 			<>
 				<Styles.Banner>
 					<Styles.Hamburger as={GiHamburgerMenu} onClick={this.handleShow}/>
-					<DropDown pausePlay={this.pausePlay} isPaused={this.props.params.pause}
-						speed={this.props.params.speed} setSpeed={this.setSpeed}
-						mutation={this.props.params.mutation} setMutation={this.setMutation}
-						skipVisual={this.skipVisual} windowSize={this.props.params.windowSize}
-						population={this.props.params.population} setPopulation={this.setPopulation}/>
-
+					<DropDown setParameters={this.props.setParameters} params={this.props.params}/>
 					<InfoModal/>
 				</Styles.Banner>
 
