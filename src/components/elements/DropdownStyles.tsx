@@ -42,7 +42,7 @@ export default class DropdownStyles {
         grid-column-end: 5;
     `
 
-    static readonly MutationRate = styled(Slider)`
+    static readonly HiddenSliders = styled(Slider)`
         padding-left: 5%;
         padding-right: 5%;
         width: 100%;
@@ -83,7 +83,7 @@ export default class DropdownStyles {
         grid-row-start: ${props => props.open ? 1 : 2};
         grid-row-end: 3;
         grid-column: 5;
-        background-color: ${Colors.PRIMARY};
+        background-color: ${Colors.PRIMARY_TRANSPARENT};
         justify-content: center;
         align-items: center;
 
