@@ -274,9 +274,15 @@ export default class Grid {
     updateCells(height: number, width: number) {
         this.width = height;
         this.height = width;
+        this.solved = false;
+        let prev_cell_width = this.cell_width;
+        let prev_cell_height = this.cell_height;
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
-        this.solved = false;
+        for(let agent of this.population) {
+            agent.pos.x *= this.cell_width / prev_cell_width;
+            agent.pos.y *= this.cell_height / prev_cell_height;
+        }
     }
 
     /**
