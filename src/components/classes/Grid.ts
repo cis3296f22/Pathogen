@@ -377,6 +377,7 @@ export default class Grid {
 
             let parent_avg_fitness = (parent_a.fitness + parent_b.fitness) / 2;
             let child_color = [255 * (1 - parent_avg_fitness), 255 * parent_avg_fitness, 0];
+            console.log(child_color);
             population.push(new Agent(start_node_pos.x * this.cell_width + this.cell_width / 2,
                                       start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna, child_color));
         }

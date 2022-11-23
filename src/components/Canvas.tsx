@@ -13,6 +13,7 @@ import Grid from "./classes/Grid";
 import CanvasStyles, { Parameters } from './CanvasStyles';
 import Constants from '../tools/Constants';
 import {Colors} from '../tools/Constants';
+import InfoModal from './elements/InfoModal';
 
 export type CanvasProps = {
 	params: Parameters,
@@ -92,6 +93,7 @@ class Canvas extends React.Component <CanvasProps, {}>{
 	render() {
 		return (
 			<CanvasStyles.Canvas>
+				<InfoModal/>
 				<Sketch setup={ this.setup } draw={ this.draw } windowResized={ this.windowResized }/>
 			</CanvasStyles.Canvas>
 		);
