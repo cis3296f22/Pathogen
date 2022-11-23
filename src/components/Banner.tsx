@@ -7,7 +7,6 @@ import Constants from '../tools/Constants';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
 import DropDown from './elements/Dropdown';
-import InfoModal from './elements/InfoModal';
 
 class Banner extends React.Component <{setParameters: Function, params: Parameters}, { show: boolean }> {
 
@@ -38,7 +37,6 @@ class Banner extends React.Component <{setParameters: Function, params: Paramete
 				<Styles.Banner>
 					<Styles.Hamburger as={GiHamburgerMenu} onClick={this.handleShow}/>
 					<DropDown setParameters={this.props.setParameters} params={this.props.params}/>
-					<InfoModal/>
 				</Styles.Banner>
 
 				{/* Start offcanvas stuff with menu */}

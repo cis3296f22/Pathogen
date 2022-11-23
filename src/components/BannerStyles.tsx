@@ -20,7 +20,6 @@ export default class BannerStyles {
 	static readonly Hamburger = styled(GiHamburgerMenu)`
 		font-size: calc(var(--vh) * .04);
 		color: ${Colors.PRIMARY};
-
 		margin: calc(var(--vh) * .01);
 		:hover {
 			color: ${Colors.SECONDARY};
