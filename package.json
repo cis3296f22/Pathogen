@@ -108,6 +108,7 @@
     "react-test-renderer": "^18.2.0",
     "sass": "^1.56.1",
     "styled-components": "^5.3.6",
+    "typedoc": "^0.23.21",
     "uuidv4": "^6.2.13",
     "wait-on": "^6.0.1"
   },
