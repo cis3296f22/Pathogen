@@ -6,7 +6,7 @@ import arcaFont1 from './assets/fonts/arcamajora3-heavy-webfont.otf'
 import arcaFont2 from './assets/fonts/arcamajora3-heavy-webfont.eot'
 import arcaFont3 from './assets/fonts/arcamajora3-heavy-webfont.woff2'
 import arcaFont4 from './assets/fonts/arcamajora3-heavy-webfont.woff'
-import Constants from './tools/Constants'
+import Constants, { Colors } from './tools/Constants'
 
 export const GlobalStyles = createGlobalStyle`
 	@font-face {
@@ -43,6 +43,7 @@ export const GlobalStyles = createGlobalStyle`
 		margin:0;
 		padding:0;
 		overflow: hidden;
+		background-color: ${Colors.PRIMARY}
 	}
 
 	canvas {

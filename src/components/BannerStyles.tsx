@@ -20,7 +20,6 @@ export default class BannerStyles {
 	static readonly Hamburger = styled(GiHamburgerMenu)`
 		font-size: calc(var(--vh) * .04);
 		color: ${Colors.PRIMARY};
-
 		margin: calc(var(--vh) * .01);
 		:hover {
 			color: ${Colors.SECONDARY};
@@ -30,16 +29,32 @@ export default class BannerStyles {
 
 	static readonly SliderStyle = styled(Slider)`
 		padding: 4%;
+		
+		& > p {
+			font-size: calc(var(--vh) * .016);
+		}
 	`
 
-	static readonly OffcanvasStyle = styled(Offcanvas)`
-		background-color: ${Colors.PRIMARY}AF;
+	static readonly OffcanvasContainer = styled(Offcanvas)`
+		background-color: ${Colors.PRIMARY_TRANSPARENT};
 		color: white;
+		width: calc(var(--vh) * .3) !important;
 
 		& > button {
 			margin: 4%;
 			width: 80%;
 			align-self: center;
+		}
+
+		& > .offcanvas-header > .offcanvas-title {
+			font-size: calc(var(--vh) * .02);
+		}
+	`
+
+	static readonly ApplyButton = styled.button`
+		&, :hover {
+			background-color: ${Colors.BLUE};
+			border-color: ${Colors.BLUE};
 		}
 	`
 }

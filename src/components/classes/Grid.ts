@@ -17,14 +17,16 @@ export default class Grid {
     cell_width: number;
     mutationRate: number;
     solved: boolean;
-    generationCount: number;
+    start_node_moving: boolean;
+    end_node_moving: boolean;
 
     constructor(rows: number, cols: number, width: number, height: number, population: number) {
         this.solved = false;
         this.populationDeathToll = 0;
-        this.generationCount = 0;
         this.rows = rows;
         this.cols = cols;
+        this.start_node_moving = false;
+        this.end_node_moving = false;
         this.width = width;
         this.height = height;
         this.cell_width = this.width / this.cols;
@@ -34,7 +36,7 @@ export default class Grid {
         this.generateMaze();
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
     }
-    
+
     // Creates a new, empty grid (2d array of `Cells`) and returns it
     createGrid(rows: number, cols: number) {
         let grid: Cell[][] = [];
@@ -62,10 +64,12 @@ export default class Grid {
                         break;
                     }
                     case CELL_TYPE.start_node: {
+                        p5.noStroke();
                         p5.fill(0, 255, 0);
                         break;
                     }
                     case CELL_TYPE.end_node: {
+                        p5.noStroke();
                         p5.fill(255, 0, 0);
                         break;
                     }
@@ -99,8 +103,8 @@ export default class Grid {
 
             // calculate fitness for each agent
             let max_fitness = -1;
-            let mx = -1;
-            let my = -1;
+            // let mx = -1;
+            // let my = -1;
             for(let agent of this.population) {
 
                 // calculate and set the distance each agent is to the end node
@@ -114,8 +118,8 @@ export default class Grid {
                 // keep track of the max fitness (used for normalization)
                 if(agent.fitness > max_fitness) {
                     max_fitness = agent.fitness;
-                    mx = agent.pos.x;
-                    my = agent.pos.y;
+                    // mx = agent.pos.x;
+                    // my = agent.pos.y;
                 }
             }
 
@@ -169,25 +173,87 @@ export default class Grid {
             agent.setLastPosition(agent.pos.x, agent.pos.y);
 
             // If the agent is not dead, update it
+            let ppos = this.getCell(agent.pos);
             agent.update();
+
+            // Check if the agent went through a diagonal (not allowed)
+            let pos = this.getCell(agent.pos);
+            if(Math.abs(ppos.x - pos.x) + Math.abs(ppos.y - pos.y) > 1) {
+                agent.kill();
+                this.populationDeathToll++;
+            }
         }
-        this.generationCount += 1;
     }
 
     handleMouse(p5: p5Types) {
-
-        // Check if mouse is pressed
-        if(!p5.mouseIsPressed) return;
+        // Reset cursor to default
+        p5.cursor('default');
 
         // Get mouse location in the grid
         let cx = Math.floor(p5.mouseX / this.cell_width);
         let cy = Math.floor(p5.mouseY / this.cell_height);
 
+        // If cursor is off canvas, reset moving status of start and end nodes
+        if(cx < 0 || cx > this.cols - 1 || cy < 0 || cy > this.rows - 1) {
+            this.start_node_moving = false;
+            this.end_node_moving = false;
+        }
+
         // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
-        if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
+        if(!this.start_node_moving && !this.end_node_moving && (cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2)) return;
+
+        // Contrain the position to the grid (not including border walls)
+        cx = p5.constrain(cx, 1, this.cols - 2);
+        cy = p5.constrain(cy, 1, this.rows - 2)
+
+        // Change cursor style
+        if(this.start_node_moving || this.end_node_moving) {
+            p5.cursor('grabbing');
+        } else if(this.grid[cy][cx].type === CELL_TYPE.start_node || this.grid[cy][cx].type === CELL_TYPE.end_node) {
+            p5.cursor('grab');
+        }
+
+        // Hover effect for moving start node
+        if(this.start_node_moving && this.grid[cy][cx].type !== CELL_TYPE.start_node && this.grid[cy][cx].type !== CELL_TYPE.end_node) {
+            p5.push();
+            p5.noStroke();
+            p5.fill(0, 255, 0, 64);
+            p5.rect(cx * this.cell_width, cy * this.cell_height, this.cell_width, this.cell_height);
+            p5.pop();
+            return;
+        }
+
+        // Hover effect for moving end node
+        if(this.end_node_moving && this.grid[cy][cx].type !== CELL_TYPE.end_node && this.grid[cy][cx].type !== CELL_TYPE.start_node) {
+            p5.push();
+            p5.fill(255, 0, 0, 64);
+            p5.noStroke();
+            p5.rect(cx * this.cell_width, cy * this.cell_height, this.cell_width, this.cell_height);
+            p5.pop();
+            return;
+        }
 
         // Check that only the empty or wall nodes are being redrawn
         if(this.grid[cy][cx].type !== CELL_TYPE.empty && this.grid[cy][cx].type !== CELL_TYPE.wall) return;
+
+        // Hover effect over cells
+        p5.push();
+        switch(this.grid[cy][cx].type) {
+            case CELL_TYPE.empty: {
+                p5.fill(Colors.SECONDARY_RGB[0] * 1.5, Colors.SECONDARY_RGB[1] * 1.5, Colors.SECONDARY_RGB[2] * 1.5, 100);
+                break;
+            }
+            case CELL_TYPE.wall: {
+                p5.fill(Colors.PRIMARY_RGB[0] * 1.5, Colors.PRIMARY_RGB[1] * 1.5, Colors.PRIMARY_RGB[2] * 1.5, 100);
+                break;
+            }
+        }
+        p5.noStroke();
+        p5.rect(cx * this.cell_width, cy * this.cell_height, this.cell_width, this.cell_height);
+        p5.pop();
+
+        // Check if mouse is pressed
+        if(!p5.mouseIsPressed) return;
 
         // The maze is no longer solved because it was updated
         this.solved = false;
@@ -208,16 +274,22 @@ export default class Grid {
     updateCells(height: number, width: number) {
         this.width = height;
         this.height = width;
+        this.solved = false;
+        let prev_cell_width = this.cell_width;
+        let prev_cell_height = this.cell_height;
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
-        this.solved = false;
+        for(let agent of this.population) {
+            agent.pos.x *= this.cell_width / prev_cell_width;
+            agent.pos.y *= this.cell_height / prev_cell_height;
+        }
     }
 
     /**
      * Make a new class to regenerate the grid and population
      */
-    generateNewMaze(rows: number, cols: number, population: number) {
-        let newGrid = new Grid(rows, cols, this.width, this.height, population);
+    generateNewMaze(rows: number, cols: number, population?: number) {
+        let newGrid = new Grid(rows, cols, this.width, this.height, population ?? this.population.length);
         return newGrid;
     }
 
@@ -305,6 +377,7 @@ export default class Grid {
 
             let parent_avg_fitness = (parent_a.fitness + parent_b.fitness) / 2;
             let child_color = [255 * (1 - parent_avg_fitness), 255 * parent_avg_fitness, 0];
+            console.log(child_color);
             population.push(new Agent(start_node_pos.x * this.cell_width + this.cell_width / 2,
                                       start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna, child_color));
         }
@@ -340,7 +413,7 @@ export default class Grid {
     getCell(pos: Vector) {
         let cell_y = Math.floor(pos.y/this.cell_height);
         let cell_x = Math.floor(pos.x/this.cell_width);
-        return this.grid[cell_y][cell_x];
+        return this.grid[cell_y] ? this.grid[cell_y][cell_x] : this.grid[0][0];
     }
 
     setMutationRate(mutation: number) {
@@ -350,4 +423,69 @@ export default class Grid {
     isSolved() {
         return this.solved;
     }
+
+    handleMousePressed(p5: p5Types) {
+
+        // Get mouse location in the grid
+        let cx = Math.floor(p5.mouseX / this.cell_width);
+        let cy = Math.floor(p5.mouseY / this.cell_height);
+
+        // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
+        if(cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2) return;
+
+        // Check if the mouse is clicked in the start node position
+        if(this.grid[cy][cx].type === CELL_TYPE.start_node) {
+            this.start_node_moving = true;
+            return;
+        }
+
+        // Check if the mouse is clicked in the end node position
+        if(this.grid[cy][cx].type === CELL_TYPE.end_node) {
+            this.end_node_moving = true;
+            return;
+        }
+    }
+
+    handleMouseReleased(p5: p5Types) {
+
+        // Get mouse location in the grid
+        let cx = Math.floor(p5.mouseX / this.cell_width);
+        let cy = Math.floor(p5.mouseY / this.cell_height);
+
+        // Contrain the position to the grid (not including border walls)
+        cx = p5.constrain(cx, 1, this.cols - 2);
+        cy = p5.constrain(cy, 1, this.rows - 2)
+
+        // Start node dropped on end node (not allowed)
+        if(this.start_node_moving && this.grid[cy][cx].type === CELL_TYPE.end_node) {
+            this.start_node_moving = false;
+            return;
+        }
+
+        // End node dropped on start node (not allowed)
+        if(this.end_node_moving && this.grid[cy][cx].type === CELL_TYPE.start_node) {
+            this.end_node_moving = false;
+            return;
+        }
+
+        // Drop the start node
+        if(this.start_node_moving && !(this.grid[cy][cx].type === CELL_TYPE.end_node)) {
+            let start_pos = this.getStartNodePosition();
+            this.grid[start_pos.y][start_pos.x].type = CELL_TYPE.empty;
+            this.grid[cy][cx].type = CELL_TYPE.start_node;
+            this.start_node_moving = false;
+            return;
+        }
+
+        // Drop the end node
+        if(this.end_node_moving && !(this.grid[cy][cx].type === CELL_TYPE.start_node)) {
+            let end_pos = this.getEndNodePosition();
+            this.grid[end_pos.y][end_pos.x].type = CELL_TYPE.empty;
+            this.grid[cy][cx].type = CELL_TYPE.end_node;
+            this.end_node_moving = false;
+            return;
+        }
+    }
+
+    setPopulation(pop: number) { this.population = this.createPopulation(pop); }
 }

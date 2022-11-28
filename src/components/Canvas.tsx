@@ -13,6 +13,7 @@ import Grid from "./classes/Grid";
 import CanvasStyles, { Parameters } from './CanvasStyles';
 import Constants from '../tools/Constants';
 import {Colors} from '../tools/Constants';
+import InfoModal from './elements/InfoModal';
 
 export type CanvasProps = {
 	params: Parameters,
@@ -29,15 +30,22 @@ class Canvas extends React.Component <CanvasProps, {}>{
 	}
 
 	setup = (p5: p5Types, parentRef: Element) => {
-		p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO).parent(parentRef);
+		this.props.setParameters({...this.props.params, windowSize: {height: p5.windowHeight, width: p5.windowWidth}});
+		let canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO).parent(parentRef);
         this.grid = new Grid(this.props.params.gridRows, this.props.params.gridColumns, p5.width, p5.height, this.props.params.population);
+        canvas.mousePressed(() => {
+            this.grid.handleMousePressed(p5);
+        });
+        canvas.mouseReleased(() => {
+            this.grid.handleMouseReleased(p5);
+        });
 	};
 
 	draw = (p5: p5Types) => {
-		p5.background('rgba(' + Colors.SECONDARY_RGB[0] + ',' + Colors.SECONDARY_RGB[1] + ',' + Colors.SECONDARY_RGB[2] + ',' + 0.5 + ')');
+		p5.background(Colors.SECONDARY_RGB[0], Colors.SECONDARY_RGB[1], Colors.SECONDARY_RGB[2], 127.5);
 
-        this.grid.handleMouse(p5);
         this.grid.show(p5);
+        this.grid.handleMouse(p5);
 
         // User paused
         if (this.props.params.pause) return;
@@ -59,9 +67,10 @@ class Canvas extends React.Component <CanvasProps, {}>{
 	};
 
 	windowResized = (p5: p5Types) => {
+		this.props.setParameters({...this.props.params, windowSize: {height: p5.windowHeight, width: p5.windowWidth}});
 		if (!isMobile) {
-			p5.createCanvas(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO);
-			this.grid.updateCells(p5.windowWidth, p5.windowHeight - this.props.windowWidth * Constants.BANNER_HEIGHT_RATIO);
+			p5.createCanvas(p5.windowWidth, p5.windowHeight - p5.windowWidth * Constants.BANNER_HEIGHT_RATIO);
+			this.grid.updateCells(p5.windowWidth, p5.windowHeight - p5.windowWidth * Constants.BANNER_HEIGHT_RATIO);
 		}
 	}
 
@@ -72,18 +81,19 @@ class Canvas extends React.Component <CanvasProps, {}>{
 		if (prevProps.params.apply !== this.props.params.apply) {
 			this.grid = this.grid.generateNewMaze(
 				this.props.params.gridRows,
-				this.props.params.gridColumns,
-				this.props.params.population
+				this.props.params.gridColumns
 			);
 		}
 
 		// If the mutation rate has changed, update it right away
 		if (prevProps.params.mutation !== this.props.params.mutation) this.grid.setMutationRate(this.props.params.mutation);
+		if (prevProps.params.population !== this.props.params.population) this.grid.setPopulation(this.props.params.population);
 	}
 
 	render() {
 		return (
 			<CanvasStyles.Canvas>
+				<InfoModal/>
 				<Sketch setup={ this.setup } draw={ this.draw } windowResized={ this.windowResized }/>
 			</CanvasStyles.Canvas>
 		);

@@ -13,8 +13,6 @@ export type IconButtonProps = {
 export default class IconButtonStyles {
 	static readonly IconContainer = styled.a`
 		display: flex;
-        font-size: 100%;
-        border-radius: 100%;
         color: white;
         align-items: center;
         justify-content: center;
@@ -25,17 +23,20 @@ export default class IconButtonStyles {
         }
 	`
 
-    static readonly Tooltip = styled.div<{hover: boolean}>`
-        position: relative;
-        top: -20%;
-        left: 50%; // TODO: Figure out tooltip positioning
-        margin: 10%;
-        padding-left: 10%;
-        padding-right: 10%;
-        border-radius: 10%;
+    // TODO: Figure out tooltip positioning
+    static readonly Tooltip = styled.div<{hover: boolean, position: {left: number, top: number}}>`
+        position: fixed;
+        /* z-index: 110; */
+        visibility: ${props => props.hover ? 'visible' : 'hidden'};
+        top: ${props => props.position.top}px;
+        left: ${props => props.position.left}px;
+        font-size: calc(var(--vh) * .01);
+        padding-left: calc(var(--vh) * .01);
+        padding-right: calc(var(--vh) * .01);
+        border-radius: 100px;
         background-color: ${Colors.PRIMARY};
         color: white;
-        opacity: ${props => props.hover ? 0.8 : 0};
-        transition: opacity 0.4s;
+        opacity: ${props => props.hover ? 0.7 : 0};
+        transition: ${props => props.hover ? 'visibility 0s, opacity 0.4s' : 'visibility 0.4s, opacity 0.4s'};
     `
 }

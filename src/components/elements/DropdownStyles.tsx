@@ -3,16 +3,6 @@ import { Colors } from '../../tools/Constants'
 import IconButton from './IconButton'
 import Slider from './Slider'
 
-export type DropdownProps = {
-	isPaused: boolean,
-    pausePlay: Function,
-    setSpeed: Function,
-    speed: number,
-    mutation: number,
-    setMutation: Function,
-    skipVisual: Function
-}
-
 export default class DropdownStyles {
 
     static readonly dropdownHeight = `calc(var(--vh) * .125)`;
@@ -26,16 +16,17 @@ export default class DropdownStyles {
         & { margin-top: ${this.minimizedDropdownOffset}; }
     `;
 
-	static readonly DropdownContainer = styled.div<{open: boolean}>`
+	static readonly DropdownContainer = styled.div<{open: boolean, location: number}>`
         z-index: 100;
+        overflow: hidden;
         position: fixed;
-        right: 0;
-        background-color: ${Colors.PRIMARY};
+        right: ${props => props.location}px;
+        background-color: ${Colors.PRIMARY_TRANSPARENT};
         border-radius: 0 0 5% 5%;
         height: ${this.dropdownHeight};
         width: calc(var(--vh) * .25);
         display: grid;
-        grid-template-columns: 10% 10% 70% 10%;
+        grid-template-columns: 10% 10% 60% 10% 10%;
         grid-template-rows: 80% 20%;
         justify-items: center;
         align-items: center;
@@ -51,11 +42,11 @@ export default class DropdownStyles {
         grid-column-end: 5;
     `
 
-    static readonly MutationRate = styled(Slider)`
+    static readonly HiddenSliders = styled(Slider)`
+        padding-left: 5%;
+        padding-right: 5%;
         width: 100%;
         color: white;
-        display: flex;
-		justify-content: space-around;
     `
 
     static readonly Skip = styled(IconButton)`
@@ -82,5 +73,22 @@ export default class DropdownStyles {
     static readonly DropdownIcon = styled(IconButton)`
         grid-row: 2;
         grid-column: 4;
+    `
+
+    static readonly DragIconContainer = styled.div<{open: boolean}>`
+        width: 100%;
+        height: 100%;
+        display: flex;
+        color: white;
+        grid-row-start: ${props => props.open ? 1 : 2};
+        grid-row-end: 3;
+        grid-column: 5;
+        background-color: ${Colors.PRIMARY_TRANSPARENT};
+        justify-content: center;
+        align-items: center;
+
+        :hover {
+            cursor: pointer;
+        }
     `
 }
