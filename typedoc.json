@@ -1,4 +1,4 @@
 {
-    "entryPoints": ["./src/components/Canvas.tsx", "./src/components/classes/Grid.ts", "./src/components/classes/Agent.ts", "./src/components/classes/Cell.ts", "./src/components/CanvasStyles.tsx", "./src/tools/Constants.tsx", "./src/components/Banner.tsx"],
+    "entryPoints": ["./src/components/Canvas.tsx", "./src/components/classes/Grid.ts", "./src/components/classes/Agent.ts", "./src/components/classes/Cell.ts", "./src/components/CanvasStyles.tsx", "./src/tools/Constants.tsx", "./src/components/Banner.tsx", "./src/components/elements/Dropdown.tsx"],
     "out": "docs"
 }
