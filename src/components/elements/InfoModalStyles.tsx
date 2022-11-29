@@ -28,8 +28,6 @@ export default class InfoModalStyles {
             border-color: #FFFFFFAF;
         }
 
-        .modal-footer { text-align: center; }
-
         .react-tabs__tab:focus:after {
             background-color: unset;
         }
