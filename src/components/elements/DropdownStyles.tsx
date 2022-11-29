@@ -5,8 +5,8 @@ import Slider from './Slider'
 
 export default class DropdownStyles {
 
-    static readonly dropdownHeight = `calc(var(--vh) * .125)`;
-    static readonly minimizedDropdownOffset = `calc(var(--vh) * .125 * 0.8 * -1)`;
+    static readonly minimizedDropdownOffset = `calc(max(calc(var(--vh) * .125), 100px) * 0.8 * -1)`;
+    // static readonly minimizedDropdownOffset = `max(calc(var(--vh) * .125 ), 100px);`;
 
     static readonly OpenDropdown = css`
         & { margin-top: 0px; }
@@ -23,8 +23,8 @@ export default class DropdownStyles {
         right: ${props => props.location}px;
         background-color: ${Colors.PRIMARY_TRANSPARENT};
         border-radius: 0 0 5% 5%;
-        height: ${this.dropdownHeight};
-        width: calc(var(--vh) * .25);
+        height: max(calc(var(--vh) * .125), 100px);
+        width: max(calc(var(--vh) * .25), 200px);
         display: grid;
         grid-template-columns: 10% 10% 60% 10% 10%;
         grid-template-rows: 80% 20%;

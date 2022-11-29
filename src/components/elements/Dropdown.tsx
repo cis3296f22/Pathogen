@@ -2,7 +2,7 @@
 import React from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
-import { FaFastForward, FaPause, FaPlay, FaFastBackward, FaUndo } from 'react-icons/fa';
+import { FaFastForward, FaPause, FaPlay, FaUndo } from 'react-icons/fa';
 import { MdDragIndicator } from 'react-icons/md';
 import Constants from '../../tools/Constants';
 import { Parameters } from '../CanvasStyles';
@@ -102,7 +102,7 @@ export default class DropDown extends React.Component<DropdownProps, DropdownSta
 						max={Constants.POPULATION_RANGE[1]} min={Constants.POPULATION_RANGE[0]}
 						onChange={(e) => this.setPopulation(parseInt(e.target.value))}/>
                     <IconButton icon={<FaUndo/>} onClick={() => this.resetGeneration()} tooltip={'Regenerate Maze'} />
-                    <IconButton icon={<FaFastBackward/>} onClick={() => {}} tooltip={'Reset Agents'} />
+                    {/* <IconButton icon={<FaFastBackward/>} onClick={() => {}} tooltip={'Reset Agents'} /> */}
                 </Styles.HiddenSettings>
                 
                 <Styles.Skip icon={<BsFillLightningChargeFill/>}
