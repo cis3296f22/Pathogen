@@ -19,19 +19,19 @@ export enum CELL_TYPE {
 
 export class Cell {
     /**
-     * // column position in the grid
+     * Column position in the grid
      */
     x: number = 0;
     /**
-     * // row position in the grid
+     * Row position in the grid
      */
     y: number = 0;
     /**
-     * specifies the type of the current cell
+     * Specifies the type of the current cell
      */
     type: CELL_TYPE = CELL_TYPE.empty;
     /**
-     * used for maze generation
+     * Used for maze generation
      */
     visited: boolean;
     dampening: number;

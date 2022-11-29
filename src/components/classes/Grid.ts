@@ -145,7 +145,7 @@ export default class Grid {
              */
             for(let agent of this.population) {
                 /**
-                 *normalize fitness value between 0-1
+                 * Normalize fitness value between 0-1
                  */
                 agent.fitness /= max_fitness;
                 let n = agent.fitness * 100;
@@ -165,7 +165,7 @@ export default class Grid {
              */
             if(agent.isDead()) continue;
             /**
-             * get the agent's current cell in the grid
+             * Get the agent's current cell in the grid
              */
             let cell = this.getCell(agent.pos);
             /**
@@ -189,7 +189,7 @@ export default class Grid {
                 continue;
             }
             /**
-             * update the visited cells of the agent
+             * Update the visited cells of the agent
              */
             agent.updateVisitedCells(this.getCell(agent.pos));
             /**
@@ -233,7 +233,7 @@ export default class Grid {
         // Check that the mouse is within the grid (not the banner or scroll bar, etc.)
         if(!this.start_node_moving && !this.end_node_moving && (cx < 1 || cx > this.cols - 2 || cy < 1 || cy > this.rows - 2)) return;
         /**
-         * Contrain the position to the grid (not including border walls)
+         * Constrain the position to the grid (not including border walls)
          */
         cx = p5.constrain(cx, 1, this.cols - 2);
         cy = p5.constrain(cy, 1, this.rows - 2)
