@@ -33,9 +33,10 @@ class Slider extends React.Component <SliderProps, {value: number}> {
 
 		let max = this.props.max;
 		let min = this.props.min;
-
-		// Solve for the constant. Found by plugging in max and min values
-		// Gives the bounds of [(min, min), (max, max)] in the conversion mapping
+		/**
+		 * Solve for the constant. Found by plugging in max and min values
+		 * Gives the bounds of [(min, min), (max, max)] in the conversion mapping
+		 */
 		let a = max / (min + Math.log(min * (max - min)));
 		val = (1/min) * Math.exp((1/a)*val-min) + min;
 		this.props.onChange(e, Math.floor(val));
