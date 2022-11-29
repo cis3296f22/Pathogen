@@ -15,7 +15,10 @@
   "build": {
     "appId": "com.electron.pathogen",
     "productName": "Pathogen",
-    "files": ["build/**/*", "node_modules/**/*"],
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
     "directories": {
       "buildResources": "public"
     },
@@ -93,6 +96,7 @@
     "cross-env": "^7.0.3",
     "electron": "^21.3.1",
     "electron-builder": "^23.6.0",
+    "electron-packager": "^17.1.1",
     "electronmon": "^2.0.2",
     "gh-pages": "^4.0.0",
     "jest": "^27.5.1",
