@@ -57,6 +57,7 @@
     "eject": "react-scripts eject",
     "electron:build": "PUBLIC_URL=./ react-scripts build",
     "electron:start": "PUBLIC_URL=./ concurrently -k \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electronmon .\"",
+    "electron:package": "PUBLIC_URL=./ yarn electron:package:mac && yarn electron:package:win && yarn electron:package:linux",
     "electron:package:mac": "PUBLIC_URL=./ yarn electron:build && electron-builder -m -c.extraMetadata.main=build/electron.js",
     "electron:package:win": "PUBLIC_URL=./ yarn electron:build && electron-builder -w -c.extraMetadata.main=build/electron.js",
     "electron:package:linux": "PUBLIC_URL=./ yarn electron:build && electron-builder -l -c.extraMetadata.main=build/electron.js"
