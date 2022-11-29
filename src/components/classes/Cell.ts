@@ -1,16 +1,39 @@
 export enum CELL_TYPE {
-    empty,      // part of the maze
-    wall,       // wall in the maze
-    start_node, // where the agents start
-    end_node,   // where the agents finish/end
+    /**
+     * part of the maze
+     */
+    empty,
+    /**
+     * wall in the maze
+     */
+    wall,
+    /**
+     * where the agents start
+     */
+    start_node,
+    /**
+     * where the agents finish/end
+     */
+    end_node, 
 }
 
 export class Cell {
-
-    x: number = 0;                     // column position in the grid
-    y: number = 0;                     // row position in the grid
-    type: CELL_TYPE = CELL_TYPE.empty; // specifies the type of the current cell
-    visited: boolean;          // used for maze generation
+    /**
+     * // column position in the grid
+     */
+    x: number = 0;
+    /**
+     * // row position in the grid
+     */
+    y: number = 0;
+    /**
+     * specifies the type of the current cell
+     */
+    type: CELL_TYPE = CELL_TYPE.empty;
+    /**
+     * used for maze generation
+     */
+    visited: boolean;
     dampening: number;
 
     constructor(x: number, y: number, type: CELL_TYPE) {

@@ -7,8 +7,9 @@ import React from 'react';
 import Sketch from 'react-p5';
 import p5Types from "p5";
 import { isMobile } from 'react-device-detect'
-
-// Custom imports
+/**
+ * Custom imports
+ */
 import Grid from "./classes/Grid";
 import CanvasStyles, { Parameters } from './CanvasStyles';
 import Constants from '../tools/Constants';
@@ -46,8 +47,9 @@ class Canvas extends React.Component <CanvasProps, {}>{
 
         this.grid.show(p5);
         this.grid.handleMouse(p5);
-
-        // User paused
+		/**
+         * User paused
+		 */
         if (this.props.params.pause) return;
 
 		if (this.props.params.skipVisual) {
@@ -59,8 +61,9 @@ class Canvas extends React.Component <CanvasProps, {}>{
 
 			if (count > 0) this.props.setParameters({...this.props.params, pause: true, skipVisual: false})
 		}
-
-        // User is fast-forwarding
+		/**
+         * User is fast-forwarding
+		 */
         for (let i = 0; i < this.props.params.speed; i++) {
             this.grid.update(p5);
         }
@@ -84,8 +87,9 @@ class Canvas extends React.Component <CanvasProps, {}>{
 				this.props.params.gridColumns
 			);
 		}
-
-		// If the mutation rate has changed, update it right away
+		/**
+		 * If the mutation rate has changed, update it right away
+		 */
 		if (prevProps.params.mutation !== this.props.params.mutation) this.grid.setMutationRate(this.props.params.mutation);
 		if (prevProps.params.population !== this.props.params.population) this.grid.setPopulation(this.props.params.population);
 	}
