@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://cis3296f22.github.io/Pathogen",
-  "author": "Ryan Hodge, Ben Scuron, Nick Coffin, Kai Iwugo",
+  "author": "Ryan Hodge, Ben Scuron, Nick Coffin, Kai Iwugo <ryanhodge240@gmail.com>",
   "contributors": [
     "Ryan Hodge",
     "Ben Scuron",
@@ -15,10 +15,7 @@
   "build": {
     "appId": "com.electron.pathogen",
     "productName": "Pathogen",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ],
+    "files": ["build/**/*", "node_modules/**/*"],
     "directories": {
       "buildResources": "public"
     },
@@ -46,8 +43,8 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "react-slider": "^2.0.4",
-    "typedoc": "^0.23.21",
     "react-tabs": "^5.1.0",
+    "typedoc": "^0.23.21",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
@@ -91,9 +88,9 @@
     "@types/styled-components": "^5.1.26",
     "babel-jest": "^29.3.1",
     "bootstrap": "^5.2.2",
-    "concurrently": "^7.5.0",
+    "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
-    "electron": "^21.2.0",
+    "electron": "^21.3.1",
     "electron-builder": "^23.6.0",
     "electronmon": "^2.0.2",
     "gh-pages": "^4.0.0",
