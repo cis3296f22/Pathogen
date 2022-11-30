@@ -11,8 +11,7 @@ export type Parameters = {
 	generationCount: number,
 	mutation: number,
 	skipVisual: boolean,
-	windowSize: {height: number, width: number},
-    generationCount: number
+	windowSize: {height: number, width: number}
 }
 
 export default class CanvasStyles {
