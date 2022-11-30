@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import { FaCircle } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Styles from './TabMenuStyes';
-import HoverImgs from './OnHoverImg'
+import Documentation from './DocumentationContainer'
 
 export default class TabMenu extends React.Component<{}, {}> {
 
@@ -74,7 +74,7 @@ export default class TabMenu extends React.Component<{}, {}> {
 
                         Most Fit Parents <FaCircle color='0AF400'/> | Somewhat Fit Parents <FaCircle color='4B9600'/> | Least Fit Parents <FaCircle color='EA1400'/>
                         <br /> <br />
-                        <div className='hoverDiv'><HoverImgs/></div>
+                        <div className='hoverDiv'><Documentation/></div>
                     </TabPanel>
                 </Styles.TabContainer>
             </>

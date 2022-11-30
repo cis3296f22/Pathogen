@@ -36,7 +36,8 @@ export default class Constants {
 		population: Constants.DEFAULT_POPULATION,
 		mutation: Constants.DEFAULT_MUTATION,
 		skipVisual: false,
-		windowSize: {height: 0, width: 0}
+		windowSize: { height: 0, width: 0 },
+		generationCount: 0
 	}
 
 	static readonly PARAGRAPH_FONT_SIZE = 'font-size: calc(var(--vh) * .009);';

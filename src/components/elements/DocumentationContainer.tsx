@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export default class OnHoverImg extends React.Component<{}, {}> {
+export default class DocumentationContainer extends React.Component<{}, {}> {
     render (): React.ReactElement {
         return (
             <>

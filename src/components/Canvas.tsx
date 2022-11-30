@@ -7,6 +7,7 @@ import React from 'react';
 import Sketch from 'react-p5';
 import p5Types from "p5";
 import { isMobile } from 'react-device-detect'
+import { FaViruses } from 'react-icons/fa';
 /**
  * Custom imports
  */
@@ -67,6 +68,8 @@ class Canvas extends React.Component <CanvasProps, {}>{
         for (let i = 0; i < this.props.params.speed; i++) {
             this.grid.update(p5);
         }
+		this.props.params.generationCount = this.grid.getGenerationCount()
+		this.setState(this.props.params)
 	};
 
 	windowResized = (p5: p5Types) => {
@@ -98,6 +101,7 @@ class Canvas extends React.Component <CanvasProps, {}>{
 		return (
 			<CanvasStyles.Canvas>
 				<InfoModal/>
+				<div className='GenerationCount'><FaViruses/> {this.props.params.generationCount}</div>
 				<Sketch setup={ this.setup } draw={ this.draw } windowResized={ this.windowResized }/>
 			</CanvasStyles.Canvas>
 		);

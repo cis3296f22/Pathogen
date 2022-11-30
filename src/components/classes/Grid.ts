@@ -16,6 +16,7 @@ export default class Grid {
     cell_height: number;
     cell_width: number;
     mutationRate: number;
+    generationCount: number;
     solved: boolean;
     start_node_moving: boolean;
     end_node_moving: boolean;
@@ -32,6 +33,7 @@ export default class Grid {
         this.cell_width = this.width / this.cols;
         this.cell_height = this.height / this.rows;
         this.mutationRate = Constants.DEFAULT_MUTATION;
+        this.generationCount = 1;
         this.grid = this.createGrid(this.rows, this.cols);
         this.generateMaze();
         this.population = this.createPopulation(population); // TODO: make this population size a slider value
@@ -439,7 +441,7 @@ export default class Grid {
             population.push(new Agent(start_node_pos.x * this.cell_width + this.cell_width / 2,
                                       start_node_pos.y * this.cell_height + this.cell_height / 2, child_dna, child_color));
         }
-
+        this.generationCount += 1;
         this.populationDeathToll = 0;
         return population;
     }
@@ -558,6 +560,6 @@ export default class Grid {
             return;
         }
     }
-
     setPopulation(pop: number) { this.population = this.createPopulation(pop); }
+    getGenerationCount() { return this.generationCount; }
 }
