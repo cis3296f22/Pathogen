@@ -24,9 +24,9 @@ export default class CanvasStyles {
 
 		.GenerationCount {
 			font-size: calc(var(--vh) * .015);
-			position: fixed;
-			bottom: 0;
-			left: 0;
+			position: absolute;
+			top: 0;
+			right: 0;
 			margin: 10px;
 			color: white;
 		}
