@@ -24,5 +24,37 @@ export default class TabStyles {
 			padding: 20px;
 			white-space: pre-line;
 		}
+
+
+		.hoverDiv { 
+            justify-content: space-evenly;
+            text-align: center;
+			display: flex;
+
+            img {
+                width: 50vw;
+                border-radius: 5px;
+            }
+                
+            .hover_img a { 
+                position:relative;
+                text-decoration: none;
+                font-weight: bold;
+                color: white;
+            }
+            .hover_img a span { 
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                position:fixed; 
+                display:none;
+                z-index:99; 
+            }
+            .hover_img a:hover span { display:block; }
+        }
+
+
+
 	`
 }
